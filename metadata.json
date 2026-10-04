@@ -1,0 +1,8 @@
+{
+  "name": "Khairabad City Directory",
+  "description": "Complete digital guide and business directory for Khairabad, Uttar Pradesh. Search local hospitals, restaurants, marriage lawns, schools, government offices, and services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

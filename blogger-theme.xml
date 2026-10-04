@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsversion='3' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+  <b:include data='blog' name='all-head-content'/>
+  <title><data:blog.pageTitle/></title>
+  
+  <!-- SEO & Social OpenGraph -->
+  <meta content='Khairabad City Directory – Complete Guide to Businesses, Hospitals, Marriage Lawns, and Public Services in Khairabad, Uttar Pradesh 261131.' name='description'/>
+  <meta content='Khairabad City Directory – Discover Khairabad, UP' property='og:title'/>
+  <meta content='website' property='og:type'/>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link href='https://fonts.googleapis.com' rel='preconnect'/>
+  <link crossorigin='' href='https://fonts.gstatic.com' rel='preconnect'/>
+  <link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Outfit:wght@600;700;800&amp;display=swap' rel='stylesheet'/>
+  
+  <!-- Tailwind CSS via CDN for 100% Zero-Dependency Blogger Rendering -->
+  <script src='https://cdn.tailwindcss.com'></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#1d4ed8',
+              600: '#1e40af',
+              700: '#1d3557',
+              800: '#0f275a',
+              900: '#0a1936'
+            },
+            saffron: {
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Blogger Standard Skin to avoid XML parse errors -->
+  <b:skin><![CDATA[
+    /* --------------------------------------------------
+       Khairabad City Directory - Blogger Custom Styles
+       -------------------------------------------------- */
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .font-display { font-family: 'Outfit', sans-serif; }
+    .blogger-hidden { display: none !important; }
+  ]]></b:skin>
+</head>
+
+<body class='bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col'>
+
+  <!-- Top Emergency Ticker -->
+  <aside aria-label='Emergency numbers ticker' class='bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800'>
+    <div class='max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3'>
+      <div class='flex items-center gap-2'>
+        <span class='inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse'></span>
+        <span class='font-semibold text-red-400 uppercase tracking-wider text-[11px]'>24/7 Helplines:</span>
+        <span class='text-slate-300'>Police: <a class='font-bold text-white underline hover:text-amber-400' href='tel:112'>112</a></span>
+        <span class='text-slate-500'>·</span>
+        <span class='text-slate-300'>Ambulance: <a class='font-bold text-white underline hover:text-amber-400' href='tel:108'>108</a></span>
+        <span class='text-slate-500'>·</span>
+        <span class='text-slate-300'>Women: <a class='font-bold text-white underline hover:text-amber-400' href='tel:1090'>1090</a></span>
+        <span class='text-slate-500'>·</span>
+        <span class='text-slate-300'>CHC Khairabad: <a class='font-bold text-white underline hover:text-amber-400' href='tel:05862252100'>05862-252100</a></span>
+      </div>
+      <div class='hidden sm:flex items-center gap-2 text-slate-400 text-[11px]'>
+        <span>PIN: 261131</span>
+        <span>·</span>
+        <span>Sitapur District, UP</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sticky Top Header (Top Bar Contract: Zone 1 Wordmark, Zone 2 Links, Zone 3 Actions) -->
+  <header class='sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200'>
+    <div class='max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4'>
+      <!-- Zone 1: Brand Wordmark -->
+      <a class='flex items-center gap-2.5 text-slate-900 group shrink-0' href='/'>
+        <div class='w-[96px] h-[54px] shrink-0'>
+          <svg class='w-full h-full block' viewBox='0 0 480 270' xmlns='http://www.w3.org/2000/svg'>
+            <rect fill='#fec200' height='256' rx='18' ry='18' stroke='#000000' stroke-width='14' width='466' x='7' y='7'/>
+            <text fill='#000000' font-family='sans-serif' font-size='72' font-weight='900' letter-spacing='0.4' text-anchor='middle' x='240' y='102'>ख़ैराबाद</text>
+            <text fill='#000000' font-family='sans-serif' font-size='30' font-weight='900' text-anchor='middle' x='240' y='142'>(अवध)</text>
+            <text fill='#000000' font-family='sans-serif' font-size='39' font-weight='900' letter-spacing='1.2' text-anchor='middle' x='122' y='198'>KHAIRABAD</text>
+            <text fill='#000000' font-family='sans-serif' font-size='28' font-weight='900' letter-spacing='0.8' text-anchor='middle' x='122' y='233'>(AVADH)</text>
+            <text fill='#000000' font-family='sans-serif' font-size='52' font-weight='bold' text-anchor='middle' x='364' y='198'>خیر آباد</text>
+            <text fill='#000000' font-family='sans-serif' font-size='27' font-weight='bold' text-anchor='middle' x='364' y='233'>(اودھ)</text>
+          </svg>
+        </div>
+        <div class='border-l-2 border-slate-200 pl-2.5'>
+          <span class='text-xs font-extrabold uppercase tracking-wider text-slate-900 block leading-tight'>Town Directory</span>
+          <span class='text-[10px] text-slate-500 font-medium block leading-tight'>Sitapur · PIN 261131</span>
+        </div>
+      </a>
+
+      <!-- Zone 2: Navigation Links -->
+      <nav class='hidden md:flex items-center gap-6 text-sm font-medium text-slate-600'>
+        <a class='hover:text-amber-700 transition-colors' href='#directory'>Directory</a>
+        <a class='hover:text-amber-700 transition-colors' href='#categories'>Categories</a>
+        <a class='hover:text-amber-700 transition-colors' href='#emergency'>Emergency</a>
+        <a class='hover:text-amber-700 transition-colors' href='#about'>About Khairabad</a>
+      </nav>
+
+      <!-- Zone 3: Primary CTA Button -->
+      <div class='flex items-center gap-2'>
+        <button class='px-3.5 py-2 text-xs font-bold text-slate-950 bg-amber-400 border border-amber-500 rounded-lg hover:bg-amber-300 transition-colors shadow-xs whitespace-nowrap' onclick='openAddModal()'>
+          + Add Business
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class='flex-grow'>
+
+    <!-- Hero Section -->
+    <section class='relative bg-gradient-to-b from-slate-950 via-slate-900 to-amber-950 text-white pt-12 pb-16 px-4 sm:px-6 overflow-hidden'>
+      <div class='max-w-4xl mx-auto text-center relative z-10'>
+        <span class='inline-block text-xs uppercase tracking-widest font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full mb-4'>
+          The Complete Digital Guide to Khairabad, UP
+        </span>
+        <h1 class='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-display mb-4 leading-tight'>
+          Find Local Businesses, Hospitals &amp; Places in Khairabad
+        </h1>
+        <p class='text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8'>
+          Search verified clinics, marriage lawns, restaurants, schools, government offices, emergency numbers, and markets in Khairabad town.
+        </p>
+
+        <!-- Search Bar Box -->
+        <div class='bg-white p-2 rounded-2xl shadow-xl flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto text-slate-900'>
+          <div class='flex-1 flex items-center px-3'>
+            <svg class='w-5 h-5 text-slate-400 mr-2 shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/></svg>
+            <input class='w-full text-sm outline-none text-slate-800 placeholder-slate-400' id='searchInput' oninput='handleSearch()' placeholder='Search "Hospital", "Marriage Lawn", "Doctor", "Restaurant"...' type='text'/>
+          </div>
+          <button class='bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 text-sm font-bold px-6 py-2.5 rounded-xl transition-colors' onclick='handleSearch()'>
+            Search
+          </button>
+        </div>
+
+        <!-- Quick Search Tags -->
+        <div class='flex flex-wrap items-center justify-center gap-2 mt-4 text-xs text-slate-300'>
+          <span class='text-slate-400'>Popular:</span>
+          <button class='hover:text-amber-400 underline decoration-slate-600' onclick='filterByCategory("hospitals")'>Hospitals</button>
+          <span>·</span>
+          <button class='hover:text-amber-400 underline decoration-slate-600' onclick='filterByCategory("marriage-lawns")'>Marriage Lawns</button>
+          <span>·</span>
+          <button class='hover:text-amber-400 underline decoration-slate-600' onclick='filterByCategory("restaurants")'>Restaurants</button>
+          <span>·</span>
+          <button class='hover:text-amber-400 underline decoration-slate-600' onclick='filterByCategory("government")'>Govt Offices</button>
+          <span>·</span>
+          <button class='hover:text-amber-400 underline decoration-slate-600' onclick='filterByCategory("religious")'>Badi Sangat / Dargah</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer Banner -->
+    <div class='bg-amber-50 border-y border-amber-200 px-4 py-2.5 text-xs text-amber-900'>
+      <div class='max-w-7xl mx-auto flex items-center justify-between gap-3'>
+        <div class='flex items-center gap-2'>
+          <span class='font-bold uppercase text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded'>Notice</span>
+          <span>Community Directory — Listings are verified independently. Always verify operational hours and critical numbers before traveling.</span>
+        </div>
+        <button class='underline text-amber-800 hover:text-amber-950 font-medium shrink-0' onclick='openAddModal()'>
+          Claim / Suggest an Edit
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Browser Section -->
+    <section class='py-8 px-4 sm:px-6 max-w-7xl mx-auto' id='categories'>
+      <div class='flex items-center justify-between mb-4'>
+        <div>
+          <h2 class='text-xl font-bold font-display text-slate-900'>Explore Categories</h2>
+          <p class='text-xs text-slate-500'>Browse key services and commercial sectors across Khairabad</p>
+        </div>
+        <button class='text-xs font-bold text-amber-800 hover:underline' onclick='filterByCategory("all")'>View All</button>
+      </div>
+
+      <div class='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3' id='categoryGridContainer'>
+        <!-- Populated via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Recently Added Section -->
+    <section class='py-4 px-4 sm:px-6 max-w-7xl mx-auto' id='recentlyAddedSection'>
+      <div class='bg-gradient-to-b from-amber-500/5 via-slate-50 to-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-xs'>
+        <div class='flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 mb-5'>
+          <div>
+            <div class='inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-2'>
+              <span class='w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block'></span>
+              <span>Fresh Directory Additions · Khairabad 261131</span>
+            </div>
+            <h2 class='text-2xl font-extrabold text-slate-900 font-display tracking-tight'>
+              Recently Added in Khairabad
+            </h2>
+            <p class='text-slate-600 text-xs mt-1'>
+              Explore the newest verified fitness gyms, Common Service Centres (CSC), and citizen services indexed in the town directory.
+            </p>
+          </div>
+          <button class='px-3.5 py-2 text-xs font-bold text-slate-950 bg-amber-400 border border-amber-500 rounded-xl hover:bg-amber-300 shrink-0 shadow-xs' onclick='openAddModal()'>
+            + Add Your Business
+          </button>
+        </div>
+
+        <!-- Horizontal scroll reel for recent items -->
+        <div class='flex gap-4 overflow-x-auto pb-3 snap-x scrollbar-none' id='recentlyAddedContainer'>
+          <!-- Populated via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Directory & Filters Section -->
+    <section class='py-6 px-4 sm:px-6 max-w-7xl mx-auto' id='directory'>
+      <div class='flex flex-col lg:flex-row gap-6 items-start'>
+
+        <!-- Sidebar Filters -->
+        <aside class='w-full lg:w-64 bg-white p-5 rounded-2xl border border-slate-200 shrink-0 space-y-5'>
+          <div>
+            <h3 class='text-sm font-bold text-slate-900 uppercase tracking-wider mb-3'>Filter By Locality</h3>
+            <div class='space-y-1.5' id='localityFilters'>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input checked='checked' name='locality' onchange='handleLocalityChange("all")' type='radio' value='all'/>
+                <span>All Khairabad Areas</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Sitapur Road")' type='radio' value='Sitapur Road'/>
+                <span>Sitapur Road</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Main Bazaar / Sabzi Mandi")' type='radio' value='Main Bazaar / Sabzi Mandi'/>
+                <span>Main Bazaar / Sabzi Mandi</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Railway Station Road")' type='radio' value='Railway Station Road'/>
+                <span>Railway Station Road</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Chungi Naka")' type='radio' value='Chungi Naka'/>
+                <span>Chungi Naka</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Civil Lines / Block Colony")' type='radio' value='Civil Lines / Block Colony'/>
+                <span>Civil Lines / Block Colony</span>
+              </label>
+              <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+                <input name='locality' onchange='handleLocalityChange("Qadam Rasul Area")' type='radio' value='Qadam Rasul Area'/>
+                <span>Qadam Rasul / Dargah</span>
+              </label>
+            </div>
+          </div>
+
+          <div class='border-t border-slate-100 pt-4'>
+            <h3 class='text-sm font-bold text-slate-900 uppercase tracking-wider mb-2'>Status</h3>
+            <label class='flex items-center gap-2 text-xs text-slate-700 cursor-pointer'>
+              <input id='verifiedOnlyFilter' onchange='handleFilterUpdate()' type='checkbox'/>
+              <span>Official / Verified Only</span>
+            </label>
+          </div>
+
+          <div class='border-t border-slate-100 pt-4'>
+            <button class='w-full py-2 text-xs font-semibold text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors' onclick='resetFilters()'>
+              Reset All Filters
+            </button>
+          </div>
+        </aside>
+
+        <!-- Listings Content Column -->
+        <div class='flex-1 w-full'>
+          <div class='flex items-center justify-between mb-4'>
+            <div class='text-xs text-slate-500' id='resultCountText'>
+              Showing all listings in Khairabad
+            </div>
+          </div>
+
+          <!-- Dynamic Listings Grid -->
+          <div class='grid grid-cols-1 md:grid-cols-2 gap-4' id='listingsContainer'>
+            <!-- Populated via JavaScript -->
+          </div>
+
+          <!-- Empty State -->
+          <div class='hidden bg-white p-8 rounded-2xl border border-slate-200 text-center' id='noResultsBox'>
+            <h4 class='text-base font-bold text-slate-900 mb-1'>No listings match your search</h4>
+            <p class='text-xs text-slate-500 mb-4'>Do you own or know a business in this category in Khairabad?</p>
+            <button class='px-4 py-2 text-xs font-bold text-slate-950 bg-amber-400 rounded-lg hover:bg-amber-300 border border-amber-500 shadow-xs' onclick='openAddModal()'>
+              Add This Business Now
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Emergency Services Highlight Bar -->
+    <section class='py-8 px-4 sm:px-6 bg-slate-100 border-t border-slate-200' id='emergency'>
+      <div class='max-w-7xl mx-auto'>
+        <div class='mb-6'>
+          <h2 class='text-xl font-bold font-display text-slate-900'>Official Emergency &amp; Citizen Numbers</h2>
+          <p class='text-xs text-slate-500'>State and local government emergency response contacts for Khairabad, Sitapur</p>
+        </div>
+        <div class='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3' id='emergencyGridContainer'>
+          <!-- Populated via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- About Khairabad Town Section -->
+    <section class='py-12 px-4 sm:px-6 max-w-7xl mx-auto' id='about'>
+      <div class='bg-white p-6 sm:p-8 rounded-2xl border border-slate-200'>
+        <h2 class='text-2xl font-bold font-display text-slate-900 mb-2'>About Khairabad, Uttar Pradesh</h2>
+        <div class='flex items-center gap-2 text-xs text-slate-500 mb-6'>
+          <span>PIN: 261131</span>
+          <span>·</span>
+          <span>District: Sitapur</span>
+          <span>·</span>
+          <span>Sub-Division: Sadar</span>
+          <span>·</span>
+          <span>Coordinates: 27.53°N 80.75°E</span>
+        </div>
+        <div class='prose prose-slate text-sm text-slate-600 space-y-4 max-w-none'>
+          <p>
+            Khairabad is an ancient town of immense historical, intellectual, and spiritual significance situated 8 km south of Sitapur district headquarters on National Highway 30 (Lucknow–Delhi highway). The town was founded in the early 11th century and later served as the head of an administrative Sarkar under Emperor Akbar in the Subah of Awadh.
+          </p>
+          <p>
+            The town is world-renowned for its intellectual contributions to philosophy and Islamic jurisprudence, being the birthplace and ancestral seat of the great 19th-century scholar and freedom fighter Allama Fazl-e-Haq Khairabadi. Khairabad also reflects India&#39;s rich composite culture, housing both the historic 17th-century Hindu complex of Badi Sangat Mandir and revered spiritual Sufi shrines such as Dargah Hazrat Makhdoom Sheikh Saaduddin and Dargah Qadam Rasul.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard Blogger Posts Section (Keeps Blogger Engine Happy) -->
+    <div class='blogger-hidden'>
+      <b:section id='main' showaddelement='yes'>
+        <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog' version='2'>
+          <b:includable id='main'>
+            <b:loop values='data:posts' var='post'>
+              <article>
+                <h2><data:post.title/></h2>
+                <div><data:post.body/></div>
+              </article>
+            </b:loop>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class='bg-slate-900 text-slate-400 py-10 px-4 sm:px-6 border-t border-slate-800 text-xs'>
+    <div class='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8'>
+      <div>
+        <div class='text-white font-bold font-display text-base mb-2'>Khairabad City</div>
+        <p class='text-slate-400 mb-4 leading-relaxed'>
+          Your complete local digital guide and business directory for Khairabad, Uttar Pradesh 261131.
+        </p>
+        <div class='text-[11px] text-slate-500'>
+          Independent community portal. Not officially affiliated with the Govt of UP.
+        </div>
+      </div>
+      <div>
+        <div class='text-white font-semibold mb-2'>Quick Links</div>
+        <ul class='space-y-1.5'>
+          <li><a class='hover:text-white' href='#directory'>Business Directory</a></li>
+          <li><a class='hover:text-white' href='#emergency'>Emergency Numbers</a></li>
+          <li><a class='hover:text-white' href='#about'>History of Khairabad</a></li>
+          <li><button class='hover:text-white' onclick='openAddModal()'>Add Your Listing</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class='text-white font-semibold mb-2'>Key Sectors</div>
+        <ul class='space-y-1.5'>
+          <li><button class='hover:text-white' onclick='filterByCategory("hospitals")'>Hospitals &amp; Clinics</button></li>
+          <li><button class='hover:text-white' onclick='filterByCategory("marriage-lawns")'>Marriage Lawns</button></li>
+          <li><button class='hover:text-white' onclick='filterByCategory("restaurants")'>Restaurants &amp; Sweets</button></li>
+          <li><button class='hover:text-white' onclick='filterByCategory("schools")'>Schools &amp; Colleges</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class='text-white font-semibold mb-2'>Business Owners</div>
+        <p class='text-slate-400 mb-3'>
+          Want to update or claim your listing on Khairabad City? Submit your details directly to our directory team.
+        </p>
+        <button class='w-full py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-center border border-amber-500 shadow-xs' onclick='openAddModal()'>
+          Submit Listing Free
+        </button>
+      </div>
+    </div>
+    <div class='max-w-7xl mx-auto pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]'>
+      <div>&#169; 2026 Khairabad City Directory. All rights reserved.</div>
+      <div>PIN: 261131 · Sitapur District · Uttar Pradesh</div>
+    </div>
+  </footer>
+
+  <!-- Modal: Add / Suggest Business -->
+  <div class='fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4' id='addModal'>
+    <div class='bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl'>
+      <div class='flex items-center justify-between pb-3 border-b border-slate-200 mb-4'>
+        <h3 class='text-lg font-bold font-display text-slate-900'>Add Your Business to Khairabad Directory</h3>
+        <button class='text-slate-400 hover:text-slate-600 text-xl font-bold' onclick='closeAddModal()'>&#215;</button>
+      </div>
+      <form id='addBusinessForm' onsubmit='handleFormSubmit(event)' class='space-y-3.5 text-xs text-slate-700'>
+        <div>
+          <label class='block font-semibold mb-1'>Business or Place Name *</label>
+          <input class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formBizName' required='required' type='text'/>
+        </div>
+        <div class='grid grid-cols-2 gap-3'>
+          <div>
+            <label class='block font-semibold mb-1'>Category *</label>
+            <select class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formCategory'>
+              <option value='hospitals'>Hospitals &amp; Healthcare</option>
+              <option value='clinics'>Clinics &amp; Diagnostics</option>
+              <option value='doctors'>Doctors &amp; Specialists</option>
+              <option value='pharmacies'>Pharmacies &amp; Chemist</option>
+              <option value='restaurants'>Restaurants &amp; Sweets</option>
+              <option value='hotels'>Hotels &amp; Lodging</option>
+              <option value='marriage-lawns'>Marriage Lawns &amp; Halls</option>
+              <option value='event-services'>Wedding &amp; Event Services</option>
+              <option value='schools'>Schools &amp; Education</option>
+              <option value='colleges'>Degree Colleges &amp; Institutes</option>
+              <option value='coaching'>Coaching &amp; Tuitions</option>
+              <option value='banks'>Banks &amp; Financial</option>
+              <option value='atms'>24/7 Cash ATMs &amp; CDMs</option>
+              <option value='government'>Government &amp; Civic Offices</option>
+              <option value='police'>Police Stations &amp; Chowkis</option>
+              <option value='post-office'>Post Office &amp; Speed Post</option>
+              <option value='petrol-pumps'>Petrol Pumps &amp; Fuel</option>
+              <option value='auto-services'>Garages &amp; Auto Repair</option>
+              <option value='transport'>Transport &amp; Travel</option>
+              <option value='markets'>Bazaars &amp; Shopping</option>
+              <option value='mobile-shops'>Mobile &amp; Electronics</option>
+              <option value='cyber-cafes'>Cyber Cafe &amp; CSC Centers</option>
+              <option value='salons'>Salons &amp; Parlours</option>
+              <option value='gyms'>Gyms &amp; Fitness</option>
+              <option value='photographers'>Photo &amp; Video Studios</option>
+              <option value='lawyers'>Lawyers &amp; Legal Services</option>
+              <option value='real-estate'>Property &amp; Real Estate</option>
+              <option value='religious'>Heritage &amp; Religious Places</option>
+            </select>
+          </div>
+          <div>
+            <label class='block font-semibold mb-1'>Locality / Area *</label>
+            <select class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formLocality'>
+              <option value='Sitapur Road'>Sitapur Road</option>
+              <option value='Main Bazaar / Sabzi Mandi'>Main Bazaar / Sabzi Mandi</option>
+              <option value='Railway Station Road'>Railway Station Road</option>
+              <option value='Chungi Naka'>Chungi Naka</option>
+              <option value='Badi Sangat Road'>Badi Sangat Road</option>
+              <option value='Civil Lines / Block Colony'>Civil Lines / Block Colony</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class='block font-semibold mb-1'>Full Address in Khairabad *</label>
+          <input class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formAddress' required='required' type='text'/>
+        </div>
+        <div class='grid grid-cols-2 gap-3'>
+          <div>
+            <label class='block font-semibold mb-1'>Calling Phone Number *</label>
+            <input class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formPhone' placeholder='05862-XXXXXX or 98XXXXXXXX' required='required' type='tel'/>
+          </div>
+          <div>
+            <label class='block font-semibold mb-1'>WhatsApp Number</label>
+            <input class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formWhatsapp' placeholder='91XXXXXXXXXX' type='tel'/>
+          </div>
+        </div>
+        <div>
+          <label class='block font-semibold mb-1'>Opening Hours (e.g. 9:00 AM – 8:00 PM)</label>
+          <input class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formHours' type='text'/>
+        </div>
+        <div>
+          <label class='block font-semibold mb-1'>Description &amp; Key Services</label>
+          <textarea class='w-full p-2 border border-slate-300 rounded-lg text-xs' id='formDesc' rows='2'></textarea>
+        </div>
+        <div class='pt-2 flex justify-end gap-2'>
+          <button class='px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50' onclick='closeAddModal()' type='button'>Cancel</button>
+          <button class='px-4 py-2 bg-amber-400 text-slate-950 font-bold rounded-lg hover:bg-amber-300 border border-amber-500 shadow-xs' type='submit'>Submit for Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Business Detail with Simplified Khairabad Town Map -->
+  <div class='fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4' id='detailModal'>
+    <div class='bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 shadow-2xl space-y-4'>
+      <div class='flex items-start justify-between pb-3 border-b border-slate-200'>
+        <div>
+          <h3 class='text-lg font-bold font-display text-slate-900' id='modalDetailName'>Business Name</h3>
+          <div class='text-xs text-slate-500' id='modalDetailMeta'>Category · Locality</div>
+        </div>
+        <button class='text-slate-400 hover:text-slate-600 text-2xl font-bold leading-none' onclick='closeDetailModal()'>&#215;</button>
+      </div>
+
+      <p class='text-xs text-slate-600 leading-relaxed' id='modalDetailDesc'></p>
+
+      <div class='p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1'>
+        <div class='font-semibold text-slate-900'>Address &amp; Hours:</div>
+        <div id='modalDetailAddress' class='text-slate-600'></div>
+        <div id='modalDetailHours' class='text-slate-500 font-medium'></div>
+      </div>
+
+      <!-- Simplified Khairabad Map Visualization Container -->
+      <div class='space-y-1.5'>
+        <div class='flex items-center justify-between text-xs'>
+          <span class='font-bold uppercase tracking-wider text-slate-500 text-[11px]'>Khairabad Location Map</span>
+          <span id='modalDetailZone' class='text-amber-800 font-semibold text-[11px]'></span>
+        </div>
+        <div class='rounded-xl border border-slate-200 bg-[#eef2f6] overflow-hidden relative h-48'>
+          <svg viewBox='0 0 600 360' class='w-full h-full object-cover' xmlns='http://www.w3.org/2000/svg'>
+            <!-- Background Urban Area -->
+            <ellipse cx='320' cy='180' rx='190' ry='120' fill='#f8fafc' opacity='0.85' />
+            <ellipse cx='310' cy='180' rx='140' ry='85' fill='#f1f5f9' />
+            <!-- Sarayan Stream -->
+            <path d='M 20 310 C 120 280, 220 340, 360 310 C 440 290, 520 330, 580 320' fill='none' stroke='#93c5fd' stroke-width='6' stroke-linecap='round' />
+            <text x='40' y='325' fill='#60a5fa' font-size='9' font-style='italic'>Sarayan Stream</text>
+            <!-- Railway Line (KB Station) -->
+            <path d='M 60 40 L 210 210 L 330 350' fill='none' stroke='#64748b' stroke-width='3' stroke-dasharray='6,4' />
+            <text x='80' y='105' fill='#64748b' font-size='8'>Railway KB</text>
+            <!-- NH-30 Highway -->
+            <path d='M 90 20 Q 150 120 180 200 T 250 360' fill='none' stroke='#f59e0b' stroke-width='5' stroke-linecap='round' />
+            <text x='130' y='65' fill='#b45309' font-size='9' font-weight='bold'>NH-30 (Sitapur Bypass)</text>
+            <!-- Town Roads -->
+            <path d='M 175 140 L 330 175 L 490 190' fill='none' stroke='#cbd5e1' stroke-width='3.5' stroke-linecap='round' />
+            <path d='M 180 110 L 260 130 L 310 180' fill='none' stroke='#cbd5e1' stroke-width='3' stroke-linecap='round' />
+            <path d='M 210 210 L 310 180 L 390 250' fill='none' stroke='#cbd5e1' stroke-width='3' stroke-linecap='round' />
+            <!-- Key Town Landmarks -->
+            <circle cx='210' cy='210' r='4' fill='#334155' /><text x='218' y='213' fill='#0f172a' font-size='8' font-weight='bold'>KB Station</text>
+            <circle cx='260' cy='130' r='4' fill='#dc2626' /><text x='268' y='133' fill='#991b1b' font-size='8' font-weight='bold'>CHC Hospital</text>
+            <circle cx='440' cy='170' r='4' fill='#d97706' /><text x='448' y='173' fill='#92400e' font-size='8' font-weight='bold'>Badi Sangat</text>
+            <circle cx='390' cy='250' r='4' fill='#059669' /><text x='398' y='253' fill='#065f46' font-size='8' font-weight='bold'>Qadam Rasul</text>
+            <!-- Dynamic Address Location Pin Marker -->
+            <g id='svgMapPinGroup' transform='translate(310, 180)'>
+              <ellipse cx='0' cy='0' rx='8' ry='3' fill='#0f172a' opacity='0.35' />
+              <circle cx='0' cy='0' r='20' fill='#ef4444' opacity='0.25'>
+                <animate attributeName='r' values='8;24;8' dur='2s' repeatCount='indefinite'/>
+                <animate attributeName='opacity' values='0.4;0.05;0.4' dur='2s' repeatCount='indefinite'/>
+              </circle>
+              <path d='M 0 0 C -3 -3 -10 -12 -10 -18 A 10 10 0 1 1 10 -18 C 10 -12 3 -3 0 0 Z' fill='#ef4444' stroke='#ffffff' stroke-width='1.5'/>
+              <circle cx='0' cy='-18' r='4' fill='#ffffff'/>
+              <circle cx='0' cy='-18' r='2' fill='#991b1b'/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class='flex items-center justify-between gap-2 pt-2 border-t border-slate-200'>
+        <a id='modalDetailMapsLink' href='#' target='_blank' rel='noopener' class='px-4 py-2 bg-amber-400 text-slate-950 rounded-xl text-xs font-bold hover:bg-amber-300 border border-amber-500 shadow-xs'>
+          Open in Google Maps &#8594;
+        </a>
+        <button class='px-4 py-2 border border-slate-300 text-slate-700 rounded-xl text-xs font-semibold' onclick='closeDetailModal()'>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMBEDDED KHAIRABAD JAVASCRIPT DIRECTORY DATABASE & ENGINE -->
+  <script>
+  //<![CDATA[
+    var KHAIRABAD_DATA = {
+      categories: [
+        { id: "hospitals", label: "Hospitals & Health", count: "CHC & Private" },
+        { id: "clinics", label: "Clinics & Diagnostics", count: "Diagnostics" },
+        { id: "doctors", label: "Doctors & Specialists", count: "Physicians" },
+        { id: "pharmacies", label: "Pharmacies & Meds", count: "24/7 Stores" },
+        { id: "restaurants", label: "Restaurants & Sweets", count: "Dining & Sweets" },
+        { id: "hotels", label: "Hotels & Lodging", count: "Highway Lodging" },
+        { id: "marriage-lawns", label: "Marriage Lawns", count: "AC Lawns & Halls" },
+        { id: "event-services", label: "Event & Tent Houses", count: "Decor & Sound" },
+        { id: "schools", label: "Schools & Colleges", count: "Inter Colleges" },
+        { id: "colleges", label: "Degree Colleges", count: "Institutes" },
+        { id: "coaching", label: "Coaching & Tuitions", count: "Study Hubs" },
+        { id: "banks", label: "Banks & Branches", count: "SBI, BOB, PNB" },
+        { id: "atms", label: "24/7 Cash ATMs", count: "Cash CDMs" },
+        { id: "government", label: "Govt & Civic Offices", count: "Nagar Palika" },
+        { id: "police", label: "Police & Security", count: "Thana Kotwali" },
+        { id: "post-office", label: "Post Office & Courier", count: "PIN 261131" },
+        { id: "petrol-pumps", label: "Petrol Pumps", count: "Fuel Stations" },
+        { id: "auto-services", label: "Garages & Auto", count: "Bike & Car Care" },
+        { id: "transport", label: "Transport & Travel", count: "KB Rail & Autos" },
+        { id: "markets", label: "Bazaars & Shopping", count: "Sarafa & Mandi" },
+        { id: "mobile-shops", label: "Mobile & Tech", count: "Sales & Repair" },
+        { id: "cyber-cafes", label: "Jan Seva & Cyber", count: "CSC Centers" },
+        { id: "salons", label: "Salons & Parlours", count: "Beauty & Grooming" },
+        { id: "gyms", label: "Gyms & Fitness", count: "Fitness Clubs" },
+        { id: "photographers", label: "Photo & Video", count: "Wedding Studios" },
+        { id: "lawyers", label: "Lawyers & Legal", count: "Advocates" },
+        { id: "real-estate", label: "Property & Lands", count: "Real Estate" },
+        { id: "religious", label: "Heritage & Shrines", count: "Badi Sangat" }
+      ],
+      emergencies: [
+        { title: "Police Emergency", num: "112", tag: "National / UP" },
+        { title: "Ambulance", num: "108", tag: "24/7 UP Health" },
+        { title: "CHC Hospital", num: "05862-252100", tag: "Khairabad Govt" },
+        { title: "Thana Khairabad", num: "05862-252222", tag: "Police Kotwali" },
+        { title: "Women Line", num: "1090", tag: "Toll-Free UP" }
+      ],
+      listings: [
+        {
+          id: "kh-hosp-001",
+          name: "Community Health Centre (CHC) Khairabad",
+          category: "hospitals",
+          locality: "Civil Lines / Block Colony",
+          address: "Near Block Office, Civil Lines, Khairabad, UP 261131",
+          phone: "05862-252100",
+          whatsapp: "",
+          hours: "24 Hours Emergency (OPD: 8 AM - 2 PM)",
+          desc: "Premier government public health hospital in Khairabad providing emergency trauma care, maternity ward, vaccination, diagnostic labs, and free government medicines.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=CHC+Khairabad+Sitapur"
+        },
+        {
+          id: "kh-hosp-002",
+          name: "Awadh Medical Care & Diagnostic Centre",
+          category: "hospitals",
+          locality: "Sitapur Road",
+          address: "Sitapur-Khairabad Main Highway Road, Khairabad, UP 261131",
+          phone: "05862-252399",
+          whatsapp: "919876543210",
+          hours: "9:00 AM - 9:00 PM (Emergency 24x7)",
+          desc: "Multi-speciality doctor visits, general surgery consultations, ultrasound coordination, and ECG monitoring. (Sample listing for directory preview).",
+          verified: false,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Khairabad+Sitapur+Road+Hospital"
+        },
+        {
+          id: "kh-lawn-001",
+          name: "Royal Palace Banquet Hall & Marriage Lawn",
+          category: "marriage-lawns",
+          locality: "Sitapur Road",
+          address: "Sitapur Bypass Road, Near Railway Overbridge, Khairabad, UP 261131",
+          phone: "05862-252650",
+          whatsapp: "919876543213",
+          hours: "Booking Office: 10:00 AM - 7:00 PM",
+          desc: "Spacious landscaped green lawn with central air-conditioned dining banquet hall, bridal suites, ample gated car parking, and generator backup.",
+          verified: false,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Marriage+Lawn+Khairabad+Sitapur"
+        },
+        {
+          id: "kh-rest-001",
+          name: "Al-Madina Family Restaurant & Biryani Corner",
+          category: "restaurants",
+          locality: "Railway Station Road",
+          address: "Near Old Bus Stand, Railway Station Road, Khairabad, UP 261131",
+          phone: "05862-252430",
+          whatsapp: "919876543215",
+          hours: "11:00 AM - 10:30 PM",
+          desc: "Famous for authentic Awadhi dum biryani, roasted kebabs, chicken handi, roomali rotis, and family cabin seating.",
+          verified: false,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Al+Madina+Restaurant+Khairabad"
+        },
+        {
+          id: "kh-govt-001",
+          name: "Nagar Palika Parishad Khairabad",
+          category: "government",
+          locality: "Civil Lines / Block Colony",
+          address: "Palika Bhavan, Town Hall, Khairabad, UP 261131",
+          phone: "05862-252345",
+          whatsapp: "",
+          hours: "10:00 AM - 5:00 PM (Mon-Sat)",
+          desc: "Official urban local body governing Khairabad municipal territory. Birth & death certificates, property tax, and public civic services.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Nagar+Palika+Parishad+Khairabad"
+        },
+        {
+          id: "kh-rel-001",
+          name: "Historic Badi Sangat Mandir Complex",
+          category: "religious",
+          locality: "Badi Sangat Road",
+          address: "Badi Sangat Road, Khairabad, Sitapur, UP 261131",
+          phone: "",
+          whatsapp: "",
+          hours: "5:00 AM - 12:00 PM, 4:00 PM - 9:00 PM",
+          desc: "Spiritual and architectural landmark founded in the 17th century by saint Baba Sahajram. Brick pavilions, peaceful courtyards, and Awadhi terracotta masonry.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Badi+Sangat+Temple+Khairabad"
+        },
+        {
+          id: "kh-rel-002",
+          name: "Dargah Hazrat Makhdoom Sheikh Saaduddin Khairabadi",
+          category: "religious",
+          locality: "Qadam Rasul Area",
+          address: "Dargah Sharif, Qadam Rasul Road, Khairabad, UP 261131",
+          phone: "",
+          whatsapp: "",
+          hours: "Open All Day (Best: 6 AM - 8 PM)",
+          desc: "Venerated 15th-century Sufi shrine honoring Hazrat Makhdoom Shah. Pilgrims of all faiths visit for blessings, annual Urs celebrations, and langar.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Dargah+Makhdoom+Khairabad"
+        },
+        {
+          id: "csc-ashish-sharma-261131",
+          name: "Ashish Kumar Plywood & CSC Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Sitapur Road",
+          address: "Plywood Center, Sitapur Road Corridor, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252131",
+          whatsapp: "919838001131",
+          hours: "8:30 AM - 7:30 PM",
+          desc: "Government authorized Common Service Center and Plywood Centre in Khairabad S.O (PIN 261131). Aadhaar updates, PAN cards, certificates, and timber.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Ashish+Kumar+Plywood+CSC+Khairabad+261131"
+        },
+        {
+          id: "csc-gita-yadav-261131",
+          name: "Gita Yadav CSC Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Purani Bazar, Sitapur-Biswan Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252132",
+          whatsapp: "919838001132",
+          hours: "9:00 AM - 7:00 PM",
+          desc: "CSC Jan Seva Kendra at Purani Bazar. UP e-District portal services, pension registration, electricity bills, and document xerox.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Gita+Yadav+CSC+Purani+Bazar+Khairabad+261131"
+        },
+        {
+          id: "csc-haani-261131",
+          name: "Haani CSC & Online Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Civil Lines / Block Colony",
+          address: "BCM Hospital Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252133",
+          whatsapp: "919838001133",
+          hours: "8:30 AM - 8:00 PM",
+          desc: "Digital Citizen Service Center on BCM Hospital Road. Ayushman Bharat golden cards, health cards, mini-ATM, and digital forms.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haani+CSC+BCM+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-haree-om-yadav-261131",
+          name: "Haree Om Yadav Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Sitapur Road",
+          address: "Pahadpur, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252134",
+          whatsapp: "919838001134",
+          hours: "9:00 AM - 7:30 PM",
+          desc: "Common Service Center in Pahadpur Khairabad S.O. PM Kisan KYC, agriculture subsidy, Bhulekh Khatauni, and scholarship forms.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haree+Om+Yadav+CSC+Pahadpur+Khairabad+261131"
+        },
+        {
+          id: "csc-himanshu-dutt-dixit-261131",
+          name: "Himanshu Dutt Dixit Jan Seva & Computer Center",
+          category: "cyber-cafes",
+          locality: "Civil Lines / Block Colony",
+          address: "Near Govt ITI Khairabad, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252135",
+          whatsapp: "919838001135",
+          hours: "8:00 AM - 8:00 PM",
+          desc: "Student cyber center near ITI Khairabad. ITI admissions, admit card printouts, high-speed internet, lamination, and Aadhaar banking.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Himanshu+Dutt+Dixit+CSC+ITI+Khairabad+261131"
+        },
+        {
+          id: "csc-javed-alam-261131",
+          name: "Javed Alam Digital CSC & Online Services",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Laharpur Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252136",
+          whatsapp: "919838001136",
+          hours: "9:00 AM - 8:00 PM",
+          desc: "Authorized CSC Jan Seva Kendra on Laharpur Road. Government portal filings, IRCTC train booking, PAN cards, and bill payments.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Javed+Alam+CSC+Laharpur+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-jitendra-mishra-261131",
+          name: "Jitendra Kumar Mishra CSC Center",
+          category: "cyber-cafes",
+          locality: "Sitapur Road",
+          address: "Lakhimpur Link Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252137",
+          whatsapp: "919838001137",
+          hours: "9:00 AM - 7:00 PM",
+          desc: "e-Governance center on Lakhimpur link road. AEPS Aadhaar withdrawals, PM Awas Yojana, Shramik cards, and citizen certificates.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jitendra+Kumar+Mishra+CSC+Lakhimpur+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-maya-prakash-mishra-261131",
+          name: "Maya Prakash Mishra CSC & Cyber Point",
+          category: "cyber-cafes",
+          locality: "Civil Lines / Block Colony",
+          address: "ITI Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252138",
+          whatsapp: "919838001138",
+          hours: "8:30 AM - 7:30 PM",
+          desc: "CSC center serving ITI Khairabad students. Online scholarship tracking, recruitment exam forms, UP e-District certificates.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Maya+Prakash+Mishra+CSC+ITI+Khairabad+261131"
+        },
+        {
+          id: "csc-mehtab-alam-261131",
+          name: "Mehtab Alam Common Service Center",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Main Bazar Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252139",
+          whatsapp: "919838001139",
+          hours: "9:00 AM - 8:30 PM",
+          desc: "Centrally located in Khairabad Main Market. Voter ID corrections, passport applications, utility bill collection, and typing.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mehtab+Alam+CSC+Main+Bazar+Khairabad+261131"
+        },
+        {
+          id: "csc-mohd-faheem-station-261131",
+          name: "Mohd Faheem Digital Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Railway Station Road",
+          address: "Near Railway Station Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252140",
+          whatsapp: "919838001140",
+          hours: "8:00 AM - 8:30 PM",
+          desc: "Common Service Center on Station Road near KB Station. Tatkal train reservations, bus bookings, and Aadhaar ATM cash.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mohd+Faheem+CSC+Station+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-mohd-kaleem-261131",
+          name: "Mohd Kaleem CSC & Online Services",
+          category: "cyber-cafes",
+          locality: "Mahmoodabad Road",
+          address: "Biswan Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252141",
+          whatsapp: "919838001141",
+          hours: "9:00 AM - 7:30 PM",
+          desc: "Common Service Center on Biswan Road. Domicile certificates, ITR filing, ration card e-KYC, and insurance schemes.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mohd+Kaleem+CSC+Biswan+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-mohd-naseeb-261131",
+          name: "Mohd Naseeb Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Qadam Rasul Area",
+          address: "Mohalla Chaudhrana / Chhatta, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252142",
+          whatsapp: "919838001142",
+          hours: "9:00 AM - 8:00 PM",
+          desc: "Jan Seva Kendra in Mohalla Chaudhrana near Qadam Rasul. Old age pension, Aadhaar banking, caste/income certs, and utility bills.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mohd+Naseeb+CSC+Mohalla+Chaudhrana+Khairabad+261131"
+        },
+        {
+          id: "csc-mohammad-faheem-bazar-261131",
+          name: "Mohammad Faheem Jan Seva & CSC Point",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Main Bazar, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252143",
+          whatsapp: "919838001143",
+          hours: "9:00 AM - 8:00 PM",
+          desc: "Common Service Center in central Khairabad Bazar. GST registration, PAN cards in 48 hours, money transfers, and scanning.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mohammad+Faheem+CSC+Main+Bazar+Khairabad+261131"
+        },
+        {
+          id: "csc-mohd-amir-261131",
+          name: "Mohd. Amir Common Service Center (CSC)",
+          category: "cyber-cafes",
+          locality: "Qadam Rasul Area",
+          address: "Mahendri Tola, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252144",
+          whatsapp: "919838001144",
+          hours: "8:30 AM - 7:30 PM",
+          desc: "e-Governance hub in Mahendri Tola. Digipay banking, scholarship forms, Jeevan Pramaan, and voter registrations.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Mohd+Amir+CSC+Mahendri+Tola+Khairabad+261131"
+        },
+        {
+          id: "csc-om-prakash-261131",
+          name: "Om CSC Center & Online Seva (Om Prakash)",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Kishani Tola, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252145",
+          whatsapp: "919838001145",
+          hours: "9:00 AM - 7:30 PM",
+          desc: "Common Service Center in Kishani Tola. Micro-ATM cash, Kisan credit cards, Aadhaar corrections, and lamination.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Om+CSC+Center+Kishani+Tola+Khairabad+261131"
+        },
+        {
+          id: "csc-pankaj-be-happy-261131",
+          name: "Be Happy Stationery & CSC Center (Pankaj Kumar)",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Near Post Office, Bazdari Tola, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252146",
+          whatsapp: "919838001146",
+          hours: "8:30 AM - 8:30 PM",
+          desc: "Stationery store and CSC Jan Seva Kendra in Bazdari Tola near Post Office. School stationery, online forms, and color xerox.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Be+Happy+Stationery+CSC+Bazdari+Tola+Khairabad+261131"
+        },
+        {
+          id: "csc-pankaj-kumar-sangat-261131",
+          name: "Pankaj Kumar Digital CSC Kendra",
+          category: "cyber-cafes",
+          locality: "Badi Sangat Road",
+          address: "Badi Sangat Marg, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252147",
+          whatsapp: "919838001147",
+          hours: "9:00 AM - 7:00 PM",
+          desc: "Common Service Center along Badi Sangat Marg. Fast internet, Ayushman cards, railway tickets, and pension verification.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Pankaj+Kumar+CSC+Badi+Sangat+Khairabad+261131"
+        },
+        {
+          id: "csc-roshan-lal-261131",
+          name: "Roshan Lal CSC Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Railway Station Road",
+          address: "Station Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252148",
+          whatsapp: "919838001148",
+          hours: "8:30 AM - 8:00 PM",
+          desc: "Trusted Common Service Center on Station Road. Biometric AEPS cash, electricity bills, UP Police verification, and admissions.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Roshan+Lal+CSC+Station+Road+Khairabad+261131"
+        },
+        {
+          id: "csc-seema-mishra-261131",
+          name: "Seema Mishra Jan Seva & Online Hub (Hera Panna)",
+          category: "cyber-cafes",
+          locality: "Sitapur Road",
+          address: "Hera Panna Complex, Near Sumit Store, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252149",
+          whatsapp: "919838001149",
+          hours: "9:00 AM - 8:00 PM",
+          desc: "Hera Panna Complex on Sitapur Road. Women empowerment schemes, Matru Vandana Yojana, Beti Bachao forms, and job forms.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Seema+Mishra+CSC+Hera+Panna+Khairabad+261131"
+        },
+        {
+          id: "csc-shan-mohd-261131",
+          name: "Shan Mohd CSC Digital Center",
+          category: "cyber-cafes",
+          locality: "Qadam Rasul Area",
+          address: "Nai Basti, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252150",
+          whatsapp: "919838001150",
+          hours: "9:00 AM - 7:30 PM",
+          desc: "Common Service Center in Nai Basti, Khairabad S.O. Ayushman cards, ration card corrections, and utility bill payments.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Shan+Mohd+CSC+Nai+Basti+Khairabad+261131"
+        },
+        {
+          id: "csc-som-pal-261131",
+          name: "Som Pal CSC Jan Seva Kendra",
+          category: "cyber-cafes",
+          locality: "Sitapur Road",
+          address: "Village Mulayampur, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252151",
+          whatsapp: "919838001151",
+          hours: "8:30 AM - 7:00 PM",
+          desc: "Rural Common Service Center at Village Mulayampur (Khairabad S.O PIN 261131). PM Kisan verification, KCC online, and mini-ATM.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Som+Pal+CSC+Mulayampur+Khairabad+261131"
+        },
+        {
+          id: "csc-vinay-kumar-sharma-261131",
+          name: "Vinay Kumar Sharma CSC & Cyber Services",
+          category: "cyber-cafes",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Main Road, Khairabad S.O, Sitapur, UP 261131",
+          phone: "05862-252152",
+          whatsapp: "919838001152",
+          hours: "9:00 AM - 8:00 PM",
+          desc: "Common Service Center on Main Road. Digital Life Certificates (Jeevan Pramaan), exam forms, e-District services, and color prints.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Vinay+Kumar+Sharma+CSC+Khairabad+261131"
+        },
+        {
+          id: "gym-fitness-feed-261131",
+          name: "Fitness Feed Gym",
+          category: "gyms",
+          locality: "Civil Lines / Block Colony",
+          address: "Nai Bazar, to BCM Rd, Khairabad, UP 261131",
+          phone: "08687331304",
+          whatsapp: "918687331304",
+          hours: "Opens 4:00 PM (Morning & Evening)",
+          desc: "5+ years in business. Rated 4.7★ (7 reviews). Complete bodybuilding weights, cardio, dumbbells, and customized diet coaching.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Fitness+Feed+Gym+BCM+Road+Khairabad+261131"
+        },
+        {
+          id: "gym-fauji-physical-academy-261131",
+          name: "FAUJI PHYSICAL ACADEMY Khairabad",
+          category: "gyms",
+          locality: "Sitapur Road",
+          address: "JLMDJ COLLEGE GROUND, Khairabad, UP 261131",
+          phone: "09451368884",
+          whatsapp: "919451368884",
+          hours: "Open · Closes 5:00 PM",
+          desc: "Specialized defense physical academy at JLMDJ College Ground. Indian Army & Police test training, running track, basketball court, parking.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Fauji+Physical+Academy+JLMDJ+College+Khairabad+261131"
+        },
+        {
+          id: "gym-alpha-fitness-centre-261131",
+          name: "Alpha Gym & Fitness Centre",
+          category: "gyms",
+          locality: "Mahmoodabad Road",
+          address: "GPMX+342, Khairabad - Biswan Bypass Rd, Khairabad, UP 261131",
+          phone: "05862-252153",
+          whatsapp: "919838001153",
+          hours: "Morning & Evening Slots",
+          desc: "Rated 5.0★ (1 review). Modern strength conditioning, multi-station gym machines, cable crossover, free weights, and cardio equipment.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Alpha+Gym+Fitness+Centre+Biswan+Bypass+Khairabad+261131"
+        },
+        {
+          id: "gym-ultimate-fitness-261131",
+          name: "Ultimate Fitness Gym",
+          category: "gyms",
+          locality: "Main Bazaar / Sabzi Mandi",
+          address: "Purani Bazar, Post Office Rd, Khairabad, UP 261131",
+          phone: "05862-252154",
+          whatsapp: "919838001154",
+          hours: "5:30 AM - 9:30 AM, 4:00 PM - 9:00 PM",
+          desc: "Rated 5.0★ (3 reviews). Popular local fitness gym with Olympic barbells, weight stacks, incline benches, and body transformation support.",
+          verified: true,
+          mapsUrl: "https://www.google.com/maps/search/?api=1&query=Ultimate+Fitness+Gym+Purani+Bazar+Khairabad+261131"
+        }
+      ]
+    };
+
+    var currentCategory = 'all';
+    var currentLocality = 'all';
+    var verifiedOnly = false;
+
+    function renderCategories() {
+      var container = document.getElementById('categoryGridContainer');
+      if (!container) return;
+      var html = '';
+      for (var i = 0; i < KHAIRABAD_DATA.categories.length; i++) {
+        var c = KHAIRABAD_DATA.categories[i];
+        html += '<button onclick="filterByCategory(\'' + c.id + '\')" class="p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-amber-400 hover:shadow-sm transition-all group">' +
+          '<div class="text-xs font-bold text-slate-900 group-hover:text-amber-800 leading-snug">' + c.label + '</div>' +
+          '<div class="text-[10px] text-slate-500 mt-1">' + c.count + '</div>' +
+        '</button>';
+      }
+      container.innerHTML = html;
+    }
+
+    function renderEmergencies() {
+      var container = document.getElementById('emergencyGridContainer');
+      if (!container) return;
+      var html = '';
+      for (var i = 0; i < KHAIRABAD_DATA.emergencies.length; i++) {
+        var e = KHAIRABAD_DATA.emergencies[i];
+        html += '<div class="bg-white p-3 rounded-xl border border-slate-200 text-center">' +
+          '<div class="text-xs font-semibold text-slate-800">' + e.title + '</div>' +
+          '<a href="tel:' + e.num.replace(/[^0-9]/g, '') + '" class="text-base font-extrabold text-amber-600 block my-1 hover:text-amber-500">' + e.num + '</a>' +
+          '<span class="text-[10px] text-slate-500 block">' + e.tag + '</span>' +
+        '</div>';
+      }
+      container.innerHTML = html;
+    }
+
+    function renderListings() {
+      var container = document.getElementById('listingsContainer');
+      var noResults = document.getElementById('noResultsBox');
+      var countText = document.getElementById('resultCountText');
+      var query = (document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase().trim() : '');
+
+      var filtered = KHAIRABAD_DATA.listings.filter(function(item) {
+        if (currentCategory !== 'all' && item.category !== currentCategory) return false;
+        if (currentLocality !== 'all' && item.locality !== currentLocality) return false;
+        if (verifiedOnly && !item.verified) return false;
+        if (query) {
+          var matchName = item.name.toLowerCase().indexOf(query) !== -1;
+          var matchDesc = item.desc.toLowerCase().indexOf(query) !== -1;
+          var matchLoc = item.locality.toLowerCase().indexOf(query) !== -1;
+          var matchCat = item.category.toLowerCase().indexOf(query) !== -1;
+          if (!matchName && !matchDesc && !matchLoc && !matchCat) return false;
+        }
+        return true;
+      });
+
+      countText.innerText = 'Showing ' + filtered.length + ' listing' + (filtered.length === 1 ? '' : 's') + (currentCategory !== 'all' ? ' in ' + currentCategory : '');
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      noResults.classList.add('hidden');
+      var html = '';
+      for (var i = 0; i < filtered.length; i++) {
+        var item = filtered[i];
+        var badge = item.verified
+          ? '<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Official / Verified</span>'
+          : '<span class="text-[11px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Community / Demo</span>';
+
+        var callBtn = item.phone
+          ? '<a href="tel:' + item.phone + '" class="px-3 py-1.5 bg-amber-400 text-slate-950 rounded-lg text-xs font-bold hover:bg-amber-300 border border-amber-500 shadow-xs">Call</a>'
+          : '';
+
+        var waBtn = item.whatsapp
+          ? '<a href="https://wa.me/' + item.whatsapp + '" target="_blank" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700">WhatsApp</a>'
+          : '';
+
+        html += '<article class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">' +
+          '<div>' +
+            '<div class="flex items-start justify-between gap-2 mb-1.5">' +
+              '<h3 class="text-base font-bold text-slate-900 leading-snug">' + item.name + '</h3>' +
+              '<div class="shrink-0">' + badge + '</div>' +
+            '</div>' +
+            '<div class="flex items-center gap-1.5 text-xs text-slate-500 mb-2">' +
+              '<span>' + item.locality + '</span>' +
+              '<span aria-hidden="true">·</span>' +
+              '<span>' + item.hours + '</span>' +
+            '</div>' +
+            '<p class="text-xs text-slate-600 line-clamp-2 mb-3">' + item.desc + '</p>' +
+            '<div class="text-[11px] text-slate-500 mb-4 truncate">' + item.address + '</div>' +
+          '</div>' +
+          '<div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">' +
+            '<div class="flex items-center gap-1.5">' + callBtn + waBtn + '</div>' +
+            '<div class="flex items-center gap-2">' +
+              '<button onclick="openDetailModal(\'' + item.id + '\')" class="text-xs font-semibold text-slate-700 hover:text-amber-800 px-2 py-1 rounded bg-slate-50 border border-slate-200">View Map &amp; Info</button>' +
+              '<a href="' + item.mapsUrl + '" target="_blank" rel="noopener" class="text-xs font-semibold text-amber-800 hover:underline">Maps &#8594;</a>' +
+            '</div>' +
+          '</div>' +
+        '</article>';
+      }
+      container.innerHTML = html;
+    }
+
+    function filterByCategory(cat) {
+      currentCategory = cat;
+      renderListings();
+      var el = document.getElementById('directory');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleLocalityChange(loc) {
+      currentLocality = loc;
+      renderListings();
+    }
+
+    function handleFilterUpdate() {
+      verifiedOnly = document.getElementById('verifiedOnlyFilter').checked;
+      renderListings();
+    }
+
+    function resetFilters() {
+      currentCategory = 'all';
+      currentLocality = 'all';
+      verifiedOnly = false;
+      var rad = document.querySelector('input[name="locality"][value="all"]');
+      if (rad) rad.checked = true;
+      var verBox = document.getElementById('verifiedOnlyFilter');
+      if (verBox) verBox.checked = false;
+      var sInp = document.getElementById('searchInput');
+      if (sInp) sInp.value = '';
+      renderListings();
+    }
+
+    function handleSearch() {
+      renderListings();
+    }
+
+    var LOCALITY_COORDS = {
+      'Sitapur Road': { x: 170, y: 100 },
+      'Chungi Naka': { x: 190, y: 140 },
+      'Main Bazaar / Sabzi Mandi': { x: 310, y: 180 },
+      'Sarafa Market': { x: 330, y: 165 },
+      'Railway Station Road': { x: 230, y: 220 },
+      'Civil Lines / Block Colony': { x: 260, y: 130 },
+      'Badi Sangat Road': { x: 440, y: 170 },
+      'Qadam Rasul Area': { x: 380, y: 245 },
+      'Mahmoodabad Road': { x: 460, y: 230 }
+    };
+
+    function openDetailModal(id) {
+      var item = KHAIRABAD_DATA.listings.find(function(l) { return l.id === id; });
+      if (!item) return;
+
+      document.getElementById('modalDetailName').innerText = item.name;
+      document.getElementById('modalDetailMeta').innerText = (item.subcategory || item.category) + ' · ' + item.locality;
+      document.getElementById('modalDetailDesc').innerText = item.desc || '';
+      document.getElementById('modalDetailAddress').innerText = item.address || '';
+      document.getElementById('modalDetailHours').innerText = item.hours ? ('Timings: ' + item.hours) : '';
+      document.getElementById('modalDetailZone').innerText = 'Zone: ' + item.locality;
+      document.getElementById('modalDetailMapsLink').href = item.mapsUrl;
+
+      var coords = LOCALITY_COORDS[item.locality] || { x: 310, y: 180 };
+      var pinGroup = document.getElementById('svgMapPinGroup');
+      if (pinGroup) {
+        pinGroup.setAttribute('transform', 'translate(' + coords.x + ', ' + coords.y + ')');
+      }
+
+      var modal = document.getElementById('detailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeDetailModal() {
+      var modal = document.getElementById('detailModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function openAddModal() {
+      var modal = document.getElementById('addModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeAddModal() {
+      var modal = document.getElementById('addModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      var name = document.getElementById('formBizName').value;
+      var cat = document.getElementById('formCategory').value;
+      var loc = document.getElementById('formLocality').value;
+      var addr = document.getElementById('formAddress').value;
+      var phone = document.getElementById('formPhone').value;
+      var wa = document.getElementById('formWhatsapp').value;
+      var hours = document.getElementById('formHours').value || '10:00 AM - 8:00 PM';
+      var desc = document.getElementById('formDesc').value || 'New business in Khairabad town.';
+
+      KHAIRABAD_DATA.listings.unshift({
+        id: 'kh-custom-' + Date.now(),
+        name: name,
+        category: cat,
+        locality: loc,
+        address: addr,
+        phone: phone,
+        whatsapp: wa,
+        hours: hours,
+        desc: desc,
+        verified: false,
+        mapsUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' ' + addr)
+      });
+
+      closeAddModal();
+      document.getElementById('addBusinessForm').reset();
+      renderListings();
+      renderRecentlyAdded();
+      alert('Listing submitted successfully! It is now visible in the live preview. For persistent submission on Blogger, connect a Google Form as detailed in the setup instructions.');
+    }
+
+    function renderRecentlyAdded() {
+      var container = document.getElementById('recentlyAddedContainer');
+      if (!container) return;
+
+      // Extract newest items (gyms, recent CSCs, custom added)
+      var recent = KHAIRABAD_DATA.listings.slice(0, 8);
+      var html = '';
+      for (var i = 0; i < recent.length; i++) {
+        var item = recent[i];
+        html += '<div class="w-64 sm:w-72 shrink-0 bg-white rounded-2xl border border-slate-200 p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all">' +
+          '<div>' +
+            '<div class="flex items-center justify-between mb-2">' +
+              '<span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">New</span>' +
+              '<span class="text-[10px] font-medium text-slate-500 uppercase tracking-wide">' + item.category + '</span>' +
+            '</div>' +
+            '<h4 class="text-sm font-bold text-slate-900 line-clamp-1 hover:text-amber-800 cursor-pointer" onclick="openDetailModal(' + i + ')">' + item.name + '</h4>' +
+            '<p class="text-xs text-slate-500 line-clamp-2 mt-1">' + item.desc + '</p>' +
+          '</div>' +
+          '<div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between gap-2">' +
+            '<div class="text-[11px] text-slate-500 truncate">📍 ' + item.locality + '</div>' +
+            (item.phone ? '<a href="tel:' + item.phone.replace(/[^0-9]/g, '') + '" class="px-2 py-1 bg-amber-50 text-slate-950 border border-amber-300 rounded text-xs font-bold hover:bg-amber-100 shrink-0">Call</a>' : '') +
+          '</div>' +
+        '</div>';
+      }
+      container.innerHTML = html;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCategories();
+      renderEmergencies();
+      renderListings();
+      renderRecentlyAdded();
+    });
+  //]]>
+  </script>
+</body>
+</html>
