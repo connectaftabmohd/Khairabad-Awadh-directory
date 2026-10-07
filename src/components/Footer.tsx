@@ -5,7 +5,7 @@ import { KhairabadLogo } from './KhairabadLogo';
 interface FooterProps {
   onSelectCategory: (cat: CategoryId) => void;
   onOpenAddModal: () => void;
-  onOpenBloggerModal: () => void;
+  onOpenBloggerModal?: () => void;
   onOpenEmergency: () => void;
   setActiveView: (view: string) => void;
 }
@@ -22,14 +22,14 @@ export const Footer: React.FC<FooterProps> = ({
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
         {/* Brand Column */}
         <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <KhairabadLogo size="sm" />
-            <div className="border-l border-slate-700 pl-2.5">
+          <div className="flex items-center gap-3.5">
+            <KhairabadLogo className="!w-40 !h-[90px]" />
+            <div className="border-l border-slate-700 pl-3">
               <span className="text-white font-bold font-display text-sm block">
-                Town Directory
+                Khairabad Directory
               </span>
               <span className="text-[10px] text-slate-400 block">
-                Khairabad · 261131
+                Sitapur · PIN 261131
               </span>
             </div>
           </div>
@@ -129,18 +129,18 @@ export const Footer: React.FC<FooterProps> = ({
             </li>
             <li>
               <button
-                onClick={onOpenEmergency}
-                className="hover:text-white transition-colors text-amber-400"
+                onClick={() => setActiveView('weather')}
+                className="hover:text-white transition-colors text-sky-400 font-medium"
               >
-                24/7 Emergency Helplines
+                Live Weather &amp; 7-Day Forecast
               </button>
             </li>
             <li>
               <button
-                onClick={onOpenBloggerModal}
-                className="hover:text-white transition-colors flex items-center gap-1 text-amber-400"
+                onClick={onOpenEmergency}
+                className="hover:text-white transition-colors text-amber-400"
               >
-                <span>Blogger Theme XML &amp; Code</span>
+                24/7 Emergency Helplines
               </button>
             </li>
             <li>

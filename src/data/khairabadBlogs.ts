@@ -21,6 +21,47 @@ export interface KhairabadBlog {
 
 export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
   {
+    id: 'blog-notable-people',
+    title: 'Notable People of Khairabad: The Revolutionary & Literary Dynasty of Fazl-e-Haq Khairabadi, Muztar Khairabadi & Jan Nisar Akhtar',
+    slug: 'notable-people-of-khairabad-fazl-e-haq-muztar-jan-nisar-akhtar',
+    category: 'History & Figures',
+    excerpt: 'Explore the extraordinary intellectual lineage born in Khairabad: 1857 freedom fighter Allama Fazl-e-Haq Khairabadi, classical Urdu poet Muztar Khairabadi, and legendary film lyricist Jan Nisar Akhtar (father of Javed Akhtar).',
+    content: [
+      'Khairabad holds a revered place in Indian history not merely as an ancient Awadhi town, but as the cradle of an astonishing intellectual and literary dynasty whose influence shaped 19th and 20th-century India. Three generations of the same illustrious Khairabadi family—Allama Fazl-e-Haq Khairabadi, his grandson Muztar Khairabadi, and great-grandson Jan Nisar Akhtar—left an indelible mark on Indian philosophy, anti-colonial revolution, classical Urdu poetry, and modern Hindi cinema.',
+      '1. Allama Fazl-e-Haq Khairabadi (1796–1861): Titan of Philosophy & 1857 Freedom Struggle — Born in Khairabad in 1796 into an eminent family of jurists, Allama Fazl-e-Haq was a polymath regarded as one of the greatest masters of Islamic logic (mantiq), philosophy, and Arabic literature of his era. A close intellectual companion and literary critic of Mirza Ghalib (who frequently sought his counsel on the Diwan-e-Ghalib), Fazl-e-Haq served as Chief Judge (Sadr-us-Sudoor) in Delhi. When the First War of Indian Independence erupted in May 1857, he authored and issued the historic declaration of rebellion uniting Indian citizens against British East India Company colonial rule. Following the siege of Delhi, he was arrested and sentenced to life imprisonment in the Andaman Islands (Kalapani). Even in brutal incarceration at Cellular Jail, he recorded the truth of the uprising in his renowned historical work "Al-Thawrat al-Hindiyya" (The Indian Revolution), written with soot on scraps of torn fabric, before attaining martyrdom in exile on August 19, 1861.',
+      '2. Muztar Khairabadi (1865–1927): Master of Classical Urdu Ghazal — The family’s poetic mantle was elevated by Allama’s grandson, Muztar Khairabadi (born Iftikhar Hussain in Khairabad in 1865). Conferred prestigious titles including E\'tibar-ul-Mulk and Iftekhar-ush-Shu\'ara by royal courts, Muztar is celebrated as one of the finest Urdu ghazal masters of the late 19th and early 20th centuries. His work, gathered in collections such as "Nazr-e-Khairabad" and "Bahar-e-Hind", is revered for its emotional depth and linguistic mastery. Muztar is also historically proven as the author of the immortal, melancholic ghazal "Na Kisi Ki Aankh Ka Noor Hoon, Na Kisi Ke Dil Ka Qaraar Hoon", cementing Khairabad’s stature on India’s poetic map.',
+      '3. Jan Nisar Akhtar (1914–1976): Progressive Poet, Sahitya Akademi Laureate & Bollywood Legend — Son of Muztar Khairabadi, Jan Nisar Akhtar carried this creative heritage to the national stage. A prominent leader of the Progressive Writers\' Association (PWA), he brought humanist and egalitarian ideals to Urdu verse. In Hindi cinema (Bollywood), he penned some of the most memorable lyrics of all time, including songs for iconic films like "Prem Parbat" (Yeh Dil Aur Unki Nigahon Ke Saaye), "C.I.D." (Aankhon Hi Aankhon Mein), "Bahu Begum", and "Noorie". In 1976, his magnum opus poetry collection "Khak-e-Dil" won the prestigious Sahitya Akademi Award. This artistic flame burns brightly to this day through his son, the celebrated lyricist and screenwriter Javed Akhtar (Padma Bhushan), and grandchildren Farhan Akhtar and Zoya Akhtar.',
+      'An Enduring Legacy in Central Awadh — Today, the memory of Fazl-e-Haq, Muztar Khairabadi, and Jan Nisar Akhtar is cherished with profound pride across Sitapur district and Uttar Pradesh. Their lives represent an unbroken two-century tradition spanning patriotic resistance, literary refinement, and popular musical culture. Heritage enthusiasts and scholars routinely visit Khairabad to trace the ancestral quarters and memorials dedicated to these towering giants of Indian civilization.'
+    ],
+    keyHighlights: [
+      'Fazl-e-Haq Khairabadi (1796–1861): Indian scholar, master logician, close mentor to Mirza Ghalib, 1857 freedom struggle leader, and author of "Al-Thawrat al-Hindiyya" in Andaman Kalapani',
+      'Muztar Khairabadi (1865–1927): Legendary classical Urdu poet, grandson of Fazl-e-Haq Khairabadi, author of "Nazr-e-Khairabad" and composer of the immortal ghazal "Na Kisi Ki Aankh Ka Noor Hoon"',
+      'Jan Nisar Akhtar (1914–1976): Progressive Urdu poet, Sahitya Akademi Award winner for "Khak-e-Dil", iconic Hindi film lyricist, son of Muztar Khairabadi and father of Javed Akhtar',
+      'An uninterrupted multi-generational dynasty originating from Khairabad that helped shape Indian freedom, Urdu literature, and Bollywood cinematic songwriting'
+    ],
+    visitorInfo: {
+      location: 'Ancestral Scholarly Mohallas & Memorial Markers, Khairabad Town, UP 261131',
+      timings: 'Historic markers and public sites open daily',
+      bestTimeToVisit: 'October to March (Recommended for historical walks and literary tours)',
+      entryFee: 'Free public site'
+    },
+    readTime: '6 min read',
+    publishDate: 'October 2026',
+    author: 'Khairabad Heritage & Historical Research Desk',
+    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    tags: [
+      'Notable People',
+      'Fazl-e-Haq Khairabadi',
+      'Muztar Khairabadi',
+      'Jan Nisar Akhtar',
+      'Javed Akhtar',
+      '1857 Freedom Fighter',
+      'Urdu Poetry',
+      'Bollywood Lyricist',
+      'Khairabad History'
+    ]
+  },
+  {
     id: 'blog-01',
     title: 'Historic Badi Sangat Mandir: The 17th-Century Spiritual Sanctuary of Baba Sahajram',
     slug: 'historic-badi-sangat-mandir-khairabad',

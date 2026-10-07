@@ -1,13 +1,15 @@
 import React from 'react';
-import { Plus, Code2, AlertTriangle } from 'lucide-react';
+import { Plus, AlertTriangle, Heart } from 'lucide-react';
 import { KhairabadLogo } from './KhairabadLogo';
 
 interface HeaderProps {
   onOpenAddModal: () => void;
-  onOpenBloggerModal: () => void;
+  onOpenBloggerModal?: () => void;
   onOpenEmergency: () => void;
   activeView: string;
   setActiveView: (view: string) => void;
+  favoritesCount?: number;
+  onOpenFavorites?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +18,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenEmergency,
   activeView,
   setActiveView,
+  favoritesCount = 0,
+  onOpenFavorites,
 }) => {
   return (
     <>
@@ -57,9 +61,9 @@ export const Header: React.FC<HeaderProps> = ({
             title="ख़ैराबाद (अवध) / KHAIRABAD (AVADH) / خیر آباد (اودھ)"
           >
             <KhairabadLogo size="md" />
-            <div className="hidden xl:block border-l-2 border-slate-200 pl-3">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 block leading-tight">
-                Town Directory
+            <div className="hidden sm:block border-l-2 border-amber-400 pl-3">
+              <span className="text-[23px] leading-tight font-black tracking-tight font-display bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 bg-clip-text text-transparent block drop-shadow-2xs">
+                Khairabad Directory
               </span>
               <span className="text-[10px] text-slate-500 font-medium block leading-tight">
                 Sitapur · PIN 261131
@@ -79,7 +83,13 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setActiveView('blog')}
               className={`hover:text-amber-700 transition-colors ${activeView === 'blog' ? 'text-slate-950 font-bold border-b-2 border-amber-500 pb-0.5' : ''}`}
             >
-              Place Blogs
+              Blog and News
+            </button>
+            <button
+              onClick={() => setActiveView('weather')}
+              className={`hover:text-amber-700 transition-colors ${activeView === 'weather' ? 'text-slate-950 font-bold border-b-2 border-amber-500 pb-0.5' : ''}`}
+            >
+              Weather
             </button>
             <button
               onClick={() => setActiveView('about')}
@@ -87,25 +97,26 @@ export const Header: React.FC<HeaderProps> = ({
             >
               About Khairabad
             </button>
-            <button
-              onClick={onOpenBloggerModal}
-              className="flex items-center gap-1.5 text-slate-800 hover:text-slate-950 bg-amber-50 hover:bg-amber-100/80 border border-amber-300 px-2.5 py-1 rounded-lg font-semibold text-xs transition-colors"
-            >
-              <Code2 className="w-3.5 h-3.5 text-amber-600" />
-              <span>Blogger Export Kit</span>
-            </button>
           </nav>
 
           {/* Zone 3: Primary Actions */}
           <div className="flex items-center gap-2">
-            <button
-              onClick={onOpenBloggerModal}
-              className="md:hidden p-2 text-slate-900 bg-amber-50 hover:bg-amber-100 rounded-lg text-xs font-semibold flex items-center gap-1 border border-amber-300"
-              title="Blogger XML Theme & Code"
-            >
-              <Code2 className="w-4 h-4 text-amber-600" />
-              <span className="hidden xs:inline">Blogger Kit</span>
-            </button>
+            {onOpenFavorites && (
+              <button
+                onClick={onOpenFavorites}
+                className="relative flex items-center gap-1.5 text-slate-700 hover:text-rose-600 bg-white hover:bg-rose-50 border border-slate-300 hover:border-rose-300 px-3 py-2 rounded-lg font-bold text-xs transition-colors shadow-2xs"
+                title="View Saved Favorites"
+              >
+                <Heart className={`w-3.5 h-3.5 ${favoritesCount > 0 ? 'fill-rose-500 text-rose-500' : 'text-slate-500'}`} />
+                <span className="hidden sm:inline">Saved</span>
+                {favoritesCount > 0 && (
+                  <span className="bg-rose-600 text-white text-[10px] font-black px-1.5 rounded-full min-w-[17px] text-center leading-tight flex items-center justify-center h-4">
+                    {favoritesCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             <button
               onClick={onOpenAddModal}
               className="px-3.5 py-2 text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 border border-amber-500 rounded-lg transition-colors flex items-center gap-1.5 shadow-xs whitespace-nowrap"

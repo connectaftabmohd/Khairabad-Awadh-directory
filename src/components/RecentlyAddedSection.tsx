@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, MapPin, Phone, ChevronLeft, ChevronRight, Plus, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Sparkles, MapPin, Phone, ChevronLeft, ChevronRight, Plus, CheckCircle2, ArrowRight, Heart } from 'lucide-react';
 import { CityListing } from '../types/directory';
 
 interface RecentlyAddedSectionProps {
@@ -7,6 +7,9 @@ interface RecentlyAddedSectionProps {
   onSelectListing: (listing: CityListing) => void;
   onOpenAddModal: () => void;
   onOpenListingDetail: (listing: CityListing) => void;
+  getListingRating?: (id: string) => { averageRating: number; totalReviews: number };
+  isFavorite?: (id: string) => boolean;
+  onToggleFavorite?: (id: string) => void;
 }
 
 export const RecentlyAddedSection: React.FC<RecentlyAddedSectionProps> = ({
@@ -14,6 +17,9 @@ export const RecentlyAddedSection: React.FC<RecentlyAddedSectionProps> = ({
   onSelectListing,
   onOpenAddModal,
   onOpenListingDetail,
+  getListingRating,
+  isFavorite,
+  onToggleFavorite,
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState<string>('all');
@@ -193,12 +199,44 @@ export const RecentlyAddedSection: React.FC<RecentlyAddedSectionProps> = ({
                   )}
                 </div>
 
-                {/* Rating pill if available */}
-                {item.rating && (
-                  <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-md bg-slate-900/85 backdrop-blur-xs text-amber-400 text-xs font-bold shadow-xs">
-                    ★ {item.rating} {item.reviews ? `(${item.reviews})` : ''}
-                  </div>
+                {/* Save Heart Button */}
+                {onToggleFavorite && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleFavorite(item.id);
+                    }}
+                    className={`absolute top-2.5 right-2.5 p-1.5 rounded-lg backdrop-blur-xs transition-colors shadow-xs z-10 ${
+                      isFavorite && isFavorite(item.id)
+                        ? 'bg-rose-600/90 text-white'
+                        : 'bg-black/40 hover:bg-black/60 text-white'
+                    }`}
+                    title={isFavorite && isFavorite(item.id) ? 'Remove from Saved' : 'Save to Favorites'}
+                  >
+                    <Heart className={`w-3.5 h-3.5 ${isFavorite && isFavorite(item.id) ? 'fill-white text-white' : ''}`} />
+                  </button>
                 )}
+
+                {/* Rating badge if available */}
+                {(() => {
+                  const summary = getListingRating ? getListingRating(item.id) : null;
+                  const score =
+                    summary && summary.totalReviews > 0
+                      ? summary.averageRating
+                      : item.rating
+                      ? parseFloat(item.rating)
+                      : null;
+                  const count =
+                    summary && summary.totalReviews > 0 ? summary.totalReviews : item.reviews;
+
+                  if (!score) return null;
+                  return (
+                    <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-md bg-slate-900/85 backdrop-blur-xs text-amber-400 text-xs font-bold shadow-xs">
+                      ★ {score.toFixed(1)} {count ? `(${count})` : ''}
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Card Body */}

@@ -17,6 +17,7 @@ import {
   ChevronRight,
   MessageSquarePlus,
   Star,
+  Heart,
 } from 'lucide-react';
 import { CityListing, Review, ReviewFormData } from '../types/directory';
 import { KhairabadMapPreview } from './KhairabadMapPreview';
@@ -35,6 +36,8 @@ interface ListingDetailPageProps {
   reviews: Review[];
   onSubmitReview: (formData: ReviewFormData) => void;
   onVoteHelpful: (reviewId: string) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
 }
 
 export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
@@ -47,6 +50,8 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   reviews,
   onSubmitReview,
   onVoteHelpful,
+  isFavorite = false,
+  onToggleFavorite,
 }) => {
   const [copied, setCopied] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -94,6 +99,20 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
+          {onToggleFavorite && (
+            <button
+              onClick={() => onToggleFavorite(listing.id)}
+              className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors ${
+                isFavorite
+                  ? 'bg-rose-50 text-rose-700 border-rose-300'
+                  : 'bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 border-slate-200'
+              }`}
+              title={isFavorite ? 'Remove from Saved' : 'Save to Favorites'}
+            >
+              <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
+              <span>{isFavorite ? 'Saved' : 'Save'}</span>
+            </button>
+          )}
           <button
             onClick={handleShare}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-2xs transition-colors"
@@ -167,6 +186,25 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               {listing.name}
             </h1>
 
+            {/* Live Rating & Review Count Anchor */}
+            <div className="flex items-center gap-3 pt-1">
+              <button
+                type="button"
+                onClick={scrollToReviews}
+                className="inline-flex items-center gap-2 bg-black/40 hover:bg-black/60 px-3 py-1 rounded-lg backdrop-blur-xs transition-colors cursor-pointer"
+              >
+                <StarRatingDisplay
+                  rating={ratingSummary.averageRating > 0 ? ratingSummary.averageRating : 5.0}
+                  size="sm"
+                  showNumber
+                  totalReviews={ratingSummary.totalReviews}
+                />
+                <span className="text-xs text-amber-300 font-semibold underline underline-offset-2">
+                  View {ratingSummary.totalReviews} {ratingSummary.totalReviews === 1 ? 'Review' : 'Reviews'} &darr;
+                </span>
+              </button>
+            </div>
+
             <p className="text-xs sm:text-sm text-slate-200 max-w-3xl line-clamp-2">
               {listing.description}
             </p>
@@ -198,6 +236,29 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                 <MessageCircle className="w-4 h-4" />
                 <span>Chat on WhatsApp</span>
               </a>
+            )}
+
+            <button
+              onClick={() => setIsReviewModalOpen(true)}
+              className="px-4 py-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-slate-300 hover:border-amber-400 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-2xs transition-colors"
+            >
+              <MessageSquarePlus className="w-4 h-4 text-amber-600" />
+              <span>Write a Review</span>
+            </button>
+
+            {onToggleFavorite && (
+              <button
+                onClick={() => onToggleFavorite(listing.id)}
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 border shadow-2xs transition-colors ${
+                  isFavorite
+                    ? 'bg-rose-50 text-rose-700 border-rose-300'
+                    : 'bg-white hover:bg-rose-50 text-slate-800 hover:text-rose-600 border-slate-300'
+                }`}
+                title={isFavorite ? 'Remove from Saved' : 'Save to Favorites'}
+              >
+                <Heart className={`w-4 h-4 ${isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
+                <span>{isFavorite ? 'Saved in Favorites' : 'Save to Favorites'}</span>
+              </button>
             )}
 
             <a
@@ -298,6 +359,14 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               <KhairabadMapPreview listing={listing} />
             </div>
 
+            {/* Customer Ratings & Reviews Section */}
+            <ReviewListSection
+              listing={listing}
+              reviews={reviews}
+              onOpenWriteReview={() => setIsReviewModalOpen(true)}
+              onVoteHelpful={onVoteHelpful}
+            />
+
             {/* Owner Actions */}
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
               <button
@@ -340,6 +409,15 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                 <div className="flex justify-between border-b border-slate-200/80 pb-2">
                   <span>Postal Code</span>
                   <span className="font-semibold text-slate-800">261131 (Sitapur)</span>
+                </div>
+
+                <div className="flex justify-between border-b border-slate-200/80 pb-2">
+                  <span>Rating &amp; Reviews</span>
+                  <span className="font-semibold text-slate-800 flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500 inline" />
+                    <span>{ratingSummary.averageRating > 0 ? ratingSummary.averageRating.toFixed(1) : '5.0'}</span>
+                    <span className="text-slate-400 font-normal">({ratingSummary.totalReviews})</span>
+                  </span>
                 </div>
 
                 <div className="flex justify-between border-b border-slate-200/80 pb-2">
@@ -415,6 +493,14 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Write a Review Modal */}
+      <ReviewFormModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        listing={listing}
+        onSubmitReview={onSubmitReview}
+      />
     </div>
   );
 };

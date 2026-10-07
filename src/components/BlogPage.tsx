@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   BookOpen,
   Search,
@@ -12,6 +12,10 @@ import {
   Tag,
   Building,
   Sparkles,
+  Award,
+  Feather,
+  Flame,
+  UserCheck,
 } from 'lucide-react';
 import { KHAIRABAD_BLOGS, KhairabadBlog } from '../data/khairabadBlogs';
 
@@ -20,6 +24,18 @@ export const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeArticle, setActiveArticle] = useState<KhairabadBlog | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // SEO: Dynamic document title sync
+  useEffect(() => {
+    if (activeArticle) {
+      document.title = `${activeArticle.title} | Khairabad Directory`;
+    } else {
+      document.title = 'Khairabad Heritage Guides & Notable People – City Directory';
+    }
+    return () => {
+      document.title = 'Khairabad Directory & Heritage – Notable People & City Guide';
+    };
+  }, [activeArticle]);
 
   const categories = [
     'All',
@@ -65,7 +81,7 @@ export const BlogPage: React.FC = () => {
               className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-amber-800 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to All 20 Khairabad Blogs</span>
+              <span>Back to All Khairabad Heritage Guides</span>
             </button>
 
             <button
@@ -155,6 +171,99 @@ export const BlogPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Dedicated Notable People Lineage Visual Card if this article */}
+          {activeArticle.id === 'blog-notable-people' && (
+            <div className="p-6 bg-gradient-to-br from-amber-50 via-white to-amber-50/50 border-2 border-amber-300 rounded-3xl space-y-6 shadow-xs">
+              <div className="flex items-center gap-2.5 border-b border-amber-200 pb-3">
+                <Award className="w-6 h-6 text-amber-700 shrink-0" />
+                <div>
+                  <h3 className="font-extrabold text-base sm:text-lg font-display text-slate-900 leading-tight">
+                    The Khairabad Lineage: 3 Generations of Historical Titans
+                  </h3>
+                  <p className="text-xs text-amber-900 mt-0.5">
+                    An unbroken family dynasty originating from Khairabad that influenced Indian philosophy, anti-colonial revolution, classical Urdu literature, and Bollywood cinema.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Generation 1: Fazl-e-Haq */}
+                <div className="bg-white p-4 rounded-2xl border border-amber-200 shadow-2xs space-y-2.5 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md">
+                        1st Gen · 1796–1861
+                      </span>
+                      <Flame className="w-4 h-4 text-red-600" />
+                    </div>
+                    <h4 className="font-bold text-slate-900 text-sm font-display leading-tight">
+                      Allama Fazl-e-Haq Khairabadi
+                    </h4>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                      Eminent Islamic scholar, logician (mantiq), Chief Judge of Delhi, close confidant of Mirza Ghalib, leader of the 1857 First War of Independence, and author of <em>Al-Thawrat al-Hindiyya</em> in Andaman Cellular Jail.
+                    </p>
+                  </div>
+                  <div className="text-[10px] text-amber-900 bg-amber-50 p-2 rounded-lg font-medium border border-amber-100">
+                    🏛️ 1857 historic rebellion fatwa &amp; martyrdom in Kalapani
+                  </div>
+                </div>
+
+                {/* Generation 2: Muztar */}
+                <div className="bg-white p-4 rounded-2xl border border-amber-200 shadow-2xs space-y-2.5 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+                        2nd Gen · 1865–1927
+                      </span>
+                      <Feather className="w-4 h-4 text-amber-600" />
+                    </div>
+                    <h4 className="font-bold text-slate-900 text-sm font-display leading-tight">
+                      Muztar Khairabadi
+                    </h4>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                      Grandson of Fazl-e-Haq. Legendary classical Urdu poet honoured with titles <em>E&#39;tibar-ul-Mulk</em> and <em>Iftekhar-ush-Shu&#39;ara</em>. Author of <em>Nazr-e-Khairabad</em> and composer of the immortal ghazal <em>&quot;Na Kisi Ki Aankh Ka Noor Hoon&quot;</em>.
+                    </p>
+                  </div>
+                  <div className="text-[10px] text-amber-900 bg-amber-50 p-2 rounded-lg font-medium border border-amber-100">
+                    ✍️ Master of the Urdu classical ghazal tradition
+                  </div>
+                </div>
+
+                {/* Generation 3: Jan Nisar Akhtar */}
+                <div className="bg-white p-4 rounded-2xl border border-amber-200 shadow-2xs space-y-2.5 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                        3rd Gen · 1914–1976
+                      </span>
+                      <Award className="w-4 h-4 text-emerald-600" />
+                    </div>
+                    <h4 className="font-bold text-slate-900 text-sm font-display leading-tight">
+                      Jan Nisar Akhtar
+                    </h4>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                      Son of Muztar Khairabadi. Forefront Progressive Writers&#39; Association poet, Sahitya Akademi Award winner for <em>Khak-e-Dil</em> (1976), iconic Bollywood lyricist, and father of celebrated writer Javed Akhtar.
+                    </p>
+                  </div>
+                  <div className="text-[10px] text-amber-900 bg-amber-50 p-2 rounded-lg font-medium border border-amber-100">
+                    🏆 Sahitya Akademi Award &amp; Bollywood golden age classics
+                  </div>
+                </div>
+              </div>
+
+              {/* Living lineage banner */}
+              <div className="p-3.5 bg-slate-900 text-slate-300 rounded-2xl flex items-center justify-between text-xs flex-wrap gap-2">
+                <span className="flex items-center gap-1.5 text-white font-semibold">
+                  <UserCheck className="w-4 h-4 text-amber-400" />
+                  <span>The Living Cultural Legacy:</span>
+                </span>
+                <span className="text-slate-300 text-[11px]">
+                  Javed Akhtar (son of Jan Nisar) → Farhan Akhtar &amp; Zoya Akhtar (great-grandchildren of Muztar Khairabadi)
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Article Paragraphs */}
           <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
             {activeArticle.content.map((paragraph, index) => (
@@ -205,15 +314,15 @@ export const BlogPage: React.FC = () => {
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-950 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full">
               <BookOpen className="w-3.5 h-3.5 text-amber-700" />
-              <span>Khairabad City Blog &amp; Place Guides</span>
+              <span>Khairabad City Blog &amp; Heritage Guides</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-slate-900 tracking-tight">
-              20 Verified Khairabad Place Information Blogs
+              Khairabad Heritage, History &amp; Notable People Guides
             </h1>
 
             <p className="text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              Explore in-depth articles on historic monuments, spiritual shrines, administrative landmarks, traditional bazaars, and local lifestyle across Khairabad, Uttar Pradesh.
+              Explore in-depth articles on notable historical figures, 1857 freedom struggle pioneers, Urdu poetry legends, historic monuments, spiritual shrines, and local Awadhi culture across Khairabad, Uttar Pradesh.
             </p>
           </div>
 

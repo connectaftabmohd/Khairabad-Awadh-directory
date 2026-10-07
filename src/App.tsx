@@ -17,6 +17,7 @@ import {
   Utensils,
   Building2,
   Code2,
+  Heart,
 } from 'lucide-react';
 import { INITIAL_LISTINGS, LOCALITIES, EMERGENCY_CONTACTS } from './data/khairabadData';
 import { CategoryId, CityListing } from './types/directory';
@@ -34,6 +35,13 @@ import { BlogPage } from './components/BlogPage';
 import { ListingDetailPage } from './components/ListingDetailPage';
 import { RecentlyAddedSection } from './components/RecentlyAddedSection';
 import { Footer } from './components/Footer';
+import { useReviewSystem } from './hooks/useReviewSystem';
+import { ReviewFormModal } from './components/ReviewFormModal';
+import { useFavorites } from './hooks/useFavorites';
+import { SavedFavoritesSection } from './components/SavedFavoritesSection';
+import { SavedFavoritesDrawer } from './components/SavedFavoritesDrawer';
+import { WeatherWidget } from './components/WeatherWidget';
+import { WeatherPage } from './components/WeatherPage';
 
 export default function App() {
   const [listings, setListings] = useState<CityListing[]>(INITIAL_LISTINGS);
@@ -41,7 +49,36 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [selectedLocality, setSelectedLocality] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
-  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'listing-detail'>('directory');
+  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'listing-detail'>('directory');
+
+  // Favorites state
+  const {
+    favoriteIds,
+    favoritesCount,
+    isFavorite,
+    toggleFavorite,
+    removeFavorite,
+    clearFavorites,
+  } = useFavorites();
+
+  const [isFavoritesDrawerOpen, setIsFavoritesDrawerOpen] = useState(false);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+
+  // Review system state
+  const {
+    reviews,
+    getListingReviews,
+    getListingRating,
+    submitReview,
+    voteHelpful,
+  } = useReviewSystem();
+
+  const [cardReviewModalListing, setCardReviewModalListing] = useState<CityListing | null>(null);
+
+  // Saved listings list
+  const savedListings = useMemo(() => {
+    return listings.filter((item) => favoriteIds.includes(item.id));
+  }, [listings, favoriteIds]);
 
   // Modals state
   const [selectedListing, setSelectedListing] = useState<CityListing | null>(null);
@@ -63,6 +100,11 @@ export default function App() {
   // Filter computation
   const filteredListings = useMemo(() => {
     return listings.filter((item) => {
+      // Favorites filter
+      if (favoritesOnly && !favoriteIds.includes(item.id)) {
+        return false;
+      }
+
       // Category filter
       if (selectedCategory !== 'all' && item.category !== selectedCategory) {
         return false;
@@ -95,7 +137,7 @@ export default function App() {
 
       return true;
     });
-  }, [listings, selectedCategory, selectedLocality, verifiedOnly, searchQuery]);
+  }, [listings, selectedCategory, selectedLocality, verifiedOnly, searchQuery, favoritesOnly, favoriteIds]);
 
   const handleAddListing = (newListing: CityListing) => {
     setListings((prev) => [newListing, ...prev]);
@@ -112,6 +154,7 @@ export default function App() {
     setSelectedCategory('all');
     setSelectedLocality('all');
     setVerifiedOnly(false);
+    setFavoritesOnly(false);
   };
 
   const scrollToDirectory = () => {
@@ -132,8 +175,10 @@ export default function App() {
         activeView={activeView}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'about' | 'blog');
+          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather');
         }}
+        favoritesCount={favoritesCount}
+        onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
       />
 
       <main className="flex-1">
@@ -156,6 +201,11 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             allListings={listings}
+            reviews={getListingReviews(selectedListingDetail.id)}
+            onSubmitReview={(formData) => submitReview(selectedListingDetail.id, formData)}
+            onVoteHelpful={voteHelpful}
+            isFavorite={isFavorite(selectedListingDetail.id)}
+            onToggleFavorite={toggleFavorite}
           />
         ) : activeView === 'directory' ? (
           <>
@@ -169,6 +219,10 @@ export default function App() {
               }}
               onOpenEmergency={() => setIsEmergencyOpen(true)}
               onScrollToDirectory={scrollToDirectory}
+              onOpenWeather={() => {
+                setActiveView('weather');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
 
             {/* Verification / Accuracy Notice Banner */}
@@ -188,14 +242,6 @@ export default function App() {
                     className="font-semibold text-amber-900 underline hover:text-amber-950"
                   >
                     + Suggest a Place
-                  </button>
-                  <span className="text-amber-300">|</span>
-                  <button
-                    onClick={() => setIsBloggerModalOpen(true)}
-                    className="font-bold text-amber-900 underline hover:text-amber-950 flex items-center gap-1"
-                  >
-                    <Code2 className="w-3.5 h-3.5 text-amber-700" />
-                    <span>Get Blogger XML</span>
                   </button>
                 </div>
               </div>
@@ -258,6 +304,18 @@ export default function App() {
               onSelectListing={(item) => setSelectedListing(item)}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onOpenListingDetail={(item) => handleOpenListingDetail(item)}
+              getListingRating={getListingRating}
+              isFavorite={isFavorite}
+              onToggleFavorite={toggleFavorite}
+            />
+
+            {/* Dedicated Saved Favorites Section */}
+            <SavedFavoritesSection
+              savedListings={savedListings}
+              onSelectListing={handleOpenListingDetail}
+              onRemoveFavorite={removeFavorite}
+              onClearAll={clearFavorites}
+              getListingRating={getListingRating}
             />
 
             {/* Main Listings and Filters Section */}
@@ -327,6 +385,28 @@ export default function App() {
                       />
                       <span>Official / Verified Only</span>
                     </label>
+                  </div>
+
+                  {/* Saved Favorites Filter */}
+                  <div className="border-t border-slate-100 pt-4">
+                    <button
+                      onClick={() => setFavoritesOnly(!favoritesOnly)}
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-between border ${
+                        favoritesOnly
+                          ? 'bg-rose-50 border-rose-300 text-rose-700 shadow-2xs'
+                          : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700'
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <Heart className={`w-3.5 h-3.5 ${favoritesOnly ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
+                        <span>My Saved Places</span>
+                      </span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                        favoritesOnly ? 'bg-rose-200 text-rose-800' : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {favoritesCount}
+                      </span>
+                    </button>
                   </div>
 
                   <div className="border-t border-slate-100 pt-4">
@@ -407,6 +487,10 @@ export default function App() {
                           key={listing.id}
                           listing={listing}
                           onSelect={handleOpenListingDetail}
+                          ratingSummary={getListingRating(listing.id)}
+                          onWriteReview={(item) => setCardReviewModalListing(item)}
+                          isFavorite={isFavorite(listing.id)}
+                          onToggleFavorite={toggleFavorite}
                         />
                       ))}
                     </div>
@@ -416,11 +500,19 @@ export default function App() {
             </section>
           </>
         ) : activeView === 'blog' ? (
-          /* 20 Verified Khairabad Place Information Blogs View */
+          /* Verified Khairabad Place & Notable Figures Blogs View */
           <BlogPage />
+        ) : activeView === 'weather' ? (
+          /* Dedicated Live Weather & 7-Day Forecast Page */
+          <WeatherPage
+            onBackToDirectory={() => {
+              setActiveView('directory');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
         ) : (
           /* About Khairabad View */
-          <AboutKhairabad />
+          <AboutKhairabad onViewBlog={() => { setActiveView('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
         )}
       </main>
 
@@ -433,7 +525,7 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         onOpenBloggerModal={() => setIsBloggerModalOpen(true)}
         onOpenEmergency={() => setIsEmergencyOpen(true)}
-        setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog')}
+        setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog' | 'weather')}
       />
 
       {/* Modals */}
@@ -448,7 +540,26 @@ export default function App() {
           setSelectedListing(null);
           setClaimState({ isOpen: true, listing: item, mode: 'report' });
         }}
+        reviews={selectedListing ? getListingReviews(selectedListing.id) : []}
+        onSubmitReview={
+          selectedListing
+            ? (formData) => submitReview(selectedListing.id, formData)
+            : undefined
+        }
+        onVoteHelpful={voteHelpful}
+        isFavorite={selectedListing ? isFavorite(selectedListing.id) : false}
+        onToggleFavorite={toggleFavorite}
       />
+
+      {/* Direct Card Review Modal */}
+      {cardReviewModalListing && (
+        <ReviewFormModal
+          isOpen={Boolean(cardReviewModalListing)}
+          onClose={() => setCardReviewModalListing(null)}
+          listing={cardReviewModalListing}
+          onSubmitReview={(formData) => submitReview(cardReviewModalListing.id, formData)}
+        />
+      )}
 
       <AddBusinessModal
         isOpen={isAddModalOpen}
@@ -472,6 +583,17 @@ export default function App() {
       <EmergencyModal
         isOpen={isEmergencyOpen}
         onClose={() => setIsEmergencyOpen(false)}
+      />
+
+      {/* Saved Favorites Slide Drawer */}
+      <SavedFavoritesDrawer
+        isOpen={isFavoritesDrawerOpen}
+        onClose={() => setIsFavoritesDrawerOpen(false)}
+        savedListings={savedListings}
+        onSelectListing={handleOpenListingDetail}
+        onRemoveFavorite={removeFavorite}
+        onClearAll={clearFavorites}
+        getListingRating={getListingRating}
       />
     </div>
   );

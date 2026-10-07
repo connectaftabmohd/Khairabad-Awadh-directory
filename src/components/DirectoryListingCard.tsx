@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, MessageCircle, MapPin, ExternalLink, Clock, ShieldCheck, AlertCircle, MessageSquare } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, ExternalLink, Clock, ShieldCheck, AlertCircle, MessageSquare, Heart } from 'lucide-react';
 import { CityListing } from '../types/directory';
 import { StarRatingDisplay } from './StarRatingDisplay';
 
@@ -8,6 +8,8 @@ interface DirectoryListingCardProps {
   onSelect: (listing: CityListing) => void;
   ratingSummary?: { averageRating: number; totalReviews: number };
   onWriteReview?: (listing: CityListing) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
 }
 
 export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
@@ -15,6 +17,8 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
   onSelect,
   ratingSummary,
   onWriteReview,
+  isFavorite = false,
+  onToggleFavorite,
 }) => {
   const displayRating =
     ratingSummary && ratingSummary.totalReviews > 0
@@ -79,8 +83,26 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
             </div>
           </div>
 
-          {/* Verification Badge */}
-          <div className="shrink-0">
+          {/* Verification Badge & Favorite Button */}
+          <div className="shrink-0 flex items-center gap-1.5">
+            {onToggleFavorite && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite(listing.id);
+                }}
+                className={`p-1.5 rounded-lg border transition-all ${
+                  isFavorite
+                    ? 'bg-rose-50 text-rose-600 border-rose-300 shadow-2xs'
+                    : 'bg-slate-50 hover:bg-rose-50 text-slate-400 hover:text-rose-500 border-slate-200'
+                }`}
+                title={isFavorite ? 'Remove from Saved' : 'Save to Favorites'}
+                aria-label={isFavorite ? `Remove ${listing.name} from saved favorites` : `Save ${listing.name} to favorites`}
+              >
+                <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-rose-500 text-rose-500' : ''}`} />
+              </button>
+            )}
             {listing.verified ? (
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                 <ShieldCheck className="w-3.5 h-3.5" />

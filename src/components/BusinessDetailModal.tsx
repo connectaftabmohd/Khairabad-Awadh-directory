@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   X,
   Phone,
@@ -12,15 +12,27 @@ import {
   Flag,
   Check,
   Building,
+  MessageSquarePlus,
+  Star,
+  Heart,
 } from 'lucide-react';
-import { CityListing } from '../types/directory';
+import { CityListing, Review, ReviewFormData } from '../types/directory';
 import { KhairabadMapPreview } from './KhairabadMapPreview';
+import { StarRatingDisplay } from './StarRatingDisplay';
+import { ReviewListSection } from './ReviewListSection';
+import { ReviewFormModal } from './ReviewFormModal';
+import { calculateRatingSummary } from '../utils/reviewStorage';
 
 interface BusinessDetailModalProps {
   listing: CityListing | null;
   onClose: () => void;
   onClaim: (listing: CityListing) => void;
   onReportEdit: (listing: CityListing) => void;
+  reviews?: Review[];
+  onSubmitReview?: (formData: ReviewFormData) => void;
+  onVoteHelpful?: (reviewId: string) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
 }
 
 export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
@@ -28,8 +40,16 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   onClose,
   onClaim,
   onReportEdit,
+  reviews = [],
+  onSubmitReview,
+  onVoteHelpful,
+  isFavorite = false,
+  onToggleFavorite,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+  const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
   if (!listing) return null;
 
@@ -90,9 +110,30 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
         {/* Modal Body Content */}
         <div className="p-6 flex-1 space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 font-display mb-2">
+            <h2 className="text-2xl font-bold text-slate-900 font-display mb-1.5">
               {listing.name}
             </h2>
+
+            {/* Live Rating Row */}
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <StarRatingDisplay
+                rating={ratingSummary.averageRating > 0 ? ratingSummary.averageRating : 5.0}
+                size="sm"
+                showNumber
+                totalReviews={ratingSummary.totalReviews}
+              />
+              {onSubmitReview && (
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(true)}
+                  className="text-xs font-bold text-amber-800 hover:text-amber-950 hover:underline flex items-center gap-1 ml-1"
+                >
+                  <MessageSquarePlus className="w-3.5 h-3.5" />
+                  <span>Rate or Review Place</span>
+                </button>
+              )}
+            </div>
+
             <p className="text-sm text-slate-600 leading-relaxed">
               {listing.description}
             </p>
@@ -121,6 +162,16 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                   <span>WhatsApp</span>
                 </a>
               )}
+              {onSubmitReview && (
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(true)}
+                  className="px-3.5 py-2 bg-white hover:bg-amber-50 text-slate-900 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
+                >
+                  <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+                  <span>Write Review</span>
+                </button>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -133,6 +184,20 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                 <span>Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
               </a>
+              {onToggleFavorite && (
+                <button
+                  onClick={() => onToggleFavorite(listing.id)}
+                  className={`p-2 border rounded-xl transition-colors ${
+                    isFavorite
+                      ? 'bg-rose-50 text-rose-600 border-rose-300'
+                      : 'border-slate-300 text-slate-600 hover:text-rose-600 hover:bg-rose-50'
+                  }`}
+                  title={isFavorite ? 'Remove from Saved' : 'Save to Favorites'}
+                  aria-label={isFavorite ? 'Remove from favorites' : 'Save to favorites'}
+                >
+                  <Heart className={`w-4 h-4 ${isFavorite ? 'fill-rose-500 text-rose-500' : ''}`} />
+                </button>
+              )}
               <button
                 onClick={handleShare}
                 className="p-2 border border-slate-300 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white"
@@ -208,6 +273,16 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
             <KhairabadMapPreview listing={listing} />
           </div>
 
+          {/* Customer Reviews & Rating Section */}
+          <div className="pt-2 border-t border-slate-100">
+            <ReviewListSection
+              listing={listing}
+              reviews={reviews}
+              onOpenWriteReview={() => setIsReviewModalOpen(true)}
+              onVoteHelpful={onVoteHelpful || (() => {})}
+            />
+          </div>
+
           {/* Owner Claim & Report Edit Actions */}
           <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
             <button
@@ -226,6 +301,16 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Review Form Modal */}
+      {onSubmitReview && (
+        <ReviewFormModal
+          isOpen={isReviewModalOpen}
+          onClose={() => setIsReviewModalOpen(false)}
+          listing={listing}
+          onSubmitReview={onSubmitReview}
+        />
+      )}
     </div>
   );
 };

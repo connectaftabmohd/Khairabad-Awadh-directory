@@ -1253,21 +1253,56 @@ export const INITIAL_LISTINGS: CityListing[] = [
 
 export const KHAIRABAD_CITY_INFO = {
   name: 'Khairabad',
+  status: 'Town',
+  country: 'India',
   state: 'Uttar Pradesh',
+  division: 'Lucknow',
   district: 'Sitapur',
+  coordinates: '27.53°N 80.75°E',
+  coordinatesDecimal: { lat: 27.53, lng: 80.75 },
+  government: {
+    type: 'Municipal Council',
+    body: 'Khairabad Municipal Council',
+    chairperson: 'Baby Gupta',
+    chairpersonParty: 'BJP',
+    lokSabhaMP: 'Rakesh Rathore',
+    lokSabhaParty: 'INC',
+  },
+  area: {
+    totalKm2: '9 km²',
+    totalSqMi: '3.5 sq mi',
+  },
+  elevation: {
+    meters: '138 m',
+    feet: '453 ft',
+  },
+  population: {
+    year: '2011 Census',
+    total: '48,490',
+    densityKm2: '5,400/km²',
+    densitySqMi: '14,000/sq mi',
+  },
+  languages: {
+    official: 'Hindi',
+    regional: 'Urdu, Awadhi',
+  },
+  timeZone: 'UTC+5:30 (IST)',
+  vehicleRegistration: 'UP-34',
+  website: 'https://khairabadnpp.in',
+  websiteDisplay: 'khairabadnpp.in',
   pinCode: '261131',
   stdCode: '05862',
-  elevation: '138 meters above sea level',
-  civicStatus: 'Nagar Palika Parishad (Class-II Urban Local Body)',
+  railwayCode: 'KB (Khairabad Avadh)',
+  civicStatus: 'Municipal Council (Nagar Palika Parishad)',
   history: `Khairabad is an ancient town of immense historical, intellectual, and spiritual significance in the Awadh region of Uttar Pradesh. Established around the early 11th century by Raja Khaira Pasi, Khairabad became the headquarters of a prestigious Sarkar (district) in the Subah of Awadh under Emperor Akbar, as recorded in the Ain-i-Akbari.
 
 In the 18th and 19th centuries, Khairabad emerged as a renowned seat of Islamic scholarship, logic (mantiq), philosophy, and literature. It was the birthplace of Allama Fazl-e-Haq Khairabadi (1797–1861)—a titan of Indian intellectual thought, jurist, philosopher, and prominent revolutionary leader who issued the historic fatwa of rebellion against British rule in the First War of Indian Independence (1857).
 
 The town is celebrated for its composite Ganga-Jamuni tehzeeb, symbolized by both venerated Sufi shrines—such as Dargah Hazrat Makhdoom Sheikh Saaduddin and Dargah Qadam Rasul—and ancient Hindu pilgrim sites such as the Badi Sangat Mandir. Historically, Khairabad was also internationally recognized for fine cotton weaves, printed calico, and handwoven durries exported via the Ganges basin.`,
-  geography: `Khairabad is located in central Uttar Pradesh, approximately 8 kilometers south of Sitapur district headquarters and about 80 kilometers north of Lucknow. Situated directly alongside National Highway 30 (old NH-24), it enjoys exceptional road connectivity. The town is traversed by the Sarayan river basin, supporting fertile agricultural lands.`,
+  geography: `Khairabad is located in central Uttar Pradesh at coordinates 27.53°N 80.75°E, approximately 8 kilometers south of Sitapur district headquarters and about 80 kilometers north of the state capital Lucknow. Situated directly alongside National Highway 30 (old NH-24), it enjoys exceptional road connectivity. The town is traversed by the Sarayan river basin, supporting fertile agricultural lands at an elevation of 138 meters (453 feet).`,
   transport: `Connectivity:
 • Highway: Located adjacent to National Highway 30 (NH-24), with 24-hour buses connecting Lucknow, Sitapur, Bareilly, and Delhi.
 • Railway: Khairabad Avadh Railway Station (Station code: KB) on the Northern Railway / North Eastern Railway zone links travelers directly with Sitapur Junction, Lucknow Charbagh, Mailani, and Lakhimpur Kheri.
 • Local Transit: Fleets of battery e-rickshaws and auto-rickshaws commute continuously between Sitapur Chungi and all Khairabad municipal wards.`,
-  demographics: `According to census estimates, Khairabad has a diverse and vibrant population of over 48,000 residents distributed across 25 municipal wards.`,
+  demographics: `According to the 2011 Census of India, Khairabad has a total population of 48,490 residents across an area of 9 km² (3.5 sq mi), with an average population density of 5,400 persons per km² (14,000 per sq mi).`,
 };

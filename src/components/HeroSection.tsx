@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, MapPin, ShieldAlert, X } from 'lucide-react';
 import { CategoryId } from '../types/directory';
+import { WeatherWidget } from './WeatherWidget';
 
 interface HeroSectionProps {
   searchQuery: string;
@@ -8,6 +9,7 @@ interface HeroSectionProps {
   onSelectCategory: (cat: CategoryId) => void;
   onOpenEmergency: () => void;
   onScrollToDirectory: () => void;
+  onOpenWeather?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -16,6 +18,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectCategory,
   onOpenEmergency,
   onScrollToDirectory,
+  onOpenWeather,
 }) => {
   return (
     <section className="relative bg-slate-950 text-white min-h-[460px] flex items-center justify-center px-4 sm:px-6 py-16 overflow-hidden">
@@ -31,10 +34,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto text-center w-full">
-        {/* Anti-slop clean kicker */}
-        <div className="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/25 px-3 py-1 rounded-full mb-4">
-          <MapPin className="w-3.5 h-3.5" />
-          <span>Khairabad · Sitapur District · PIN 261131</span>
+        {/* Anti-slop clean kicker with live Sitapur/Khairabad weather badge */}
+        <div className="flex items-center justify-center gap-2.5 flex-wrap mb-4">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/25 px-3 py-1 rounded-full">
+            <MapPin className="w-3.5 h-3.5" />
+            <span>Khairabad · Sitapur District · PIN 261131</span>
+          </div>
+          {onOpenWeather ? (
+            <button
+              onClick={onOpenWeather}
+              className="hover:scale-105 transition-transform cursor-pointer"
+              title="Open full 7-day Khairabad weather forecast"
+            >
+              <WeatherWidget compact />
+            </button>
+          ) : (
+            <WeatherWidget compact />
+          )}
         </div>
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-display mb-4 leading-tight text-white [text-wrap:balance]">
