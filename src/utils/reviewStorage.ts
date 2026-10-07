@@ -31,6 +31,18 @@ export function getStoredReviews(): Review[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
+      // Merge in any new seed reviews not yet present in localStorage
+      const existingIds = new Set(parsed.map((r: Review) => r.id));
+      const missingInitial = INITIAL_REVIEWS.filter((r) => !existingIds.has(r.id));
+      if (missingInitial.length > 0) {
+        const merged = [...parsed, ...missingInitial];
+        try {
+          localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(merged));
+        } catch {
+          // ignore
+        }
+        return merged;
+      }
       return parsed;
     }
     return INITIAL_REVIEWS;

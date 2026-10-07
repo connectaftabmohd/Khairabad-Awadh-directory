@@ -25,6 +25,7 @@ import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { calculateRatingSummary } from '../utils/reviewStorage';
+import { AdSenseSlot } from './AdSenseSlot';
 
 interface ListingDetailPageProps {
   listing: CityListing;
@@ -358,6 +359,9 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               </h3>
               <KhairabadMapPreview listing={listing} />
             </div>
+
+            {/* Google AdSense Listing Unit */}
+            <AdSenseSlot adSlot="7890123456" adFormat="auto" label="Sponsored Local Recommendation" />
 
             {/* Customer Ratings & Reviews Section */}
             <ReviewListSection

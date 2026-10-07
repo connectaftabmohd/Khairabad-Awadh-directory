@@ -32,6 +32,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { getWeatherCondition } from './WeatherWidget';
+import { AdSenseSlot } from './AdSenseSlot';
 
 interface HourlyForecastItem {
   timeLabel: string;
@@ -577,6 +578,9 @@ export const WeatherPage: React.FC<WeatherPageProps> = ({ onBackToDirectory }) =
           })}
         </div>
       </div>
+
+      {/* Google AdSense Weather Leaderboard Unit */}
+      <AdSenseSlot adSlot="6789012345" adFormat="horizontal" label="Advertisement" />
 
       {/* Awadh Seasonal Climate Guide & Travel Advisory for Khairabad */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

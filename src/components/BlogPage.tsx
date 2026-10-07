@@ -18,6 +18,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { KHAIRABAD_BLOGS, KhairabadBlog } from '../data/khairabadBlogs';
+import { AdSenseSlot } from './AdSenseSlot';
 
 export const BlogPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -297,6 +298,11 @@ export const BlogPage: React.FC = () => {
             ))}
           </div>
 
+          {/* AdSense In-Article Ad Unit */}
+          <div className="pt-2">
+            <AdSenseSlot adSlot="4567890123" adFormat="auto" label="Sponsored Heritage Partner" />
+          </div>
+
           {/* Bottom Navigation */}
           <div className="pt-6 border-t border-slate-200 flex justify-between items-center">
             <button
@@ -356,6 +362,11 @@ export const BlogPage: React.FC = () => {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* AdSense Archive Leaderboard Unit */}
+          <div className="max-w-4xl mx-auto w-full">
+            <AdSenseSlot adSlot="5678901234" adFormat="horizontal" label="Advertisement" />
           </div>
 
           {/* Blog Cards Grid */}

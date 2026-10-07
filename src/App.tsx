@@ -42,6 +42,11 @@ import { SavedFavoritesSection } from './components/SavedFavoritesSection';
 import { SavedFavoritesDrawer } from './components/SavedFavoritesDrawer';
 import { WeatherWidget } from './components/WeatherWidget';
 import { WeatherPage } from './components/WeatherPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsOfServicePage } from './components/TermsOfServicePage';
+import { CookieConsentBanner } from './components/CookieConsentBanner';
+import { AdSenseSlot } from './components/AdSenseSlot';
+import { AdSenseSetupModal } from './components/AdSenseSetupModal';
 
 export default function App() {
   const [listings, setListings] = useState<CityListing[]>(INITIAL_LISTINGS);
@@ -49,7 +54,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [selectedLocality, setSelectedLocality] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
-  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'listing-detail'>('directory');
+  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
+  const [isAdSenseModalOpen, setIsAdSenseModalOpen] = useState(false);
 
   // Favorites state
   const {
@@ -175,7 +181,7 @@ export default function App() {
         activeView={activeView}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather');
+          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
         }}
         favoritesCount={favoritesCount}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
@@ -418,6 +424,11 @@ export default function App() {
                       <span>Reset All Filters</span>
                     </button>
                   </div>
+
+                  {/* Google AdSense Sidebar Rectangle Unit */}
+                  <div className="pt-1">
+                    <AdSenseSlot adSlot="3456789012" adFormat="rectangle" label="Sponsored Partner" />
+                  </div>
                 </aside>
 
                 {/* Right Listings Column */}
@@ -482,16 +493,26 @@ export default function App() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {filteredListings.map((listing) => (
-                        <DirectoryListingCard
-                          key={listing.id}
-                          listing={listing}
-                          onSelect={handleOpenListingDetail}
-                          ratingSummary={getListingRating(listing.id)}
-                          onWriteReview={(item) => setCardReviewModalListing(item)}
-                          isFavorite={isFavorite(listing.id)}
-                          onToggleFavorite={toggleFavorite}
-                        />
+                      {filteredListings.map((listing, index) => (
+                        <React.Fragment key={listing.id}>
+                          <DirectoryListingCard
+                            listing={listing}
+                            onSelect={handleOpenListingDetail}
+                            ratingSummary={getListingRating(listing.id)}
+                            onWriteReview={(item) => setCardReviewModalListing(item)}
+                            isFavorite={isFavorite(listing.id)}
+                            onToggleFavorite={toggleFavorite}
+                          />
+                          {index === 3 && (
+                            <div className="col-span-1 md:col-span-2">
+                              <AdSenseSlot
+                                adSlot="8901234567"
+                                adFormat="fluid"
+                                label="Featured Sponsored Listings"
+                              />
+                            </div>
+                          )}
+                        </React.Fragment>
                       ))}
                     </div>
                   )}
@@ -506,6 +527,22 @@ export default function App() {
           /* Dedicated Live Weather & 7-Day Forecast Page */
           <WeatherPage
             onBackToDirectory={() => {
+              setActiveView('directory');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        ) : activeView === 'privacy' ? (
+          /* Google AdSense Compliant Privacy Policy */
+          <PrivacyPolicyPage
+            onBack={() => {
+              setActiveView('directory');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        ) : activeView === 'terms' ? (
+          /* Terms of Service Policy */
+          <TermsOfServicePage
+            onBack={() => {
               setActiveView('directory');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -525,7 +562,8 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         onOpenBloggerModal={() => setIsBloggerModalOpen(true)}
         onOpenEmergency={() => setIsEmergencyOpen(true)}
-        setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog' | 'weather')}
+        onOpenAdSenseSetup={() => setIsAdSenseModalOpen(true)}
+        setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms')}
       />
 
       {/* Modals */}
@@ -594,6 +632,28 @@ export default function App() {
         onRemoveFavorite={removeFavorite}
         onClearAll={clearFavorites}
         getListingRating={getListingRating}
+      />
+
+      {/* Google AdSense Deployment & Status Manager Modal */}
+      <AdSenseSetupModal
+        isOpen={isAdSenseModalOpen}
+        onClose={() => setIsAdSenseModalOpen(false)}
+        onOpenPrivacyPolicy={() => {
+          setActiveView('privacy');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onOpenTerms={() => {
+          setActiveView('terms');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+
+      {/* Google AdSense & DPDP / GDPR Compliant Cookie Consent Banner */}
+      <CookieConsentBanner
+        onOpenPrivacyPolicy={() => {
+          setActiveView('privacy');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
       />
     </div>
   );
