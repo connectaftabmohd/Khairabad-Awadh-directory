@@ -46,7 +46,7 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({ onOpen
   return (
     <aside
       aria-label="Cookie and Privacy Consent"
-      className="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:bottom-6 sm:max-w-md z-50 bg-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-2xl space-y-3 animate-fade-in"
+      className="hidden sm:block fixed sm:right-6 sm:bottom-6 sm:max-w-md z-50 bg-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-2xl space-y-3 animate-fade-in"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">

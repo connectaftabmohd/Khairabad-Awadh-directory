@@ -156,7 +156,7 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
           {listing.phone && (
             <a
               href={`tel:${listing.phone}`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-lg text-xs font-bold transition-colors min-h-[36px] border border-amber-500"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-950 rounded-lg text-xs font-bold transition-all min-h-[36px] border border-amber-500 shadow-2xs"
               aria-label={`Call ${listing.name}`}
             >
               <Phone className="w-3.5 h-3.5" />
@@ -168,7 +168,7 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
               href={`https://wa.me/${listing.whatsapp}?text=${encodeURIComponent(`Hello, I found your listing for "${listing.name}" on Khairabad City Directory.`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition-colors min-h-[36px]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white rounded-lg text-xs font-semibold transition-all min-h-[36px] shadow-2xs"
               aria-label={`WhatsApp ${listing.name}`}
             >
               <MessageCircle className="w-3.5 h-3.5" />

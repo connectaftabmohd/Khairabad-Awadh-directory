@@ -47,6 +47,7 @@ import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { AdSenseSlot } from './components/AdSenseSlot';
 import { AdSenseSetupModal } from './components/AdSenseSetupModal';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 export default function App() {
   const [listings, setListings] = useState<CityListing[]>(INITIAL_LISTINGS);
@@ -172,7 +173,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 pb-16 md:pb-0">
       {/* Header */}
       <Header
         onOpenAddModal={() => setIsAddModalOpen(true)}
@@ -232,7 +233,7 @@ export default function App() {
             />
 
             {/* Verification / Accuracy Notice Banner */}
-            <aside aria-label="Community notice" className="bg-amber-50 border-y border-amber-200 py-2.5 px-4 text-xs text-amber-900">
+            <aside aria-label="Community notice" className="hidden sm:block bg-amber-50 border-y border-amber-200 py-2.5 px-4 text-xs text-amber-900">
               <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-bold uppercase text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded shrink-0">
@@ -327,8 +328,8 @@ export default function App() {
             {/* Main Listings and Filters Section */}
             <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto" id="directory-content">
               <div className="flex flex-col lg:flex-row gap-6 items-start">
-                {/* Left Filter Sidebar */}
-                <aside className="w-full lg:w-64 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm shrink-0 space-y-5">
+                {/* Left Filter Sidebar - Hidden on mobile, shown on desktop */}
+                <aside className="hidden lg:block w-64 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm shrink-0 space-y-5">
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -433,6 +434,62 @@ export default function App() {
 
                 {/* Right Listings Column */}
                 <div className="flex-1 w-full space-y-4">
+                  {/* Mobile Quick Filter Strip (App-Style) */}
+                  <div className="lg:hidden space-y-2">
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none">
+                      <button
+                        onClick={() => setSelectedLocality('all')}
+                        className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all text-xs border ${
+                          selectedLocality === 'all'
+                            ? 'bg-amber-400 text-slate-950 border-amber-500 shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                        }`}
+                      >
+                        All Areas ({listings.length})
+                      </button>
+                      {LOCALITIES.map((loc) => {
+                        const count = listings.filter((l) => l.locality === loc.name).length;
+                        return (
+                          <button
+                            key={loc.id}
+                            onClick={() => setSelectedLocality(loc.name)}
+                            className={`px-3 py-1.5 rounded-full whitespace-nowrap transition-all text-xs border ${
+                              selectedLocality === loc.name
+                                ? 'bg-amber-400 text-slate-950 font-bold border-amber-500 shadow-xs'
+                                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                            }`}
+                          >
+                            {loc.name} ({count})
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                      <button
+                        onClick={() => setVerifiedOnly(!verifiedOnly)}
+                        className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
+                          verifiedOnly
+                            ? 'bg-emerald-600 text-white border-emerald-700 shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200'
+                        }`}
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>Official Only</span>
+                      </button>
+                      <button
+                        onClick={() => setFavoritesOnly(!favoritesOnly)}
+                        className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
+                          favoritesOnly
+                            ? 'bg-rose-500 text-white border-rose-600 shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200'
+                        }`}
+                      >
+                        <Heart className={`w-3.5 h-3.5 ${favoritesOnly ? 'fill-white text-white' : 'text-slate-400'}`} />
+                        <span>Saved ({favoritesCount})</span>
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Results Count & Active Category Badge */}
                   <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 text-xs">
                     <div className="text-slate-600">
@@ -654,6 +711,19 @@ export default function App() {
           setActiveView('privacy');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
+      />
+
+      {/* Mobile App-Style Bottom Navigation Menu Bar */}
+      <MobileBottomNav
+        activeView={activeView}
+        setActiveView={(v) => {
+          setSelectedListingDetail(null);
+          setActiveView(v);
+        }}
+        favoritesCount={favoritesCount}
+        onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
+        onOpenEmergency={() => setIsEmergencyOpen(true)}
+        onOpenAddModal={() => setIsAddModalOpen(true)}
       />
     </div>
   );
