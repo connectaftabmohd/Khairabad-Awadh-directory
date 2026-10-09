@@ -16,11 +16,17 @@ import {
   Feather,
   Flame,
   UserCheck,
+  ExternalLink,
 } from 'lucide-react';
 import { KHAIRABAD_BLOGS, KhairabadBlog } from '../data/khairabadBlogs';
-import { AdSenseSlot } from './AdSenseSlot';
+import { CityListing } from '../types/directory';
 
-export const BlogPage: React.FC = () => {
+interface BlogPageProps {
+  onOpenListingDetail?: (item: CityListing) => void;
+  listings?: CityListing[];
+}
+
+export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listings }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeArticle, setActiveArticle] = useState<KhairabadBlog | null>(null);
@@ -272,6 +278,70 @@ export const BlogPage: React.FC = () => {
             ))}
           </div>
 
+          {/* Dedicated Babbu Hotel Verified Listing Spotlight Card */}
+          {activeArticle.id === 'blog-babbu-hotel' && (
+            <div className="p-6 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-3xl space-y-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200 pb-3">
+                <div>
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-amber-900 uppercase tracking-wider">
+                    <Sparkles className="w-4 h-4 text-amber-700 shrink-0" />
+                    <span>Verified Google Maps Listing</span>
+                  </div>
+                  <h3 className="font-extrabold text-lg sm:text-xl font-display text-slate-900">
+                    Babbu Hotel (बब्बू होटल)
+                  </h3>
+                  <div className="text-xs text-slate-600 flex items-center gap-2 mt-0.5">
+                    <span className="font-bold text-amber-800">4.1 ★★★★☆ (208 reviews)</span>
+                    <span>·</span>
+                    <span>Chilla Sarain Chauraha</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Babbu+Hotel+chilla+sarain+chauraha+Khairabad+Uttar+Pradesh+261131"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
+                  >
+                    <span>Google Maps</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                  </a>
+
+                  {onOpenListingDetail && listings && (
+                    <button
+                      onClick={() => {
+                        const babbuItem = listings.find((l) => l.id === 'kh-htl-babbu' || l.id === 'kh-rest-babbu');
+                        if (babbuItem) onOpenListingDetail(babbuItem);
+                      }}
+                      className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl text-xs font-extrabold transition-colors border border-amber-500 shadow-2xs cursor-pointer"
+                    >
+                      View Directory Listing &rarr;
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div className="p-3 bg-white rounded-xl border border-amber-200">
+                  <span className="text-slate-500 text-[11px] block font-medium">Plus Code Location</span>
+                  <span className="font-bold text-slate-900 block mt-0.5">GQJ3+QRH Khairabad</span>
+                  <span className="text-slate-500 text-[10px]">Chilla Sarain / Darul Huda St</span>
+                </div>
+                <div className="p-3 bg-white rounded-xl border border-amber-200">
+                  <span className="text-slate-500 text-[11px] block font-medium">Timings</span>
+                  <span className="font-bold text-slate-900 block mt-0.5">6:30 AM – 10:30 PM</span>
+                  <span className="text-slate-500 text-[10px]">Breakfast, Lunch &amp; Dinner</span>
+                </div>
+                <div className="p-3 bg-white rounded-xl border border-amber-200">
+                  <span className="text-slate-500 text-[11px] block font-medium">Famous For</span>
+                  <span className="font-bold text-amber-900 block mt-0.5">Kulhad Chai &amp; Awadhi Meals</span>
+                  <span className="text-slate-500 text-[10px]">Hot samosas, tandoor &amp; snacks</span>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Key Highlights Bullet points */}
           <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900 font-display">
@@ -296,11 +366,6 @@ export const BlogPage: React.FC = () => {
                 #{tag}
               </span>
             ))}
-          </div>
-
-          {/* AdSense In-Article Ad Unit */}
-          <div className="pt-2">
-            <AdSenseSlot adSlot="4567890123" adFormat="auto" label="Sponsored Heritage Partner" />
           </div>
 
           {/* Bottom Navigation */}
@@ -362,11 +427,6 @@ export const BlogPage: React.FC = () => {
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* AdSense Archive Leaderboard Unit */}
-          <div className="max-w-4xl mx-auto w-full">
-            <AdSenseSlot adSlot="5678901234" adFormat="horizontal" label="Advertisement" />
           </div>
 
           {/* Blog Cards Grid */}

@@ -45,8 +45,6 @@ import { WeatherPage } from './components/WeatherPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
-import { AdSenseSlot } from './components/AdSenseSlot';
-import { AdSenseSetupModal } from './components/AdSenseSetupModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
 export default function App() {
@@ -56,7 +54,6 @@ export default function App() {
   const [selectedLocality, setSelectedLocality] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
-  const [isAdSenseModalOpen, setIsAdSenseModalOpen] = useState(false);
 
   // Favorites state
   const {
@@ -205,6 +202,10 @@ export default function App() {
             }}
             onSelectListing={(item) => {
               setSelectedListingDetail(item);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onViewBlog={() => {
+              setActiveView('blog');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             allListings={listings}
@@ -425,11 +426,6 @@ export default function App() {
                       <span>Reset All Filters</span>
                     </button>
                   </div>
-
-                  {/* Google AdSense Sidebar Rectangle Unit */}
-                  <div className="pt-1">
-                    <AdSenseSlot adSlot="3456789012" adFormat="rectangle" label="Sponsored Partner" />
-                  </div>
                 </aside>
 
                 {/* Right Listings Column */}
@@ -560,15 +556,6 @@ export default function App() {
                             isFavorite={isFavorite(listing.id)}
                             onToggleFavorite={toggleFavorite}
                           />
-                          {index === 3 && (
-                            <div className="col-span-1 md:col-span-2">
-                              <AdSenseSlot
-                                adSlot="8901234567"
-                                adFormat="fluid"
-                                label="Featured Sponsored Listings"
-                              />
-                            </div>
-                          )}
                         </React.Fragment>
                       ))}
                     </div>
@@ -579,7 +566,10 @@ export default function App() {
           </>
         ) : activeView === 'blog' ? (
           /* Verified Khairabad Place & Notable Figures Blogs View */
-          <BlogPage />
+          <BlogPage
+            onOpenListingDetail={handleOpenListingDetail}
+            listings={listings}
+          />
         ) : activeView === 'weather' ? (
           /* Dedicated Live Weather & 7-Day Forecast Page */
           <WeatherPage
@@ -619,7 +609,6 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         onOpenBloggerModal={() => setIsBloggerModalOpen(true)}
         onOpenEmergency={() => setIsEmergencyOpen(true)}
-        onOpenAdSenseSetup={() => setIsAdSenseModalOpen(true)}
         setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms')}
       />
 
@@ -691,21 +680,7 @@ export default function App() {
         getListingRating={getListingRating}
       />
 
-      {/* Google AdSense Deployment & Status Manager Modal */}
-      <AdSenseSetupModal
-        isOpen={isAdSenseModalOpen}
-        onClose={() => setIsAdSenseModalOpen(false)}
-        onOpenPrivacyPolicy={() => {
-          setActiveView('privacy');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onOpenTerms={() => {
-          setActiveView('terms');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      />
-
-      {/* Google AdSense & DPDP / GDPR Compliant Cookie Consent Banner */}
+      {/* Cookie Consent Banner */}
       <CookieConsentBanner
         onOpenPrivacyPolicy={() => {
           setActiveView('privacy');

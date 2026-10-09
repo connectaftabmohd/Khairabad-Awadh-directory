@@ -127,7 +127,7 @@ export const BloggerExportModal: React.FC<BloggerExportModalProps> = ({
             }`}
           >
             <CheckCircle className="w-4 h-4" />
-            <span>4. SEO &amp; AdSense</span>
+            <span>4. SEO &amp; Discovery</span>
           </button>
         </div>
 
@@ -273,7 +273,7 @@ export const BloggerExportModal: React.FC<BloggerExportModalProps> = ({
 
           {activeTab === 'seo' && (
             <div className="space-y-4 text-slate-700">
-              <h4 className="font-bold text-slate-900 text-sm">SEO &amp; AdSense Monetization Checklist</h4>
+              <h4 className="font-bold text-slate-900 text-sm">SEO &amp; Search Engine Discovery Checklist</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-1.5">
                   <div className="font-bold text-slate-900 flex items-center gap-1.5">
@@ -298,10 +298,10 @@ export const BloggerExportModal: React.FC<BloggerExportModalProps> = ({
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-1.5">
                   <div className="font-bold text-slate-900 flex items-center gap-1.5">
                     <CheckCircle className="w-4 h-4 text-emerald-600" />
-                    <span>AdSense Placements Ready</span>
+                    <span>Fast Mobile Responsive Layout</span>
                   </div>
                   <p className="text-slate-600">
-                    Safe AdSense slots: Top banner below header, in-feed listing cards, sidebar banner, and footer banner.
+                    Fully optimized for Indian mobile web browsers with bottom navigation bar, quick call buttons, and fast loading speed.
                   </p>
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, Info, ExternalLink } from 'lucide-react';
+import { X, CheckCircle, Upload, Trash2, Image as ImageIcon } from 'lucide-react';
 import { CategoryId, CityListing } from '../types/directory';
 import { CATEGORIES, LOCALITIES } from '../data/khairabadData';
 
@@ -16,7 +16,6 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
   onAddListing,
   initialCategory = 'hospitals',
 }) => {
-  const [activeTab, setActiveTab] = useState<'form' | 'guide'>('form');
   const [name, setName] = useState('');
   const [category, setCategory] = useState<CategoryId>(initialCategory);
   const [subcategory, setSubcategory] = useState('');
@@ -27,6 +26,7 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
       setCategory(initialCategory);
     }
   }, [initialCategory, isOpen]);
+
   const [locality, setLocality] = useState('Sitapur Road');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -34,9 +34,38 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
   const [openingHours, setOpeningHours] = useState('9:00 AM – 8:00 PM');
   const [description, setDescription] = useState('');
   const [servicesInput, setServicesInput] = useState('');
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [imageUrlInput, setImageUrlInput] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setUploadedImages((prev) => [...prev, event.target!.result as string]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleAddImageUrl = () => {
+    if (imageUrlInput.trim()) {
+      setUploadedImages((prev) => [...prev, imageUrlInput.trim()]);
+      setImageUrlInput('');
+    }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setUploadedImages((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +87,7 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
       openingHours: openingHours.trim(),
       description: description.trim() || 'Community added listing on Khairabad City Directory.',
       services: services.length > 0 ? services : ['Local Service'],
-      images: [],
+      images: uploadedImages.length > 0 ? uploadedImages : [],
       googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
         `${name.trim()} Khairabad Sitapur`
       )}`,
@@ -78,6 +107,8 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
     setWhatsapp('');
     setDescription('');
     setServicesInput('');
+    setUploadedImages([]);
+    setImageUrlInput('');
     onClose();
   };
 
@@ -87,10 +118,10 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
         <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
           <div>
             <h3 className="text-lg font-bold font-display text-slate-900">
-              Add Your Business to Khairabad Directory
+              Add Your Business or Place
             </h3>
             <p className="text-xs text-slate-500">
-              Free listing for businesses, healthcare, schools & services in Khairabad
+              Free listing for places, marriage lawns, healthcare, shops &amp; services in Khairabad
             </p>
           </div>
           <button
@@ -101,63 +132,17 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
           </button>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex border-b border-slate-200 mb-4 text-xs font-semibold">
-          <button
-            type="button"
-            onClick={() => setActiveTab('form')}
-            className={`py-2 px-4 border-b-2 transition-colors ${
-              activeTab === 'form'
-                ? 'border-amber-500 text-slate-950 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            Submit Listing Now
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('guide')}
-            className={`py-2 px-4 border-b-2 transition-colors ${
-              activeTab === 'guide'
-                ? 'border-amber-500 text-slate-950 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            Blogger Form Configuration
-          </button>
-        </div>
-
-        {activeTab === 'guide' ? (
-          <div className="space-y-4 text-xs text-slate-600 leading-relaxed">
-            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-950">
-              <span className="font-bold">Blogger Integration Note:</span> Because Blogger.com is a static blog host without a custom backend database, business submission forms on Blogger are connected to a <strong>free Google Form</strong> or <strong>Google Apps Script</strong> that automatically saves submissions into a Google Sheet.
-            </div>
-
-            <h4 className="font-bold text-slate-900 text-sm">Recommended Google Form Setup:</h4>
-            <ol className="list-decimal pl-4 space-y-1.5">
-              <li>Open Google Forms (<a href="https://forms.google.com" target="_blank" rel="noreferrer" className="text-amber-900 font-bold underline">forms.google.com</a>).</li>
-              <li>Create form fields: Business Name, Category, Area, Calling Phone, WhatsApp, Address, Timings.</li>
-              <li>Get the form embed link or public URL.</li>
-              <li>In your Blogger theme, replace the modal form action with your Google Form URL so every submission lands in your Google Sheet spreadsheet!</li>
-            </ol>
-            <button
-              onClick={() => setActiveTab('form')}
-              className="mt-3 px-4 py-2 bg-slate-950 text-amber-400 font-bold rounded-lg border border-slate-900 hover:bg-black"
-            >
-              Test Form Submission Live
-            </button>
-          </div>
-        ) : isSuccess ? (
+        {isSuccess ? (
           <div className="text-center py-8 space-y-3">
             <CheckCircle className="w-12 h-12 text-emerald-600 mx-auto" />
-            <h4 className="text-lg font-bold text-slate-900">Listing Added Successfully!</h4>
+            <h4 className="text-lg font-bold text-slate-900">Place Added Successfully!</h4>
             <p className="text-xs text-slate-600 max-w-sm mx-auto">
-              Your business &quot;{name}&quot; has been added to the local directory database and is now searchable and visible in the listings list.
+              &quot;{name}&quot; has been added to the Khairabad directory database with its photo and is now searchable and visible in the listings.
             </p>
             <div className="pt-2">
               <button
                 onClick={resetAndClose}
-                className="px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold"
+                className="px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold shadow-xs"
               >
                 View in Directory
               </button>
@@ -174,7 +159,7 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Awadh Diagnostics or Shahnai Marriage Lawn"
+                placeholder="e.g. Awadh Diagnostics, Shahnai Marriage Lawn, CHC Ward"
                 className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs"
               />
             </div>
@@ -205,7 +190,7 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                   type="text"
                   value={subcategory}
                   onChange={(e) => setSubcategory(e.target.value)}
-                  placeholder="e.g. Clinic, Pure Veg Dhaba, AC Lawn"
+                  placeholder="e.g. AC Marriage Lawn, Clinic, Dhaba"
                   className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs"
                 />
               </div>
@@ -252,7 +237,7 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                 required
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="Shop No., Landmark, Khairabad, UP 261131"
+                placeholder="Shop / Plot No., Landmark, Khairabad, UP 261131"
                 className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs"
               />
             </div>
@@ -286,6 +271,96 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
               </div>
             </div>
 
+            {/* Upload Place Image Feature */}
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <label className="block font-semibold text-slate-800">
+                Upload Place Image / Photos
+                <span className="text-slate-400 font-normal ml-1">
+                  (Recommended — displays as hero banner on directory cards)
+                </span>
+              </label>
+
+              {/* Upload Dropzone + URL Option */}
+              <div className="flex flex-col sm:flex-row items-stretch gap-2.5">
+                <label className="flex-1 flex flex-col items-center justify-center p-4 border-2 border-dashed border-amber-300 hover:border-amber-500 rounded-2xl bg-amber-50/50 hover:bg-amber-50/80 transition-all cursor-pointer group text-center">
+                  <Upload className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform mb-1" />
+                  <span className="text-xs font-bold text-slate-800">
+                    Click to Upload Photo
+                  </span>
+                  <span className="text-[10px] text-slate-500">
+                    PNG, JPG, WebP from your device
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageFileChange}
+                    className="hidden"
+                  />
+                </label>
+
+                {/* Paste Direct URL */}
+                <div className="sm:w-52 flex flex-col justify-between p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-1.5">
+                  <span className="text-[10px] font-semibold text-slate-600 flex items-center gap-1">
+                    <ImageIcon className="w-3 h-3 text-slate-500" />
+                    Or Paste Image URL
+                  </span>
+                  <div className="flex gap-1">
+                    <input
+                      type="url"
+                      value={imageUrlInput}
+                      onChange={(e) => setImageUrlInput(e.target.value)}
+                      placeholder="https://..."
+                      className="flex-1 p-1.5 text-[11px] border border-slate-300 rounded-lg outline-none bg-white focus:border-amber-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddImageUrl}
+                      className="px-2.5 py-1 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-black"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Uploaded Images Preview Strip */}
+              {uploadedImages.length > 0 && (
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] text-slate-500 font-semibold">
+                    Uploaded Photos ({uploadedImages.length}):
+                  </span>
+                  <div className="flex gap-2.5 overflow-x-auto pb-1">
+                    {uploadedImages.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-300 shrink-0 group"
+                      >
+                        <img
+                          src={img}
+                          alt={`Uploaded place ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveImage(idx)}
+                          className="absolute top-1 right-1 p-1 bg-black/75 hover:bg-rose-600 text-white rounded-md transition-colors shadow-xs"
+                          title="Remove Photo"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                        {idx === 0 && (
+                          <span className="absolute bottom-1 left-1 right-1 text-center bg-amber-500 text-slate-950 text-[9px] font-bold rounded py-0.2">
+                            Main Cover
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div>
               <label className="block font-semibold mb-1 text-slate-800">
                 Key Services (comma-separated)
@@ -301,13 +376,13 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
 
             <div>
               <label className="block font-semibold mb-1 text-slate-800">
-                Business Description
+                Business / Place Description
               </label>
               <textarea
                 rows={2}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Provide a clear description of your products, specialities or facilities in Khairabad..."
+                placeholder="Provide a clear description of your facilities, products or specialties in Khairabad..."
                 className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs"
               />
             </div>
@@ -322,9 +397,9 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl font-bold shadow-xs"
+                className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl font-bold shadow-xs transition-all"
               >
-                Submit Listing
+                Submit Place Listing
               </button>
             </div>
           </form>

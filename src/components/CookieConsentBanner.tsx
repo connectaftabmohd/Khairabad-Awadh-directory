@@ -57,7 +57,7 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({ onOpen
             <h4 className="text-xs font-bold text-white uppercase tracking-wider font-display">
               Cookie &amp; Privacy Notice
             </h4>
-            <span className="text-[10px] text-slate-400">Google AdSense &amp; Analytics Consent</span>
+            <span className="text-[10px] text-slate-400">Site Preferences &amp; Analytics</span>
           </div>
         </div>
         <button
@@ -70,7 +70,7 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({ onOpen
       </div>
 
       <p className="text-xs text-slate-300 leading-relaxed">
-        We use cookies and third-party services (such as Google AdSense) to deliver personalized ads, analyze local traffic, and remember your saved favorites.
+        We use essential cookies and local storage to remember your saved favorites, search preferences, and analyze community traffic.
       </p>
 
       <div className="flex items-center justify-between gap-2 pt-1 text-xs">

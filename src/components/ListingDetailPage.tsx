@@ -25,7 +25,6 @@ import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { calculateRatingSummary } from '../utils/reviewStorage';
-import { AdSenseSlot } from './AdSenseSlot';
 
 interface ListingDetailPageProps {
   listing: CityListing;
@@ -33,6 +32,7 @@ interface ListingDetailPageProps {
   onClaim: (listing: CityListing) => void;
   onReportEdit: (listing: CityListing) => void;
   onSelectListing: (listing: CityListing) => void;
+  onViewBlog?: () => void;
   allListings: CityListing[];
   reviews: Review[];
   onSubmitReview: (formData: ReviewFormData) => void;
@@ -47,6 +47,7 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   onClaim,
   onReportEdit,
   onSelectListing,
+  onViewBlog,
   allListings,
   reviews,
   onSubmitReview,
@@ -294,6 +295,27 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               <p className="text-xs text-slate-500 leading-relaxed">
                 Located in the {listing.locality} area of Khairabad, this establishment serves residents of Khairabad town and adjacent localities across Sitapur district with verified local service.
               </p>
+
+              {/* Featured Blog Highlight if available */}
+              {listing.id.includes('babbu') && onViewBlog && (
+                <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-950">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>Featured in Khairabad Food &amp; Heritage Guide</span>
+                    </div>
+                    <p className="text-xs text-slate-700 leading-snug">
+                      Read our special story: <em>&ldquo;Babbu Hotel Khairabad: The Iconic Town Eatery, Kulhad Chai &amp; Culinary Landmark of Chilla Sarain Chauraha&rdquo;</em>
+                    </p>
+                  </div>
+                  <button
+                    onClick={onViewBlog}
+                    className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-xl transition-colors border border-amber-500 shadow-2xs shrink-0"
+                  >
+                    Read Blog Post &rarr;
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Quick Details Cards */}
@@ -359,9 +381,6 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               </h3>
               <KhairabadMapPreview listing={listing} />
             </div>
-
-            {/* Google AdSense Listing Unit */}
-            <AdSenseSlot adSlot="7890123456" adFormat="auto" label="Sponsored Local Recommendation" />
 
             {/* Customer Ratings & Reviews Section */}
             <ReviewListSection

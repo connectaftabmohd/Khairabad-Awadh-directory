@@ -30,7 +30,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onBack }) 
       <header className="space-y-3 border-b border-slate-200 pb-6">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-900 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full">
           <Shield className="w-3.5 h-3.5 text-amber-700" />
-          <span>Google AdSense &amp; Legal Compliance</span>
+          <span>Privacy Policy &amp; DPDP Compliance</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-slate-900 tracking-tight">
           Privacy Policy
@@ -48,18 +48,18 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onBack }) 
             <span>1. Introduction &amp; Scope</span>
           </h2>
           <p>
-            Welcome to <strong>Khairabad City Directory</strong> (accessible via this portal). We respect your privacy and are committed to protecting the personal data of our visitors, business owners, and citizens. This Privacy Policy outlines how information is collected, used, and safeguarded in accordance with applicable laws, including the <strong>Digital Personal Data Protection Act (DPDP Act, India)</strong>, the <strong>General Data Protection Regulation (GDPR)</strong>, and <strong>Google AdSense Publisher Policies</strong>.
+            Welcome to <strong>Khairabad City Directory</strong> (accessible via this portal). We respect your privacy and are committed to protecting the personal data of our visitors, business owners, and citizens. This Privacy Policy outlines how information is collected, used, and safeguarded in accordance with applicable laws, including the <strong>Digital Personal Data Protection Act (DPDP Act, India)</strong> and the <strong>General Data Protection Regulation (GDPR)</strong>.
           </p>
         </section>
 
-        {/* Google AdSense & DoubleClick Cookie Disclosure (Mandatory for AdSense) */}
-        <section className="space-y-3 bg-amber-50/70 p-5 rounded-2xl border border-amber-200">
-          <h2 className="text-lg font-bold font-display text-slate-900 flex items-center gap-2 text-amber-950">
+        {/* Cookies & Local Storage Disclosure */}
+        <section className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <h2 className="text-lg font-bold font-display text-slate-900 flex items-center gap-2 text-slate-900">
             <Cookie className="w-4 h-4 text-amber-700" />
-            <span>2. Google AdSense &amp; DoubleClick DART Cookies</span>
+            <span>2. Cookies &amp; Local Storage</span>
           </h2>
           <p className="text-slate-800">
-            This website utilizes <strong>Google AdSense</strong>, an advertising service provided by Google LLC, to display contextual and interest-based advertisements to our visitors.
+            This website utilizes minimal standard cookies and browser local storage to provide a seamless directory experience for visitors.
           </p>
           <ul className="list-disc pl-5 space-y-2 text-slate-700">
             <li>
@@ -140,7 +140,6 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onBack }) 
             <li>To operate and maintain the Khairabad public community directory.</li>
             <li>To verify local business listings, hospital details, and emergency contacts.</li>
             <li>To deliver relevant civic news, weather forecasts, and historical place guides.</li>
-            <li>To serve relevant display advertisements through Google AdSense to support the maintenance of this free community portal.</li>
             <li>To prevent fraud, spam reviews, and unauthorized listing tampering.</li>
           </ul>
         </section>
@@ -172,7 +171,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onBack }) 
             <span>7. Contact Information &amp; Grievance Officer</span>
           </h2>
           <p>
-            If you have questions regarding this Privacy Policy, wish to request removal of your listing, or have inquiries regarding Google AdSense ads served on our portal, please contact our community desk:
+            If you have questions regarding this Privacy Policy or wish to request correction or removal of your listing, please contact our community desk:
           </p>
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5 text-xs text-slate-700">
             <div className="font-bold text-slate-900">Khairabad City Directory &amp; Heritage Portal</div>

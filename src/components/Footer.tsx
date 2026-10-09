@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { CategoryId } from '../types/directory';
 import { KhairabadLogo } from './KhairabadLogo';
 
@@ -8,7 +8,6 @@ interface FooterProps {
   onOpenAddModal: () => void;
   onOpenBloggerModal?: () => void;
   onOpenEmergency: () => void;
-  onOpenAdSenseSetup?: () => void;
   setActiveView: (view: string) => void;
 }
 
@@ -17,7 +16,6 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenAddModal,
   onOpenBloggerModal,
   onOpenEmergency,
-  onOpenAdSenseSetup,
   setActiveView,
 }) => {
   return (
@@ -154,17 +152,6 @@ export const Footer: React.FC<FooterProps> = ({
                 Add Your Business Listing (Free)
               </button>
             </li>
-            {onOpenAdSenseSetup && (
-              <li className="pt-1">
-                <button
-                  onClick={onOpenAdSenseSetup}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 font-semibold border border-amber-400/30 transition-colors"
-                >
-                  <DollarSign className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Google AdSense Setup &amp; ads.txt</span>
-                </button>
-              </li>
-            )}
           </ul>
         </div>
 
@@ -187,29 +174,17 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
       </div>
 
-      {/* Bottom Copyright & Legal AdSense Policy Links */}
+      {/* Bottom Copyright & Legal Links */}
       <div className="max-w-7xl mx-auto pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
         <div>
           &copy; 2026 Khairabad City Directory. All rights reserved.
         </div>
         <div className="flex items-center gap-3 text-slate-400 flex-wrap justify-center sm:justify-end">
-          {onOpenAdSenseSetup && (
-            <>
-              <button
-                onClick={onOpenAdSenseSetup}
-                className="hover:text-amber-400 text-amber-300 font-semibold transition-colors flex items-center gap-1"
-              >
-                <DollarSign className="w-3 h-3" />
-                <span>AdSense Manager</span>
-              </button>
-              <span>·</span>
-            </>
-          )}
           <button
             onClick={() => setActiveView('privacy')}
             className="hover:text-amber-400 transition-colors underline"
           >
-            Privacy Policy (AdSense)
+            Privacy Policy
           </button>
           <span>·</span>
           <button

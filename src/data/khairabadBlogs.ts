@@ -21,6 +21,44 @@ export interface KhairabadBlog {
 
 export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
   {
+    id: 'blog-babbu-hotel',
+    title: 'Babbu Hotel Khairabad: The Iconic Town Eatery, Kulhad Chai & Culinary Landmark of Chilla Sarain Chauraha',
+    slug: 'babbu-hotel-khairabad-chilla-sarain-culinary-landmark',
+    category: 'Food & Lifestyle',
+    excerpt: 'Discover Babbu Hotel (बब्बू होटल), one of Khairabad’s most cherished traditional hotel & food institutions at Chilla Sarain Chauraha, celebrated for piping-hot chai, Awadhi delicacies, and timeless neighborhood hospitality with a 4.1★ rating from 208+ Google Maps reviews.',
+    content: [
+      'Situated at the vibrant crossroads of Chilla Sarain Chauraha along Darul Huda Street, Babbu Hotel (बब्बू होटल) stands as one of Khairabad’s most beloved and enduring community culinary landmarks. With an impressive 4.1-star rating from over 208 reviews on Google Maps, this time-honored eatery and town hotel serves as a bustling hub where locals, traders, students from nearby Darul Huda and JLMDJ College, and travelers converge from dawn till night.',
+      'Step up to the open-air counter and you are greeted by the rhythmic clinking of brass ladles, simmering kettles of rich spiced milk tea, and the enticing aroma of fresh tandoori rotis and sizzling local specialties. The storefront features a classic glass showcase brimming with crispy snacks, freshly made samosas, and regional sweets, while the seating area welcomes patrons with warm, unpretentious Awadhi hospitality.',
+      'Beyond its hearty meals and quick bites, Babbu Hotel is a vital social forum for the town. Located right near Peepal Tree Khairabad, Sujawalpur Chauraha, and historic neighborhood masjids (Ayesha Masjid and Mohammadi Masjid), it is the premier morning spot for catching up on local news over a steaming glass of kulhad chai. In the evening, the street comes alive with families picking up hot dinner parcels and friends gathering for late-evening conversations.',
+      'Whether you are visiting Khairabad to explore its 1857 revolutionary heritage, attending a wedding at nearby Awadh Palace or marriage lawns, or simply searching for an authentic taste of everyday life in central Uttar Pradesh, a stop at Babbu Hotel is an essential and heartwarming local experience.'
+    ],
+    keyHighlights: [
+      'Celebrated local food & lodging institution with a 4.1★ rating from 208+ Google Maps reviews',
+      'Prime crossroads location at Chilla Sarain Chauraha along Darul Huda Street (PIN 261131)',
+      'Famous for aromatic kulhad chai, crispy samosas, tandoor bread, and wholesome Awadhi meals',
+      'Enduring community gathering spot representing the true warmth and hospitality of Khairabad'
+    ],
+    visitorInfo: {
+      location: 'GQJ3+QRH, Chilla Sarain Chauraha, Darul Huda St, Khairabad, UP 261131',
+      timings: '6:30 AM – 10:30 PM Daily (Breakfast, Lunch & Dinner)',
+      bestTimeToVisit: 'Morning for fresh tea & samosas; Evenings for lively street atmosphere & dinner',
+      entryFee: 'Budget-friendly (₹30 – ₹150 per person)'
+    },
+    readTime: '4 min read',
+    publishDate: 'October 2026',
+    author: 'Khairabad Food & Lifestyle Desk',
+    image: '/src/assets/images/babbu_hotel_khairabad_1791570399551.jpg',
+    tags: [
+      'Babbu Hotel',
+      'Khairabad Food',
+      'Chilla Sarain',
+      'Dhaba & Tea',
+      'Awadhi Cuisine',
+      'Google Maps Verified',
+      'Local Eatery'
+    ]
+  },
+  {
     id: 'blog-notable-people',
     title: 'Notable People of Khairabad: The Revolutionary & Literary Dynasty of Fazl-e-Haq Khairabadi, Muztar Khairabadi & Jan Nisar Akhtar',
     slug: 'notable-people-of-khairabad-fazl-e-haq-muztar-jan-nisar-akhtar',

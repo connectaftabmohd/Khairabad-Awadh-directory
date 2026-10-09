@@ -80,10 +80,10 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onBack }
 
         <section className="space-y-3">
           <h2 className="text-lg font-bold font-display text-slate-900">
-            4. Advertisements &amp; Sponsored Links (Google AdSense)
+            4. External Links &amp; Third-Party Services
           </h2>
           <p>
-            This website displays advertisements provided by Google AdSense and third-party advertising partners to cover hosting and maintenance costs. Inclusion of an ad or sponsored link does not imply endorsement of the advertised product or service by Khairabad City Directory.
+            This website provides links to external local resources, government portals, and Google Maps for directions and convenience. Inclusion of any link does not imply endorsement by Khairabad City Directory.
           </p>
         </section>
 
