@@ -123,11 +123,8 @@ export const Footer: React.FC<FooterProps> = ({
             <li>
               <button
                 onClick={() => {
-                  setActiveView('directory');
-                  setTimeout(() => {
-                    const el = document.getElementById('roads-connectivity-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 50);
+                  setActiveView('roads');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="hover:text-white transition-colors text-amber-300 font-medium"
               >

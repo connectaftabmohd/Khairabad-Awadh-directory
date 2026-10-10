@@ -131,7 +131,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
         {filteredCategories.map((cat) => {
           const IconComp = ICON_MAP[cat.icon] || Building2;
           const isSelected = selectedCategory === cat.id;
@@ -140,39 +140,52 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
           return (
             <div
               key={cat.id}
-              className={`rounded-xl border transition-all flex flex-col justify-between p-3 relative group ${
+              className={`rounded-2xl border transition-all duration-200 flex flex-col justify-between p-3.5 sm:p-4 lg:p-5 relative group shadow-2xs hover:shadow-md ${
                 isSelected
                   ? 'bg-slate-950 text-white border-slate-950 shadow-md ring-2 ring-amber-400'
-                  : 'bg-white hover:bg-amber-50/40 border-slate-200 text-slate-900 hover:border-amber-400'
+                  : 'bg-white hover:bg-amber-50/50 border-slate-200 text-slate-900 hover:border-amber-400 hover:-translate-y-0.5'
               }`}
             >
               <button
                 onClick={() => onSelectCategory(isSelected ? 'all' : cat.id)}
                 className="text-left w-full flex-1"
               >
-                <div
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 transition-colors ${
-                    isSelected
-                      ? 'bg-amber-400 text-slate-950'
-                      : 'bg-amber-50 text-amber-800 group-hover:bg-amber-100'
-                  }`}
-                >
-                  <IconComp className="w-4 h-4" />
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <div
+                    className={`w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-all ${
+                      isSelected
+                        ? 'bg-amber-400 text-slate-950 shadow-xs'
+                        : 'bg-amber-50 text-amber-800 group-hover:bg-amber-100 group-hover:scale-105'
+                    }`}
+                  >
+                    <IconComp className="w-5 h-5 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                  </div>
+                  <span
+                    className={`text-[10px] sm:text-[11px] lg:text-xs font-semibold px-2 py-0.5 rounded-full ${
+                      isSelected
+                        ? 'bg-white/10 text-amber-300 border border-white/20'
+                        : 'bg-slate-100 text-slate-600 group-hover:bg-amber-100 group-hover:text-amber-900'
+                    }`}
+                  >
+                    {count} {count === 1 ? 'place' : 'places'}
+                  </span>
                 </div>
+
                 <div
-                  className={`text-xs font-bold leading-tight line-clamp-1 ${
+                  className={`text-sm sm:text-base lg:text-lg font-extrabold leading-snug line-clamp-1 ${
                     isSelected ? 'text-white' : 'text-slate-900 group-hover:text-amber-800'
                   }`}
                 >
                   {cat.label}
                 </div>
-                <div
-                  className={`text-[10px] mt-0.5 ${
-                    isSelected ? 'text-amber-300 font-medium' : 'text-slate-500'
+
+                <p
+                  className={`text-xs mt-1.5 line-clamp-2 leading-relaxed hidden lg:block ${
+                    isSelected ? 'text-slate-300' : 'text-slate-500'
                   }`}
                 >
-                  {count} {count === 1 ? 'listing' : 'listings'}
-                </div>
+                  {cat.description}
+                </p>
               </button>
 
               {/* Quick Add Shortcut for this category */}
@@ -183,14 +196,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     onOpenAddModalWithCategory(cat.id);
                   }}
                   title={`Add a business to ${cat.label}`}
-                  className={`mt-2 pt-1 border-t text-[10px] font-semibold flex items-center justify-between transition-colors ${
+                  className={`mt-3 pt-2.5 border-t text-xs font-bold flex items-center justify-between transition-colors ${
                     isSelected
                       ? 'border-white/20 text-amber-200 hover:text-white'
                       : 'border-slate-100 text-slate-500 hover:text-amber-800'
                   }`}
                 >
-                  <span>+ Add</span>
-                  <Plus className="w-3 h-3" />
+                  <span>+ Add Business</span>
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 </button>
               )}
             </div>

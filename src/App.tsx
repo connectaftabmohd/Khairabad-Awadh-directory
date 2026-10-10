@@ -36,7 +36,6 @@ import { AboutKhairabad } from './components/AboutKhairabad';
 import { BlogPage } from './components/BlogPage';
 import { ListingDetailPage } from './components/ListingDetailPage';
 import { RecentlyAddedSection } from './components/RecentlyAddedSection';
-import { MainRoadsConnectivity } from './components/MainRoadsConnectivity';
 import { MAIN_ROADS_CONNECTIVITY, CHAURAHA_HUBS, TRADITIONAL_MOHALLAS } from './data/roadsConnectivityData';
 import { Footer } from './components/Footer';
 import { useReviewSystem } from './hooks/useReviewSystem';
@@ -48,6 +47,7 @@ import { WeatherWidget } from './components/WeatherWidget';
 import { WeatherPage } from './components/WeatherPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
+import { RoadsTransitPage } from './components/RoadsTransitPage';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
@@ -60,9 +60,9 @@ export default function App() {
   const [selectedMohalla, setSelectedMohalla] = useState('all');
   const [selectedChauraha, setSelectedChauraha] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
-  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
+  const [activeView, setActiveView] = useState<'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
 
-  // Synchronize listing detail and views from URL query parameters (?listing=...)
+  // Synchronize listing detail and views from URL query parameters (?listing=..., ?view=...)
   useEffect(() => {
     const syncFromUrl = () => {
       try {
@@ -86,8 +86,8 @@ export default function App() {
           return;
         }
 
-        if (view && ['directory', 'about', 'blog', 'weather', 'privacy', 'terms'].includes(view)) {
-          setActiveView(view as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+        if (view && ['directory', 'roads', 'about', 'blog', 'weather', 'privacy', 'terms'].includes(view)) {
+          setActiveView(view as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
           return;
         }
       } catch {
@@ -301,10 +301,15 @@ export default function App() {
         activeView={activeView}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
           try {
             const url = new URL(window.location.href);
             url.searchParams.delete('listing');
+            if (v === 'directory') {
+              url.searchParams.delete('view');
+            } else {
+              url.searchParams.set('view', v);
+            }
             window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
           } catch {
             // ignore
@@ -368,8 +373,15 @@ export default function App() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onOpenRoads={() => {
-                const el = document.getElementById('roads-connectivity-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                setActiveView('roads');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                try {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('view', 'roads');
+                  window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+                } catch {
+                  // ignore
+                }
               }}
             />
 
@@ -445,24 +457,6 @@ export default function App() {
                 </div>
               </div>
             </section>
-
-            {/* Main Roads & Connectivity Interactive Transit Section */}
-            <MainRoadsConnectivity
-              onSelectRoad={(road) => {
-                setSelectedRoad(road);
-                scrollToDirectory();
-              }}
-              onSelectMohalla={(moh) => {
-                setSelectedMohalla(moh);
-                scrollToDirectory();
-              }}
-              onSelectChauraha={(chauraha) => {
-                setSelectedChauraha(chauraha);
-                scrollToDirectory();
-              }}
-              onOpenListingDetail={handleOpenListingDetail}
-              allListings={listings}
-            />
 
             {/* Recently Added Section */}
             <RecentlyAddedSection
@@ -930,6 +924,69 @@ export default function App() {
               </div>
             </section>
           </>
+        ) : activeView === 'roads' ? (
+          /* Dedicated Separate Page for Khairabad Main Roads, Highways & Transit */
+          <RoadsTransitPage
+            onBackToDirectory={() => {
+              setActiveView('directory');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('view');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
+            }}
+            onSelectRoadFilter={(roadName) => {
+              setSelectedRoad(roadName);
+              setActiveView('directory');
+              setTimeout(() => {
+                const el = document.getElementById('directory-content');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 60);
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('view');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
+            }}
+            onSelectMohallaFilter={(mohalla) => {
+              setSelectedMohalla(mohalla);
+              setActiveView('directory');
+              setTimeout(() => {
+                const el = document.getElementById('directory-content');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 60);
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('view');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
+            }}
+            onSelectChaurahaFilter={(chauraha) => {
+              setSelectedChauraha(chauraha);
+              setActiveView('directory');
+              setTimeout(() => {
+                const el = document.getElementById('directory-content');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 60);
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('view');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
+            }}
+            onOpenListingDetail={handleOpenListingDetail}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
+            allListings={listings}
+          />
         ) : activeView === 'blog' ? (
           /* Verified Khairabad Place & Notable Figures Blogs View */
           <BlogPage
@@ -965,11 +1022,15 @@ export default function App() {
           <AboutKhairabad
             onViewBlog={() => { setActiveView('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             onViewRoads={() => {
-              setActiveView('directory');
-              setTimeout(() => {
-                const el = document.getElementById('roads-connectivity-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 50);
+              setActiveView('roads');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('view', 'roads');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
             }}
           />
         )}
@@ -984,7 +1045,22 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         onOpenBloggerModal={() => setIsBloggerModalOpen(true)}
         onOpenEmergency={() => setIsEmergencyOpen(true)}
-        setActiveView={(v) => setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms')}
+        setActiveView={(v) => {
+          setSelectedListingDetail(null);
+          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('listing');
+            if (v === 'directory') {
+              url.searchParams.delete('view');
+            } else {
+              url.searchParams.set('view', v);
+            }
+            window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+          } catch {
+            // ignore
+          }
+        }}
       />
 
       {/* Modals */}

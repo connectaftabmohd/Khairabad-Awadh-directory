@@ -32,6 +32,7 @@ interface MainRoadsConnectivityProps {
   onSelectMohalla?: (mohalla: string) => void;
   onSelectChauraha?: (chauraha: string) => void;
   onOpenListingDetail?: (listing: CityListing) => void;
+  onOpenFullPage?: () => void;
   allListings?: CityListing[];
 }
 
@@ -40,6 +41,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
   onSelectMohalla,
   onSelectChauraha,
   onOpenListingDetail,
+  onOpenFullPage,
   allListings = [],
 }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'highways' | 'local-roads' | 'chaurahas' | 'mohallas'>('all');
@@ -107,8 +109,17 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
             </div>
             <div className="bg-slate-800/90 backdrop-blur-xs border border-slate-700 px-3 py-1.5 rounded-xl flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-rose-400" />
-              <span className="text-slate-300">9 Historic Mohallas</span>
+              <span className="text-slate-300">8 Historic Mohallas</span>
             </div>
+            {onOpenFullPage && (
+              <button
+                onClick={onOpenFullPage}
+                className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-xs"
+              >
+                <span>Full Roads &amp; Transit Page</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
