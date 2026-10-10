@@ -48,6 +48,7 @@ import { WeatherPage } from './components/WeatherPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { RoadsTransitPage } from './components/RoadsTransitPage';
+import { FAQSection } from './components/FAQSection';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
@@ -133,11 +134,6 @@ export default function App() {
 
   const [cardReviewModalListing, setCardReviewModalListing] = useState<CityListing | null>(null);
 
-  // Saved listings list
-  const savedListings = useMemo(() => {
-    return listings.filter((item) => favoriteIds.includes(item.id));
-  }, [listings, favoriteIds]);
-
   // Modals state
   const [selectedListing, setSelectedListing] = useState<CityListing | null>(null);
   const [selectedListingDetail, setSelectedListingDetail] = useState<CityListing | null>(null);
@@ -154,6 +150,46 @@ export default function App() {
     listing: null,
     mode: 'claim',
   });
+
+  // Dynamic SEO Page Title & Meta Description Synchronization
+  useEffect(() => {
+    let title = 'Khairabad City Directory & Local Business Guide | Sitapur, UP (PIN 261131)';
+    let desc = 'Official Khairabad digital guide & local business directory: find top hospitals, doctors, schools, marriage lawns, emergency helplines, shops & historic Awadh heritage in Sitapur (PIN 261131).';
+
+    if (activeView === 'roads') {
+      title = 'Khairabad Roads, Highways (NH-24, SH-30) & Transit Corridors | Khairabad Directory';
+      desc = 'Complete guide to Khairabad highways (NH-24 Sitapur-Lucknow, SH-30 Biswan), major local roads, Chauraha hubs, e-rickshaw stands, and mohalla connectivity.';
+    } else if (activeView === 'about') {
+      title = 'About Khairabad – History, Awadh Heritage, Facts & Tourism Profile | PIN 261131';
+      desc = "Discover Khairabad's rich history from Raja Khaira Pasi to Mughal Akbar Sarkar, Badi Sangat, Dargahs, culture, population, and connectivity in Sitapur district.";
+    } else if (activeView === 'blog') {
+      title = 'Notable Figures & Heritage of Khairabad – Fazl-e-Haq, Muztar Khairabadi | Articles';
+      desc = "Read historical biographies of Khairabad's legendary intellectual figures: 1857 revolutionary Allama Fazl-e-Haq Khairabadi, poet Muztar Khairabadi, and Jan Nisar Akhtar.";
+    } else if (activeView === 'weather') {
+      title = 'Khairabad & Sitapur Live Weather, Air Quality & 7-Day Forecast';
+      desc = 'Live local weather updates, temperature, AQI, humidity, sunrise/sunset, and 7-day forecast for Khairabad and Sitapur, Uttar Pradesh.';
+    } else if (activeView === 'privacy') {
+      title = 'Privacy Policy | Khairabad City Directory';
+      desc = 'Privacy Policy and data protection terms for Khairabad City Directory and community search services.';
+    } else if (activeView === 'terms') {
+      title = 'Terms of Service | Khairabad City Directory';
+      desc = 'Terms of Service, community listing guidelines, and usage terms for Khairabad City Directory.';
+    } else if (activeView === 'listing-detail' && selectedListingDetail) {
+      title = `${selectedListingDetail.name} – ${selectedListingDetail.category} in ${selectedListingDetail.locality || 'Khairabad'} | City Directory`;
+      desc = `${selectedListingDetail.name} in Khairabad (${selectedListingDetail.locality || 'Sitapur'}). Phone: ${selectedListingDetail.phone || 'Available in directory'}. ${selectedListingDetail.address}. Verified local listing.`;
+    }
+
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', desc);
+    }
+  }, [activeView, selectedListingDetail]);
+
+  // Saved listings list
+  const savedListings = useMemo(() => {
+    return listings.filter((item) => favoriteIds.includes(item.id));
+  }, [listings, favoriteIds]);
 
   // Filter computation
   const filteredListings = useMemo(() => {
@@ -923,6 +959,37 @@ export default function App() {
                 </div>
               </div>
             </section>
+
+            {/* Rich Google Search FAQ Accordion for Local SEO */}
+            <FAQSection
+              onSelectCategory={(cat) => {
+                setSelectedCategory(cat);
+                scrollToDirectory();
+              }}
+              onOpenAddModal={() => setIsAddModalOpen(true)}
+              onOpenRoads={() => {
+                setActiveView('roads');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                try {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('view', 'roads');
+                  window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+                } catch {
+                  // ignore
+                }
+              }}
+              onOpenBlog={() => {
+                setActiveView('blog');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                try {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('tab', 'blog');
+                  window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+                } catch {
+                  // ignore
+                }
+              }}
+            />
           </>
         ) : activeView === 'roads' ? (
           /* Dedicated Separate Page for Khairabad Main Roads, Highways & Transit */
