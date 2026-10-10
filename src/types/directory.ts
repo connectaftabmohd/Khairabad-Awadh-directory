@@ -64,6 +64,10 @@ export interface CityListing {
   capacity?: string; // for marriage lawn
   facilities?: string[];
   foodType?: 'Pure Veg' | 'Veg / Non-Veg' | 'Veg' | 'Non-Veg';
+  // Roads, Connectivity & Mohalla tagging
+  roadName?: string;
+  mohalla?: string;
+  chaurahaHub?: string;
 }
 
 export interface EmergencyContact {

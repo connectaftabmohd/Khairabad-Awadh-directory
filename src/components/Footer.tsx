@@ -122,6 +122,20 @@ export const Footer: React.FC<FooterProps> = ({
             </li>
             <li>
               <button
+                onClick={() => {
+                  setActiveView('directory');
+                  setTimeout(() => {
+                    const el = document.getElementById('roads-connectivity-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
+                }}
+                className="hover:text-white transition-colors text-amber-300 font-medium"
+              >
+                🛣️ Main Roads &amp; Connectivity Guide
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => setActiveView('about')}
                 className="hover:text-white transition-colors"
               >
@@ -161,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({
             Key Town Localities
           </h4>
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            Sitapur Road · Main Bazaar / Sabzi Mandi · Railway Station Road · Chungi Naka · Badi Sangat Marg · Civil Lines · Qadam Rasul Area
+            NH-24 Sitapur Road · BCM Road · Bahraich Road · Nai Bazar · Post Office Road · Joshitola · Sujawalpur · Arjunpur · Mevati Tola · Miyan Sarai · Purani Bazar
           </p>
           <div className="pt-2">
             <button

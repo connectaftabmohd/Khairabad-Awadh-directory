@@ -57,12 +57,14 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
   const handleShare = () => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
+      const shareUrl = `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(listing.id)}`;
+      navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -134,17 +136,36 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
       {/* Main Full Page Content Container */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         {/* Dedicated Full Image Header */}
-        <div className="relative h-64 sm:h-80 md:h-96 bg-slate-900 overflow-hidden">
+        <div className="relative h-64 sm:h-80 md:h-96 bg-slate-900 overflow-hidden group">
           {listing.images && listing.images.length > 0 ? (
             <img
-              src={listing.images[0]}
+              src={listing.images[activeImageIndex] || listing.images[0]}
               alt={listing.name}
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover filter brightness-75"
+              className="w-full h-full object-cover filter brightness-75 transition-all duration-300"
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 flex items-center justify-center text-white/40">
               <Building className="w-24 h-24 stroke-[1]" />
+            </div>
+          )}
+
+          {/* Multiple Image Selector Dots / Thumbnails */}
+          {listing.images && listing.images.length > 1 && (
+            <div className="absolute top-16 right-4 z-10 flex gap-1.5 bg-black/60 backdrop-blur-md p-1.5 rounded-xl border border-white/20">
+              {listing.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImageIndex(idx)}
+                  className={`w-7 h-7 rounded-lg overflow-hidden border transition-all ${
+                    idx === activeImageIndex
+                      ? 'border-amber-400 ring-2 ring-amber-400/50 scale-105'
+                      : 'border-white/30 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
             </div>
           )}
 
@@ -341,6 +362,33 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                   </div>
                 )}
               </div>
+
+              {/* Road & Mohalla Connectivity Details */}
+              {(listing.roadName || listing.mohalla || listing.chaurahaHub) && (
+                <div className="sm:col-span-2 p-4 rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50/70 to-indigo-50/70 space-y-2 text-xs">
+                  <div className="font-bold text-slate-900 flex items-center gap-2">
+                    <Navigation className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span>Road &amp; Mohalla Transit Details</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 text-slate-700">
+                    {listing.roadName && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-100 text-blue-900 font-semibold text-[11px] border border-blue-200">
+                        🛣️ Road: {listing.roadName}
+                      </span>
+                    )}
+                    {listing.mohalla && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-purple-100 text-purple-900 font-semibold text-[11px] border border-purple-200">
+                        🏘️ Mohalla: {listing.mohalla}
+                      </span>
+                    )}
+                    {listing.chaurahaHub && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-semibold text-[11px] border border-emerald-200">
+                        🚦 Hub Chauraha: {listing.chaurahaHub}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Services & Facilities */}

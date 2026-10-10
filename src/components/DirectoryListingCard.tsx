@@ -229,6 +229,27 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
             )}
           </div>
 
+          {/* Road, Mohalla & Chauraha Navigation Badges */}
+          {(listing.roadName || listing.mohalla || listing.chaurahaHub) && (
+            <div className="flex flex-wrap items-center gap-1 mt-2 text-[10px]">
+              {listing.roadName && (
+                <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-medium border border-blue-100">
+                  🛣️ {listing.roadName}
+                </span>
+              )}
+              {listing.mohalla && (
+                <span className="px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 font-medium border border-purple-100">
+                  🏘️ {listing.mohalla}
+                </span>
+              )}
+              {listing.chaurahaHub && (
+                <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-medium border border-emerald-100">
+                  🚦 {listing.chaurahaHub}
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Services summary */}
           {listing.services && listing.services.length > 0 && (
             <div className="text-[11px] text-slate-500 mt-2.5 flex items-center flex-wrap gap-1">

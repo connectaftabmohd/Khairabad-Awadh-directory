@@ -5,9 +5,10 @@ import { KhairabadTownInfobox } from './KhairabadTownInfobox';
 
 interface AboutKhairabadProps {
   onViewBlog?: () => void;
+  onViewRoads?: () => void;
 }
 
-export const AboutKhairabad: React.FC<AboutKhairabadProps> = ({ onViewBlog }) => {
+export const AboutKhairabad: React.FC<AboutKhairabadProps> = ({ onViewBlog, onViewRoads }) => {
   return (
     <div className="py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-12">
       {/* Title & Introduction */}
@@ -208,26 +209,44 @@ export const AboutKhairabad: React.FC<AboutKhairabadProps> = ({ onViewBlog }) =>
           <Train className="w-4 h-4" />
           <span>Geography & Strategic Transport</span>
         </div>
-        <h2 className="text-2xl font-bold font-display text-white">
-          Connectivity to Lucknow, Sitapur & Delhi
-        </h2>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <h2 className="text-2xl font-bold font-display text-white">
+            Connectivity to Lucknow, Sitapur &amp; Delhi
+          </h2>
+          {onViewRoads && (
+            <button
+              onClick={onViewRoads}
+              className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-xl transition-colors shrink-0 shadow-sm flex items-center gap-1.5"
+            >
+              <span>Explore Main Roads Guide</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-300 pt-2 leading-relaxed">
           <div className="space-y-1">
-            <h4 className="font-bold text-white text-sm">Road & Highway (NH-30)</h4>
+            <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <span>🛣️ NH-24 / Sitapur Road</span>
+            </h4>
             <p>
-              Situated directly alongside National Highway 30 (old NH-24), Khairabad enjoys seamless 24/7 bus connectivity to Lucknow (80 km south) and Bareilly / New Delhi to the north.
+              National Highway 24 (NH-30) connects Khairabad directly to Lucknow (~80 km) and Sitapur (~8 km). Anchors Khairabad Chauraha and the Barabhari Toll Plaza with round-the-clock passenger buses.
             </p>
           </div>
           <div className="space-y-1">
-            <h4 className="font-bold text-white text-sm">Railway Station (KB)</h4>
+            <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <span>🏙️ Inner Commercial Corridors</span>
+            </h4>
             <p>
-              Khairabad Avadh Railway Station provides direct passenger train connections on the Sitapur–Lucknow and Sitapur–Mailani lines under Northern and North Eastern Railway.
+              Inner-city lifelines include BCM Road (housing BCM Hospital and City Optical), Bahraich Road (near RTO Sitapur &amp; Hira Market), Post Office Road (Purani Bazar link), and Nai Bazar Road (Joshitola retail hub).
             </p>
           </div>
           <div className="space-y-1">
-            <h4 className="font-bold text-white text-sm">Local Transit</h4>
+            <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <span>🚆 Rail &amp; Local Transit</span>
+            </h4>
             <p>
-              Frequent shared battery e-rickshaws and auto-rickshaws commute continuously between Khairabad Chungi Naka and Sitapur city centre within 15 minutes.
+              Khairabad Avadh Railway Station (KB) connects to Lucknow Charbagh and Mailani. Fleets of battery e-rickshaws shuttle between Chungi Naka and all 9 municipal wards.
             </p>
           </div>
         </div>

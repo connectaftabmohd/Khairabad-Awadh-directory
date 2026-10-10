@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Search,
   Filter,
@@ -18,8 +18,10 @@ import {
   Building2,
   Code2,
   Heart,
+  Signpost,
 } from 'lucide-react';
 import { INITIAL_LISTINGS, LOCALITIES, EMERGENCY_CONTACTS } from './data/khairabadData';
+import { getAllCombinedListings, saveUserListing, deleteUserListing } from './utils/listingStorage';
 import { CategoryId, CityListing } from './types/directory';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -34,6 +36,8 @@ import { AboutKhairabad } from './components/AboutKhairabad';
 import { BlogPage } from './components/BlogPage';
 import { ListingDetailPage } from './components/ListingDetailPage';
 import { RecentlyAddedSection } from './components/RecentlyAddedSection';
+import { MainRoadsConnectivity } from './components/MainRoadsConnectivity';
+import { MAIN_ROADS_CONNECTIVITY, CHAURAHA_HUBS, TRADITIONAL_MOHALLAS } from './data/roadsConnectivityData';
 import { Footer } from './components/Footer';
 import { useReviewSystem } from './hooks/useReviewSystem';
 import { ReviewFormModal } from './components/ReviewFormModal';
@@ -48,12 +52,62 @@ import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
 export default function App() {
-  const [listings, setListings] = useState<CityListing[]>(INITIAL_LISTINGS);
+  const [listings, setListings] = useState<CityListing[]>(() => getAllCombinedListings());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [selectedLocality, setSelectedLocality] = useState('all');
+  const [selectedRoad, setSelectedRoad] = useState('all');
+  const [selectedMohalla, setSelectedMohalla] = useState('all');
+  const [selectedChauraha, setSelectedChauraha] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
+
+  // Synchronize listing detail and views from URL query parameters (?listing=...)
+  useEffect(() => {
+    const syncFromUrl = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const listingId = params.get('listing');
+        const blogSlug = params.get('blog');
+        const view = params.get('view');
+
+        if (listingId) {
+          const all = getAllCombinedListings();
+          const match = all.find((item) => item.id === listingId);
+          if (match) {
+            setSelectedListingDetail(match);
+            setActiveView('listing-detail');
+            return;
+          }
+        }
+
+        if (blogSlug) {
+          setActiveView('blog');
+          return;
+        }
+
+        if (view && ['directory', 'about', 'blog', 'weather', 'privacy', 'terms'].includes(view)) {
+          setActiveView(view as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          return;
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    syncFromUrl();
+    window.addEventListener('popstate', syncFromUrl);
+
+    const handleListingsUpdate = () => {
+      setListings(getAllCombinedListings());
+    };
+    window.addEventListener('khairabad_listings_updated', handleListingsUpdate);
+
+    return () => {
+      window.removeEventListener('popstate', syncFromUrl);
+      window.removeEventListener('khairabad_listings_updated', handleListingsUpdate);
+    };
+  }, []);
 
   // Favorites state
   const {
@@ -119,6 +173,49 @@ export default function App() {
         return false;
       }
 
+      // Road Name filter (simultaneous)
+      if (selectedRoad !== 'all') {
+        const rLower = selectedRoad.toLowerCase();
+        const roadMatch =
+          (item.roadName && item.roadName.toLowerCase().includes(rLower)) ||
+          item.address.toLowerCase().includes(rLower) ||
+          item.locality.toLowerCase().includes(rLower) ||
+          (selectedRoad.includes('NH-24') && (item.address.toLowerCase().includes('nh-24') || item.address.toLowerCase().includes('sitapur road') || item.locality.toLowerCase().includes('sitapur road'))) ||
+          (selectedRoad.includes('SH-30') && (item.address.toLowerCase().includes('sh-30') || item.address.toLowerCase().includes('biswan') || item.locality.toLowerCase().includes('biswan'))) ||
+          (selectedRoad.includes('BCM') && (item.address.toLowerCase().includes('bcm') || item.locality.toLowerCase().includes('bcm'))) ||
+          (selectedRoad.includes('Bahraich') && (item.address.toLowerCase().includes('bahraich') || item.address.toLowerCase().includes('arjunpur') || item.address.toLowerCase().includes('sujawalpur'))) ||
+          (selectedRoad.includes('Post Office') && (item.address.toLowerCase().includes('post office') || item.address.toLowerCase().includes('purani bazar'))) ||
+          (selectedRoad.includes('Nai Bazar') && (item.address.toLowerCase().includes('nai bazar') || item.address.toLowerCase().includes('joshitola')));
+        if (!roadMatch) {
+          return false;
+        }
+      }
+
+      // Traditional Mohalla filter (simultaneous)
+      if (selectedMohalla !== 'all') {
+        const mLower = selectedMohalla.toLowerCase();
+        const mohallaMatch =
+          (item.mohalla && item.mohalla.toLowerCase().includes(mLower)) ||
+          item.locality.toLowerCase().includes(mLower) ||
+          item.address.toLowerCase().includes(mLower) ||
+          item.description.toLowerCase().includes(mLower);
+        if (!mohallaMatch) {
+          return false;
+        }
+      }
+
+      // Major Chauraha Hub filter
+      if (selectedChauraha !== 'all') {
+        const cLower = selectedChauraha.toLowerCase();
+        const chaurahaMatch =
+          (item.chaurahaHub && item.chaurahaHub.toLowerCase().includes(cLower)) ||
+          item.address.toLowerCase().includes(cLower) ||
+          item.description.toLowerCase().includes(cLower);
+        if (!chaurahaMatch) {
+          return false;
+        }
+      }
+
       // Verified filter
       if (verifiedOnly && !item.verified) {
         return false;
@@ -132,24 +229,46 @@ export default function App() {
         const inSub = item.subcategory.toLowerCase().includes(q);
         const inLoc = item.locality.toLowerCase().includes(q);
         const inAddr = item.address.toLowerCase().includes(q);
+        const inRoad = (item.roadName || '').toLowerCase().includes(q);
+        const inMoh = (item.mohalla || '').toLowerCase().includes(q);
+        const inChauraha = (item.chaurahaHub || '').toLowerCase().includes(q);
         const inServices = item.services?.some((s) => s.toLowerCase().includes(q));
 
-        if (!inName && !inDesc && !inSub && !inLoc && !inAddr && !inServices) {
+        if (!inName && !inDesc && !inSub && !inLoc && !inAddr && !inRoad && !inMoh && !inChauraha && !inServices) {
           return false;
         }
       }
 
       return true;
     });
-  }, [listings, selectedCategory, selectedLocality, verifiedOnly, searchQuery, favoritesOnly, favoriteIds]);
+  }, [listings, selectedCategory, selectedLocality, selectedRoad, selectedMohalla, selectedChauraha, verifiedOnly, searchQuery, favoritesOnly, favoriteIds]);
 
   const handleAddListing = (newListing: CityListing) => {
-    setListings((prev) => [newListing, ...prev]);
+    saveUserListing(newListing);
+    const updated = getAllCombinedListings();
+    setListings(updated);
+    setSelectedListingDetail(newListing);
+    setActiveView('listing-detail');
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('listing', newListing.id);
+      window.history.pushState({ listingId: newListing.id }, '', url.toString());
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenListingDetail = (item: CityListing) => {
     setSelectedListingDetail(item);
     setActiveView('listing-detail');
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('listing', item.id);
+      window.history.pushState({ listingId: item.id }, '', url.toString());
+    } catch {
+      // ignore
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -157,6 +276,9 @@ export default function App() {
     setSearchQuery('');
     setSelectedCategory('all');
     setSelectedLocality('all');
+    setSelectedRoad('all');
+    setSelectedMohalla('all');
+    setSelectedChauraha('all');
     setVerifiedOnly(false);
     setFavoritesOnly(false);
   };
@@ -180,6 +302,13 @@ export default function App() {
         setActiveView={(v) => {
           setSelectedListingDetail(null);
           setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('listing');
+            window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+          } catch {
+            // ignore
+          }
         }}
         favoritesCount={favoritesCount}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
@@ -193,6 +322,13 @@ export default function App() {
             onBack={() => {
               setActiveView('directory');
               setSelectedListingDetail(null);
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('listing');
+                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+              } catch {
+                // ignore
+              }
             }}
             onClaim={(item) => {
               setClaimState({ isOpen: true, listing: item, mode: 'claim' });
@@ -230,6 +366,10 @@ export default function App() {
               onOpenWeather={() => {
                 setActiveView('weather');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenRoads={() => {
+                const el = document.getElementById('roads-connectivity-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
             />
 
@@ -306,6 +446,24 @@ export default function App() {
               </div>
             </section>
 
+            {/* Main Roads & Connectivity Interactive Transit Section */}
+            <MainRoadsConnectivity
+              onSelectRoad={(road) => {
+                setSelectedRoad(road);
+                scrollToDirectory();
+              }}
+              onSelectMohalla={(moh) => {
+                setSelectedMohalla(moh);
+                scrollToDirectory();
+              }}
+              onSelectChauraha={(chauraha) => {
+                setSelectedChauraha(chauraha);
+                scrollToDirectory();
+              }}
+              onOpenListingDetail={handleOpenListingDetail}
+              allListings={listings}
+            />
+
             {/* Recently Added Section */}
             <RecentlyAddedSection
               listings={listings}
@@ -330,12 +488,100 @@ export default function App() {
             <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto" id="directory-content">
               <div className="flex flex-col lg:flex-row gap-6 items-start">
                 {/* Left Filter Sidebar - Hidden on mobile, shown on desktop */}
-                <aside className="hidden lg:block w-64 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm shrink-0 space-y-5">
+                <aside className="hidden lg:block w-72 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm shrink-0 space-y-5">
+                  {/* Simultaneous Road Name & Mohalla Filter Hub (Web Design Tips 1 & 2) */}
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 p-3.5 rounded-xl border border-amber-200/80 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-bold text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+                        <Signpost className="w-3.5 h-3.5 text-amber-700" />
+                        <span>Road &amp; Mohalla Navigator</span>
+                      </h3>
+                      {(selectedRoad !== 'all' || selectedMohalla !== 'all' || selectedChauraha !== 'all') && (
+                        <button
+                          onClick={() => {
+                            setSelectedRoad('all');
+                            setSelectedMohalla('all');
+                            setSelectedChauraha('all');
+                          }}
+                          className="text-[11px] text-amber-900 font-bold hover:underline"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-amber-900/80 leading-tight">
+                      Filter businesses by both <strong>Road Name</strong> and <strong>Mohalla</strong> simultaneously.
+                    </p>
+
+                    {/* Road Dropdown */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        🛣️ Road / Artery
+                      </label>
+                      <select
+                        value={selectedRoad}
+                        onChange={(e) => setSelectedRoad(e.target.value)}
+                        className="w-full text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium text-slate-800 focus:ring-1 focus:ring-amber-500 outline-none"
+                      >
+                        <option value="all">All Roads &amp; Arteries</option>
+                        <optgroup label="Category 1: Highways &amp; Arteries">
+                          <option value="National Highway 24 (NH-24)">NH-24 (Sitapur / Lucknow Rd)</option>
+                          <option value="State Highway 30 (SH-30)">SH-30 (Biswan–Sitapur Rd)</option>
+                        </optgroup>
+                        <optgroup label="Category 2: Central Local Roads">
+                          <option value="BCM Road">BCM Hospital Road</option>
+                          <option value="Bahraich–Sitapur Road">Bahraich–Sitapur Road (RTO)</option>
+                          <option value="Post Office Road">Post Office Road (Purani Bazar)</option>
+                          <option value="Nai Bazar Road">Nai Bazar Road (Joshitola)</option>
+                        </optgroup>
+                      </select>
+                    </div>
+
+                    {/* Mohalla Dropdown */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        🏘️ Traditional Mohalla
+                      </label>
+                      <select
+                        value={selectedMohalla}
+                        onChange={(e) => setSelectedMohalla(e.target.value)}
+                        className="w-full text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium text-slate-800 focus:ring-1 focus:ring-amber-500 outline-none"
+                      >
+                        <option value="all">All Traditional Mohallas</option>
+                        {TRADITIONAL_MOHALLAS.map((moh) => (
+                          <option key={moh.id} value={moh.name}>
+                            {moh.name} ({moh.hindiName})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Chauraha Dropdown */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        🚦 Chauraha (Intersection) Hub
+                      </label>
+                      <select
+                        value={selectedChauraha}
+                        onChange={(e) => setSelectedChauraha(e.target.value)}
+                        className="w-full text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium text-slate-800 focus:ring-1 focus:ring-amber-500 outline-none"
+                      >
+                        <option value="all">All Landmark Chaurahas</option>
+                        {CHAURAHA_HUBS.map((hub) => (
+                          <option key={hub.id} value={hub.name}>
+                            {hub.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Standard Locality Filter */}
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                         <Filter className="w-3.5 h-3.5 text-amber-600" />
-                        <span>Filter Locality</span>
+                        <span>Filter Locality Area</span>
                       </h3>
                       {selectedLocality !== 'all' && (
                         <button
@@ -347,7 +593,7 @@ export default function App() {
                       )}
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                       <button
                         onClick={() => setSelectedLocality('all')}
                         className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${
@@ -431,8 +677,47 @@ export default function App() {
                 {/* Right Listings Column */}
                 <div className="flex-1 w-full space-y-4">
                   {/* Mobile Quick Filter Strip (App-Style) */}
-                  <div className="lg:hidden space-y-2">
-                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none">
+                  <div className="lg:hidden space-y-2 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">
+                          🛣️ Road Filter
+                        </label>
+                        <select
+                          value={selectedRoad}
+                          onChange={(e) => setSelectedRoad(e.target.value)}
+                          className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg p-1.5 font-medium text-slate-800"
+                        >
+                          <option value="all">All Roads</option>
+                          <option value="National Highway 24 (NH-24)">NH-24 (Sitapur Rd)</option>
+                          <option value="State Highway 30 (SH-30)">SH-30 (Biswan Rd)</option>
+                          <option value="BCM Road">BCM Hospital Road</option>
+                          <option value="Bahraich–Sitapur Road">Bahraich–Sitapur Road</option>
+                          <option value="Post Office Road">Post Office Road</option>
+                          <option value="Nai Bazar Road">Nai Bazar Road</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">
+                          🏘️ Mohalla Filter
+                        </label>
+                        <select
+                          value={selectedMohalla}
+                          onChange={(e) => setSelectedMohalla(e.target.value)}
+                          className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg p-1.5 font-medium text-slate-800"
+                        >
+                          <option value="all">All Mohallas</option>
+                          {TRADITIONAL_MOHALLAS.map((m) => (
+                            <option key={m.id} value={m.name}>
+                              {m.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none pt-1">
                       <button
                         onClick={() => setSelectedLocality('all')}
                         className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all text-xs border ${
@@ -460,10 +745,10 @@ export default function App() {
                         );
                       })}
                     </div>
-                    <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                    <div className="flex items-center gap-2 overflow-x-auto pb-0.5 text-xs">
                       <button
                         onClick={() => setVerifiedOnly(!verifiedOnly)}
-                        className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
+                        className={`px-3 py-1 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
                           verifiedOnly
                             ? 'bg-emerald-600 text-white border-emerald-700 shadow-xs'
                             : 'bg-white text-slate-700 border-slate-200'
@@ -474,7 +759,7 @@ export default function App() {
                       </button>
                       <button
                         onClick={() => setFavoritesOnly(!favoritesOnly)}
-                        className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
+                        className={`px-3 py-1 rounded-full font-semibold whitespace-nowrap transition-all text-xs border flex items-center gap-1 ${
                           favoritesOnly
                             ? 'bg-rose-500 text-white border-rose-600 shadow-xs'
                             : 'bg-white text-slate-700 border-slate-200'
@@ -486,32 +771,113 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Results Count & Active Category Badge */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 text-xs">
-                    <div className="text-slate-600">
-                      Showing <strong>{filteredListings.length}</strong>{' '}
-                      {filteredListings.length === 1 ? 'place' : 'places'} in Khairabad
-                      {selectedCategory !== 'all' && (
-                        <span>
-                          {' '}
-                          in <span className="font-bold text-amber-800 capitalize">{selectedCategory.replace('-', ' ')}</span>
-                        </span>
-                      )}
-                      {selectedLocality !== 'all' && (
-                        <span>
-                          {' '}
-                          near <span className="font-bold text-amber-800">{selectedLocality}</span>
-                        </span>
+                  {/* Results Count & Active Category / Road / Mohalla Badges */}
+                  <div className="space-y-2 bg-white p-3.5 rounded-2xl border border-slate-200 text-xs shadow-2xs">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="text-slate-600">
+                        Showing <strong>{filteredListings.length}</strong>{' '}
+                        {filteredListings.length === 1 ? 'place' : 'places'} in Khairabad
+                        {selectedCategory !== 'all' && (
+                          <span>
+                            {' '}
+                            in <span className="font-bold text-amber-800 capitalize">{selectedCategory.replace('-', ' ')}</span>
+                          </span>
+                        )}
+                        {selectedLocality !== 'all' && (
+                          <span>
+                            {' '}
+                            near <span className="font-bold text-amber-800">{selectedLocality}</span>
+                          </span>
+                        )}
+                      </div>
+
+                      {(selectedCategory !== 'all' ||
+                        selectedLocality !== 'all' ||
+                        selectedRoad !== 'all' ||
+                        selectedMohalla !== 'all' ||
+                        selectedChauraha !== 'all' ||
+                        searchQuery ||
+                        verifiedOnly ||
+                        favoritesOnly) && (
+                        <button
+                          onClick={handleResetFilters}
+                          className="text-amber-800 font-bold hover:underline flex items-center gap-1"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          <span>Clear All Filters</span>
+                        </button>
                       )}
                     </div>
 
-                    {(selectedCategory !== 'all' || selectedLocality !== 'all' || searchQuery || verifiedOnly) && (
-                      <button
-                        onClick={handleResetFilters}
-                        className="text-amber-800 font-bold hover:underline"
-                      >
-                        Clear Active Filters
-                      </button>
+                    {/* Active Filter Chips */}
+                    {(selectedRoad !== 'all' ||
+                      selectedMohalla !== 'all' ||
+                      selectedChauraha !== 'all' ||
+                      selectedLocality !== 'all' ||
+                      selectedCategory !== 'all') && (
+                      <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-100">
+                        <span className="text-[11px] font-bold text-slate-400">Active filters:</span>
+
+                        {selectedRoad !== 'all' && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-[11px] font-semibold border border-blue-200">
+                            <span>🛣️ Road: {selectedRoad}</span>
+                            <button
+                              onClick={() => setSelectedRoad('all')}
+                              className="hover:text-blue-600 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
+
+                        {selectedMohalla !== 'all' && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 text-[11px] font-semibold border border-purple-200">
+                            <span>🏘️ Mohalla: {selectedMohalla}</span>
+                            <button
+                              onClick={() => setSelectedMohalla('all')}
+                              className="hover:text-purple-600 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
+
+                        {selectedChauraha !== 'all' && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-[11px] font-semibold border border-emerald-200">
+                            <span>🚦 Chauraha: {selectedChauraha}</span>
+                            <button
+                              onClick={() => setSelectedChauraha('all')}
+                              className="hover:text-emerald-600 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
+
+                        {selectedLocality !== 'all' && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-semibold border border-amber-200">
+                            <span>Area: {selectedLocality}</span>
+                            <button
+                              onClick={() => setSelectedLocality('all')}
+                              className="hover:text-amber-700 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
+
+                        {selectedCategory !== 'all' && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-[11px] font-semibold border border-slate-200">
+                            <span>Category: {selectedCategory}</span>
+                            <button
+                              onClick={() => setSelectedCategory('all')}
+                              className="hover:text-slate-600 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
 
@@ -596,7 +962,16 @@ export default function App() {
           />
         ) : (
           /* About Khairabad View */
-          <AboutKhairabad onViewBlog={() => { setActiveView('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+          <AboutKhairabad
+            onViewBlog={() => { setActiveView('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onViewRoads={() => {
+              setActiveView('directory');
+              setTimeout(() => {
+                const el = document.getElementById('roads-connectivity-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 50);
+            }}
+          />
         )}
       </main>
 
@@ -694,6 +1069,13 @@ export default function App() {
         setActiveView={(v) => {
           setSelectedListingDetail(null);
           setActiveView(v);
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('listing');
+            window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+          } catch {
+            // ignore
+          }
         }}
         favoritesCount={favoritesCount}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}

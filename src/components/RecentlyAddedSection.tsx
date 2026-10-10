@@ -28,13 +28,14 @@ export const RecentlyAddedSection: React.FC<RecentlyAddedSectionProps> = ({
   // In our dataset, the newest gyms and csc businesses are positioned at the top of recent additions
   // Or reverse of initial array + any user added items at index 0..N
   const recentItems = React.useMemo(() => {
-    // Collect user submitted or designated recent IDs
-    const gyms = listings.filter((l) => l.category === 'gyms');
-    const cscs = listings.filter((l) => l.id.startsWith('csc-') && l.id.includes('261131')).slice(0, 8);
-    const others = listings.filter((l) => !gyms.includes(l) && !cscs.includes(l)).slice(0, 4);
+    // Prioritize user-submitted listings first, followed by new gyms and CSCs
+    const userAdded = listings.filter((l) => l.id.startsWith('kh-user-'));
+    const gyms = listings.filter((l) => l.category === 'gyms' && !userAdded.includes(l));
+    const cscs = listings.filter((l) => l.id.startsWith('csc-') && l.id.includes('261131') && !userAdded.includes(l)).slice(0, 8);
+    const others = listings.filter((l) => !userAdded.includes(l) && !gyms.includes(l) && !cscs.includes(l)).slice(0, 4);
 
-    // Combine gyms first (since user just added them), then recent CSCs, then others
-    const combined = [...gyms, ...cscs, ...others];
+    // Combine user added first, then gyms, then cscs, then others
+    const combined = [...userAdded, ...gyms, ...cscs, ...others];
     // De-duplicate by ID
     const seen = new Set<string>();
     return combined.filter((item) => {

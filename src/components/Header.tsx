@@ -80,6 +80,18 @@ export const Header: React.FC<HeaderProps> = ({
               Directory
             </button>
             <button
+              onClick={() => {
+                setActiveView('directory');
+                setTimeout(() => {
+                  const el = document.getElementById('roads-connectivity-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+              }}
+              className="hover:text-amber-700 transition-colors"
+            >
+              Roads & Transit
+            </button>
+            <button
               onClick={() => setActiveView('blog')}
               className={`hover:text-amber-700 transition-colors ${activeView === 'blog' ? 'text-slate-950 font-bold border-b-2 border-amber-500 pb-0.5' : ''}`}
             >

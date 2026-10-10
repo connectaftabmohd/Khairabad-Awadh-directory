@@ -10,6 +10,7 @@ interface HeroSectionProps {
   onOpenEmergency: () => void;
   onScrollToDirectory: () => void;
   onOpenWeather?: () => void;
+  onOpenRoads?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -19,6 +20,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenEmergency,
   onScrollToDirectory,
   onOpenWeather,
+  onOpenRoads,
 }) => {
   return (
     <section className="relative bg-slate-950 text-white min-h-[460px] flex items-center justify-center px-4 sm:px-6 py-16 overflow-hidden">
@@ -115,6 +117,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors"
           >
             💒 Marriage Lawns
+          </button>
+          <button
+            onClick={onOpenRoads}
+            className="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 transition-colors flex items-center gap-1.5"
+          >
+            <span>🛣️ Roads & Connectivity</span>
           </button>
           <button
             onClick={onOpenEmergency}

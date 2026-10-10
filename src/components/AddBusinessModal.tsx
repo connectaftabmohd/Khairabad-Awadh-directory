@@ -28,6 +28,9 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
   }, [initialCategory, isOpen]);
 
   const [locality, setLocality] = useState('Sitapur Road');
+  const [roadName, setRoadName] = useState('National Highway 24 (NH-24)');
+  const [mohalla, setMohalla] = useState('');
+  const [chaurahaHub, setChaurahaHub] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -40,20 +43,60 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX_DIM = 1200;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > MAX_DIM || height > MAX_DIM) {
+            if (width > height) {
+              height = Math.round((height * MAX_DIM) / width);
+              width = MAX_DIM;
+            } else {
+              width = Math.round((width * MAX_DIM) / height);
+              height = MAX_DIM;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.8));
+          } else {
+            resolve(event.target?.result as string);
+          }
+        };
+        img.onerror = () => resolve(event.target?.result as string);
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    Array.from(files).forEach((file) => {
-      if (!file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setUploadedImages((prev) => [...prev, event.target!.result as string]);
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith('image/')) continue;
+      try {
+        const compressed = await compressImage(file);
+        if (compressed) {
+          setUploadedImages((prev) => [...prev, compressed]);
         }
-      };
-      reader.readAsDataURL(file);
-    });
+      } catch (err) {
+        console.error('Failed to process image:', err);
+      }
+    }
   };
 
   const handleAddImageUrl = () => {
@@ -81,6 +124,9 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
       category,
       subcategory: subcategory.trim() || 'Local Business',
       locality,
+      roadName: roadName.trim() || undefined,
+      mohalla: mohalla.trim() || undefined,
+      chaurahaHub: chaurahaHub.trim() || undefined,
       address: address.trim() || `${locality}, Khairabad, UP 261131`,
       phone: phone.trim(),
       whatsapp: whatsapp.trim(),
@@ -224,6 +270,54 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                   onChange={(e) => setOpeningHours(e.target.value)}
                   placeholder="e.g. 9:00 AM – 8:30 PM"
                   className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs"
+                />
+              </div>
+            </div>
+
+            {/* Road & Mohalla Transit Mapping */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-amber-50/50 p-3 rounded-xl border border-amber-200/60">
+              <div>
+                <label className="block font-semibold mb-1 text-slate-800 text-[11px]">
+                  🛣️ Road / Corridor
+                </label>
+                <select
+                  value={roadName}
+                  onChange={(e) => setRoadName(e.target.value)}
+                  className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:border-amber-500 text-xs bg-white"
+                >
+                  <option value="National Highway 24 (NH-24)">NH-24 (Sitapur Road)</option>
+                  <option value="State Highway 30 (SH-30)">SH-30 (Biswan Road)</option>
+                  <option value="BCM Road">BCM Hospital Road</option>
+                  <option value="Bahraich–Sitapur Road">Bahraich–Sitapur Road</option>
+                  <option value="Post Office Road">Post Office Road (Purani Bazar)</option>
+                  <option value="Nai Bazar Road">Nai Bazar Road (Joshitola)</option>
+                  <option value="Other Town Link Road">Other Town Link Road</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-800 text-[11px]">
+                  🏘️ Mohalla (Quarter)
+                </label>
+                <input
+                  type="text"
+                  value={mohalla}
+                  onChange={(e) => setMohalla(e.target.value)}
+                  placeholder="e.g. Joshitola, Sujawalpur, Mevati Tola"
+                  className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:border-amber-500 text-xs bg-white"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-800 text-[11px]">
+                  🚦 Nearest Chauraha
+                </label>
+                <input
+                  type="text"
+                  value={chaurahaHub}
+                  onChange={(e) => setChaurahaHub(e.target.value)}
+                  placeholder="e.g. Khairabad Chauraha, BCM Chauraha"
+                  className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:border-amber-500 text-xs bg-white"
                 />
               </div>
             </div>
