@@ -55,9 +55,11 @@ import { RoadsTransitPage } from './components/RoadsTransitPage';
 import { FAQSection } from './components/FAQSection';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
+import { SupabaseStatusModal } from './components/SupabaseStatusModal';
 
 export default function App() {
   const [listings, setListings] = useState<CityListing[]>(() => getAllCombinedListings());
+  const [isSupabaseModalOpen, setIsSupabaseModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [selectedLocality, setSelectedLocality] = useState('all');
@@ -246,14 +248,25 @@ export default function App() {
         }
       }
 
-      // Traditional Mohalla filter (simultaneous)
+      // Traditional Mohalla / Municipal Ward filter (simultaneous)
       if (selectedMohalla !== 'all') {
         const mLower = selectedMohalla.toLowerCase();
-        const mohallaMatch =
-          (item.mohalla && item.mohalla.toLowerCase().includes(mLower)) ||
-          item.locality.toLowerCase().includes(mLower) ||
-          item.address.toLowerCase().includes(mLower) ||
-          item.description.toLowerCase().includes(mLower);
+        const aliases: string[] = [mLower];
+        if (mLower.includes('shujawalpur')) aliases.push('sujawalpur');
+        if (mLower.includes('sujawalpur')) aliases.push('shujawalpur');
+        if (mLower.includes('kaswati')) aliases.push('qasbati');
+        if (mLower.includes('qasbati')) aliases.push('kaswati');
+        if (mLower.includes('miyansray')) aliases.push('miyan sarai', 'miyan-sarai');
+        if (mLower.includes('chillay')) aliases.push('chilla');
+        if (mLower.includes('laliya')) aliases.push('laliyapur');
+
+        const mohallaMatch = aliases.some(
+          (alias) =>
+            (item.mohalla && item.mohalla.toLowerCase().includes(alias)) ||
+            item.locality.toLowerCase().includes(alias) ||
+            item.address.toLowerCase().includes(alias) ||
+            item.description.toLowerCase().includes(alias)
+        );
         if (!mohallaMatch) {
           return false;
         }
@@ -542,17 +555,17 @@ export default function App() {
                     {/* Mohalla Dropdown */}
                     <div>
                       <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                        🏘️ Traditional Mohalla
+                        🏘️ Municipal Ward &amp; Mohalla (25 Wards)
                       </label>
                       <select
                         value={selectedMohalla}
                         onChange={(e) => setSelectedMohalla(e.target.value)}
                         className="w-full text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium text-slate-800 focus:ring-1 focus:ring-amber-500 outline-none"
                       >
-                        <option value="all">All Traditional Mohallas</option>
+                        <option value="all">All 25 Municipal Wards &amp; Mohallas</option>
                         {TRADITIONAL_MOHALLAS.map((moh) => (
                           <option key={moh.id} value={moh.name}>
-                            {moh.name} ({moh.hindiName})
+                            Ward {moh.wardNumber}: {moh.name} ({moh.hindiName})
                           </option>
                         ))}
                       </select>
@@ -702,17 +715,17 @@ export default function App() {
 
                       <div>
                         <label className="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">
-                          🏘️ Mohalla Filter
+                          🏘️ Ward &amp; Mohalla (25 Wards)
                         </label>
                         <select
                           value={selectedMohalla}
                           onChange={(e) => setSelectedMohalla(e.target.value)}
                           className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg p-1.5 font-medium text-slate-800"
                         >
-                          <option value="all">All Mohallas</option>
+                          <option value="all">All 25 Wards &amp; Mohallas</option>
                           {TRADITIONAL_MOHALLAS.map((m) => (
                             <option key={m.id} value={m.name}>
-                              {m.name}
+                              {m.wardNumber}. {m.name} ({m.hindiName})
                             </option>
                           ))}
                         </select>
@@ -1189,6 +1202,12 @@ export default function App() {
       <EmergencyModal
         isOpen={isEmergencyOpen}
         onClose={() => setIsEmergencyOpen(false)}
+      />
+
+      {/* Supabase Cloud Database Status & Quick SQL Setup Modal */}
+      <SupabaseStatusModal
+        isOpen={isSupabaseModalOpen}
+        onClose={() => setIsSupabaseModalOpen(false)}
       />
 
       {/* Saved Favorites Slide Drawer */}

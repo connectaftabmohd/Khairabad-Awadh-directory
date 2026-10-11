@@ -56,6 +56,7 @@ export interface CityListing {
   images: string[];
   googleMapsUrl: string;
   verified: boolean;
+  status?: 'active' | 'under-review' | 'rejected';
   isDemo: boolean;
   featured?: boolean;
   establishedYear?: string;

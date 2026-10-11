@@ -1,5 +1,6 @@
 import { CityListing } from '../types/directory';
 import { INITIAL_LISTINGS } from '../data/khairabadData';
+import { syncListingToSupabase, fetchListingsFromSupabase } from './supabaseClient';
 
 export const USER_LISTINGS_STORAGE_KEY = 'khairabad_user_listings_v1';
 const DB_NAME = 'KhairabadDirectoryDB';
@@ -220,6 +221,15 @@ export function saveUserListing(newListing: CityListing): CityListing[] {
       console.warn('IndexedDB save background task failed:', err)
     );
 
+    // Asynchronously push to Supabase Cloud Database
+    syncListingToSupabase(newListing).then((res) => {
+      if (!res.success) {
+        console.info('Supabase sync info:', res.error);
+      }
+    }).catch((err) => {
+      console.warn('Supabase sync caught:', err);
+    });
+
     // Dispatch custom event for real-time app update
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('khairabad_listings_updated', { detail: newListing }));
@@ -316,6 +326,23 @@ export async function syncListingsFromPersistentStorage(): Promise<CityListing[]
       if (!idbListings.some((idbItem) => idbItem.id === item.id)) {
         saveListingToIndexedDB(item).catch(() => {});
       }
+    }
+
+    // 4. Try fetching remote listings from Supabase to merge cross-device cloud listings
+    try {
+      const remoteListings = await fetchListingsFromSupabase();
+      if (remoteListings.length > 0) {
+        for (const item of remoteListings) {
+          if (!mergedMap.has(item.id)) {
+            mergedMap.set(item.id, item);
+            hasNewFromIDB = true;
+            // Also cache into IndexedDB locally
+            saveListingToIndexedDB(item).catch(() => {});
+          }
+        }
+      }
+    } catch (remoteErr) {
+      console.info('Supabase background fetch status:', remoteErr);
     }
 
     const mergedList = Array.from(mergedMap.values());

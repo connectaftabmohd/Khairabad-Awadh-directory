@@ -183,7 +183,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <Building className="w-4 h-4 text-purple-500" />
-          <span>🏘️ Traditional Mohallas ({TRADITIONAL_MOHALLAS.length})</span>
+          <span>🏘️ Municipal Wards &amp; Mohallas ({TRADITIONAL_MOHALLAS.length})</span>
         </button>
       </div>
 
@@ -572,10 +572,10 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
             </div>
             <div className="space-y-1">
               <h4 className="text-sm font-bold text-purple-950">
-                Traditional Mohallas (Quarters) of Khairabad
+                Official Municipal Wards &amp; Mohallas of Khairabad (25 Wards)
               </h4>
               <p className="text-xs text-purple-900 leading-relaxed">
-                Khairabad is densely packed with heritage mohallas like Joshitola, Sujawalpur, Arjunpur, Mevati Tola, and Miyan Sarai. Filter businesses by both road and neighborhood to discover hyperlocal craftsmen, markets, and essentials.
+                All 25 official municipal wards of Nagar Palika Parishad Khairabad, including Makhupur, Shujawalpur, Joshitola, Katra, Miyansray, and Kaswati Tola. Filter businesses by both road and ward.
               </p>
             </div>
           </div>
@@ -589,7 +589,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-purple-100 text-purple-800">
-                      Traditional Mohalla
+                      Ward No. {moh.wardNumber}
                     </span>
                     <span className="text-[11px] text-slate-400">PIN 261131</span>
                   </div>
@@ -597,7 +597,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
                   <h4 className="text-base font-bold text-slate-900 font-display mb-0.5">
                     {moh.name}
                   </h4>
-                  <p className="text-xs text-slate-500 mb-2 font-serif">{moh.hindiName}</p>
+                  <p className="text-xs text-purple-700 font-semibold mb-2">{moh.hindiName}</p>
 
                   <div className="space-y-1 text-xs text-slate-600 mb-3">
                     <p>

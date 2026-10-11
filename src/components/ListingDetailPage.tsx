@@ -18,9 +18,10 @@ import {
   MessageSquarePlus,
   Star,
   Heart,
+  Copy,
+  X,
 } from 'lucide-react';
 import { CityListing, Review, ReviewFormData } from '../types/directory';
-import { KhairabadMapPreview } from './KhairabadMapPreview';
 import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { StarRatingDisplay } from './StarRatingDisplay';
@@ -57,18 +58,42 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   onToggleFavorite,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const displayImages = useMemo(() => getListingAllImages(listing), [listing]);
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      const shareUrl = `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(listing.id)}`;
-      navigator.clipboard.writeText(shareUrl);
+  const shareUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(listing.id)}`
+      : `https://khairabad.city/?listing=${encodeURIComponent(listing.id)}`;
+
+  const shareWhatsAppText = `📍 *${listing.name}*
+${listing.subcategory || listing.category} · ${listing.locality}, Khairabad
+${listing.address ? `📌 Address: ${listing.address}\n` : ''}${listing.phone ? `📞 Phone: ${listing.phone}\n` : ''}${listing.openingHours ? `⏰ Timings: ${listing.openingHours}\n` : ''}
+🔗 View full details on Khairabad City Directory:
+${shareUrl}`;
+
+  const shareTwitterText = `Discover "${listing.name}" (${listing.subcategory || listing.category}) in ${listing.locality}, Khairabad on Khairabad City Directory:`;
+
+  const handleCopyLink = async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
     }
   };
 
@@ -119,13 +144,81 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
               <span>{isFavorite ? 'Saved' : 'Save'}</span>
             </button>
           )}
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-2xs transition-colors"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
-            <span>{copied ? 'Link Copied' : 'Share Place'}</span>
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setIsShareOpen(!isShareOpen)}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors ${
+                isShareOpen
+                  ? 'bg-amber-50 text-amber-900 border-amber-300'
+                  : 'text-slate-700 bg-white hover:bg-slate-50 border-slate-200'
+              }`}
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Share Place</span>
+            </button>
+
+            {/* Social Media Share Dropdown */}
+            {isShareOpen && (
+              <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-3 z-30 animate-fadeIn space-y-2">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span className="text-xs font-bold text-slate-800">Share with Friends</span>
+                  <button
+                    onClick={() => setIsShareOpen(false)}
+                    className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* WhatsApp */}
+                <a
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareWhatsAppText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>WhatsApp</span>
+                  </div>
+                  <span className="text-[10px] bg-emerald-700/80 px-1.5 py-0.5 rounded text-emerald-100">Send Chat</span>
+                </a>
+
+                {/* Twitter / X */}
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTwitterText)}&url=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold shadow-xs transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Share2 className="w-3.5 h-3.5" />
+                    <span>Twitter / X</span>
+                  </div>
+                  <span className="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Post</span>
+                </a>
+
+                {/* Copy Link */}
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                    copied
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                    <span>{copied ? 'Link Copied!' : 'Copy Direct Link'}</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    {copied ? '✓' : 'Copy'}
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
           <button
             onClick={() => onClaim(listing)}
             className="text-xs font-bold text-slate-900 hover:text-amber-800 px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-amber-50 transition-colors"
@@ -433,14 +526,6 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                 </div>
               </div>
             )}
-
-            {/* Dedicated Location Map Visualization */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold font-display text-slate-900">
-                Khairabad Town Map &amp; Spatial Orientation
-              </h3>
-              <KhairabadMapPreview listing={listing} />
-            </div>
 
             {/* Customer Ratings & Reviews Section */}
             <ReviewListSection

@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, Upload, Trash2, Image as ImageIcon } from 'lucide-react';
+import { X, CheckCircle, Upload, Trash2, Loader2, Clock, ShieldCheck, Share2, Copy, Check } from 'lucide-react';
 import { CategoryId, CityListing } from '../types/directory';
 import { CATEGORIES, LOCALITIES } from '../data/khairabadData';
+import { TRADITIONAL_MOHALLAS } from '../data/roadsConnectivityData';
+import { syncListingToSupabase } from '../utils/supabaseClient';
+
+// Clean SVG icon for WhatsApp branding
+const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.888 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.456 5.711 1.457h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+  </svg>
+);
+
+// Clean SVG icon for Twitter / X branding
+const TwitterXIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 interface AddBusinessModalProps {
   isOpen: boolean;
@@ -38,11 +54,12 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
   const [description, setDescription] = useState('');
   const [servicesInput, setServicesInput] = useState('');
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
-  const [imageUrlInput, setImageUrlInput] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
   const [lastAddedListingId, setLastAddedListingId] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [supabaseSynced, setSupabaseSynced] = useState<boolean | null>(null);
 
   if (!isOpen) return null;
 
@@ -103,19 +120,13 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
     }
   };
 
-  const handleAddImageUrl = () => {
-    if (imageUrlInput.trim()) {
-      setUploadedImages((prev) => [...prev, imageUrlInput.trim()]);
-      setImageUrlInput('');
-    }
-  };
-
   const handleRemoveImage = (index: number) => {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const services = servicesInput
       .split(',')
@@ -142,20 +153,48 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
         `${name.trim()} Khairabad Sitapur`
       )}`,
       verified: false,
+      status: 'under-review',
       isDemo: false,
     };
 
     setLastAddedListingId(newListing.id);
     onAddListing(newListing);
-    setIsSuccess(true);
+
+    // Sync to Supabase project vyyuvanyyexkdnjmhkdz
+    try {
+      const res = await syncListingToSupabase(newListing);
+      setSupabaseSynced(res.success);
+    } catch {
+      setSupabaseSynced(false);
+    } finally {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }
   };
 
-  const handleCopyListingLink = () => {
-    if (lastAddedListingId && typeof window !== 'undefined') {
-      const url = `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(lastAddedListingId)}`;
-      navigator.clipboard.writeText(url);
-      setCopiedLink(true);
-      setTimeout(() => setCopiedLink(false), 2500);
+  const shareUrl =
+    lastAddedListingId && typeof window !== 'undefined'
+      ? `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(lastAddedListingId)}`
+      : 'https://khairabad.city/';
+
+  const handleCopyListingLink = async () => {
+    if (typeof window !== 'undefined') {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = shareUrl;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2500);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
     }
   };
 
@@ -168,7 +207,6 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
     setDescription('');
     setServicesInput('');
     setUploadedImages([]);
-    setImageUrlInput('');
     setLastAddedListingId(null);
     setCopiedLink(false);
     onClose();
@@ -195,42 +233,139 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
         </div>
 
         {isSuccess ? (
-          <div className="text-center py-6 space-y-4">
-            <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
-              <CheckCircle className="w-8 h-8" />
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-slate-900">Place Added &amp; Saved Successfully!</h4>
-              <p className="text-xs text-slate-600 max-w-md mx-auto mt-1">
-                <strong>&quot;{name}&quot;</strong> has been saved directly to your device&#39;s persistent local database (IndexedDB &amp; offline storage).
-              </p>
-            </div>
-
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-left text-xs text-amber-950 space-y-1.5 max-w-md mx-auto">
-              <div className="font-bold flex items-center gap-1.5">
-                <span>✓ Always Available on This Device</span>
+          <div className="text-center py-5 space-y-4 animate-in fade-in zoom-in-95 duration-200">
+            {/* Success icon & Status Header */}
+            <div className="relative mx-auto w-16 h-16">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600 shadow-inner">
+                <CheckCircle className="w-9 h-9" />
               </div>
-              <p className="text-[11px] text-amber-900 leading-relaxed">
-                Even if you close or reopen your browser, this listing will remain saved and searchable. You can also share the direct link below.
+              <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white rounded-full p-1 border-2 border-white shadow-xs">
+                <Clock className="w-3.5 h-3.5 animate-pulse" />
+              </div>
+            </div>
+
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-2">
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Listing Submitted Successfully</span>
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 font-display">
+                Listing Under Review
+              </h4>
+              <p className="text-xs text-slate-600 max-w-md mx-auto mt-1 leading-relaxed">
+                Thank you! <strong>&quot;{name}&quot;</strong> has been received and entered into our verification queue. It is now saved locally &amp; synced with the Khairabad directory.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <button
-                onClick={resetAndClose}
-                className="w-full sm:w-auto px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold shadow-xs"
-              >
-                View in Directory
-              </button>
-              {lastAddedListingId && (
+            {/* Listing Under Review Status Card */}
+            <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-4 text-left text-xs space-y-2.5 max-w-md mx-auto">
+              <div className="flex items-center justify-between">
+                <div className="font-bold flex items-center gap-2 text-amber-950">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping" />
+                  <span>Current Status: Under Review (समीक्षाधीन)</span>
+                </div>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-amber-200/80 text-amber-900 border border-amber-300">
+                  Pending Verification
+                </span>
+              </div>
+
+              <p className="text-[11px] text-amber-900/90 leading-relaxed">
+                Our local moderators review business phone numbers, street location ({locality}), and opening hours to prevent duplicate spam and keep Khairabad Portal trusted for all residents.
+              </p>
+
+              <div className="pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-amber-950 font-medium">
+                <span className="flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Estimated verification:</span>
+                </span>
+                <span className="font-bold text-emerald-800">Within 12–24 Hours</span>
+              </div>
+            </div>
+
+            {/* Quick Share Menu */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 max-w-md mx-auto text-left">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Share2 className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Share Preview Link</span>
+                </span>
+                <span className="text-[10px] text-slate-500">ID: {lastAddedListingId?.slice(-8)}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyListingLink}
-                  className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold border border-slate-300 flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2 px-3 bg-white hover:bg-slate-100 text-slate-800 rounded-xl text-xs font-semibold border border-slate-200 flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
                 >
-                  <span>{copiedLink ? '✓ Link Copied!' : 'Copy Direct Link'}</span>
+                  {copiedLink ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700 font-bold">Link Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Copy Link</span>
+                    </>
+                  )}
                 </button>
-              )}
+
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(
+                    `📍 Reviewing new listing: *${name}* (${subcategory || category}) in ${locality}, Khairabad.\nCheck it out: ${shareUrl}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+                  title="Share on WhatsApp"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `New place "${name}" added in ${locality}, Khairabad! Currently under review.`
+                  )}&url=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+                  title="Share on X"
+                >
+                  <TwitterXIcon className="w-3.5 h-3.5" />
+                  <span>X / Post</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={resetAndClose}
+                className="w-full sm:w-auto px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold shadow-xs transition-colors"
+              >
+                Done &amp; View in Directory
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSuccess(false);
+                  setName('');
+                  setAddress('');
+                  setPhone('');
+                  setWhatsapp('');
+                  setDescription('');
+                  setServicesInput('');
+                  setUploadedImages([]);
+                  setLastAddedListingId(null);
+                  setCopiedLink(false);
+                }}
+                className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition-colors"
+              >
+                Add Another Place
+              </button>
             </div>
           </div>
         ) : (
@@ -336,15 +471,23 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
 
               <div>
                 <label className="block font-semibold mb-1 text-slate-800 text-[11px]">
-                  🏘️ Mohalla (Quarter)
+                  🏘️ Municipal Ward / Mohalla
                 </label>
                 <input
                   type="text"
+                  list="official-mohalla-list"
                   value={mohalla}
                   onChange={(e) => setMohalla(e.target.value)}
-                  placeholder="e.g. Joshitola, Sujawalpur, Mevati Tola"
+                  placeholder="e.g. Joshitola, Shujawalpur, Makhupur..."
                   className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:border-amber-500 text-xs bg-white"
                 />
+                <datalist id="official-mohalla-list">
+                  {TRADITIONAL_MOHALLAS.map((m) => (
+                    <option key={m.id} value={m.name}>
+                      Ward {m.wardNumber}: {m.name} ({m.hindiName})
+                    </option>
+                  ))}
+                </datalist>
               </div>
 
               <div>
@@ -413,49 +556,23 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                 </span>
               </label>
 
-              {/* Upload Dropzone + URL Option */}
-              <div className="flex flex-col sm:flex-row items-stretch gap-2.5">
-                <label className="flex-1 flex flex-col items-center justify-center p-4 border-2 border-dashed border-amber-300 hover:border-amber-500 rounded-2xl bg-amber-50/50 hover:bg-amber-50/80 transition-all cursor-pointer group text-center">
-                  <Upload className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform mb-1" />
-                  <span className="text-xs font-bold text-slate-800">
-                    Click to Upload Photo
-                  </span>
-                  <span className="text-[10px] text-slate-500">
-                    PNG, JPG, WebP from your device
-                  </span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageFileChange}
-                    className="hidden"
-                  />
-                </label>
-
-                {/* Paste Direct URL */}
-                <div className="sm:w-52 flex flex-col justify-between p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-1.5">
-                  <span className="text-[10px] font-semibold text-slate-600 flex items-center gap-1">
-                    <ImageIcon className="w-3 h-3 text-slate-500" />
-                    Or Paste Image URL
-                  </span>
-                  <div className="flex gap-1">
-                    <input
-                      type="url"
-                      value={imageUrlInput}
-                      onChange={(e) => setImageUrlInput(e.target.value)}
-                      placeholder="https://..."
-                      className="flex-1 p-1.5 text-[11px] border border-slate-300 rounded-lg outline-none bg-white focus:border-amber-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddImageUrl}
-                      className="px-2.5 py-1 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-black"
-                    >
-                      Add
-                    </button>
-                  </div>
-                </div>
-              </div>
+              {/* Upload Dropzone */}
+              <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-amber-300 hover:border-amber-500 rounded-2xl bg-amber-50/50 hover:bg-amber-50/80 transition-all cursor-pointer group text-center">
+                <Upload className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform mb-1" />
+                <span className="text-xs font-bold text-slate-800">
+                  Click to Upload Photo
+                </span>
+                <span className="text-[10px] text-slate-500">
+                  PNG, JPG, WebP from your device
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageFileChange}
+                  className="hidden"
+                />
+              </label>
 
               {/* Uploaded Images Preview Strip */}
               {uploadedImages.length > 0 && (
@@ -530,9 +647,17 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl font-bold shadow-xs transition-all"
+                disabled={isSubmitting}
+                className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl font-bold shadow-xs transition-all flex items-center gap-1.5 disabled:opacity-60"
               >
-                Submit Place Listing
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Saving to Supabase...</span>
+                  </>
+                ) : (
+                  <span>Submit Place Listing</span>
+                )}
               </button>
             </div>
           </form>

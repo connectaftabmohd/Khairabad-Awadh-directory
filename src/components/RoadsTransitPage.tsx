@@ -100,13 +100,16 @@ export const RoadsTransitPage: React.FC<RoadsTransitPageProps> = ({
   // Filter mohallas
   const filteredMohallas = useMemo(() => {
     if (!searchQuery.trim()) return TRADITIONAL_MOHALLAS;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     return TRADITIONAL_MOHALLAS.filter(
       (m) =>
         m.name.toLowerCase().includes(q) ||
         m.hindiName.toLowerCase().includes(q) ||
         m.primaryRoad.toLowerCase().includes(q) ||
         m.character.toLowerCase().includes(q) ||
+        `ward ${m.wardNumber}`.includes(q) ||
+        `ward no ${m.wardNumber}`.includes(q) ||
+        `${m.wardNumber}` === q ||
         m.highlights.some((h) => h.toLowerCase().includes(q))
     );
   }, [searchQuery]);
@@ -388,7 +391,7 @@ export const RoadsTransitPage: React.FC<RoadsTransitPageProps> = ({
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Traditional Mohallas (8)</span>
+            <span>Municipal Wards &amp; Mohallas ({TRADITIONAL_MOHALLAS.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('transit')}
@@ -951,24 +954,24 @@ export const RoadsTransitPage: React.FC<RoadsTransitPageProps> = ({
           </section>
         )}
 
-        {/* Section 4: Traditional Mohallas */}
+        {/* Section 4: Official Municipal Wards & Mohallas */}
         {(activeTab === 'all' || activeTab === 'mohallas') && (
           <section className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-3">
               <div>
                 <div className="text-xs font-bold uppercase tracking-wider text-purple-700 flex items-center gap-1.5">
                   <Layers className="w-4 h-4" />
-                  <span>Tip 2: Neighborhood Directory</span>
+                  <span>Nagar Palika Parishad Khairabad</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-display">
-                  🏘️ Traditional Mohalla Filters &amp; Connectivity
+                  🏘️ Official Municipal Wards &amp; Mohallas (Wards 1–25)
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Khairabad is densely packed with heritage mohallas. Residents and shoppers can explore each neighborhood, its primary connecting road, and trade specialties.
+                  All 25 official municipal wards of Nagar Palika Parishad Khairabad. Explore each neighborhood's character, primary road, and businesses.
                 </p>
               </div>
               <span className="text-xs font-bold text-purple-800 bg-purple-100 px-3 py-1 rounded-full shrink-0">
-                8 Mohallas
+                {TRADITIONAL_MOHALLAS.length} Official Wards
               </span>
             </div>
 
@@ -980,16 +983,17 @@ export const RoadsTransitPage: React.FC<RoadsTransitPageProps> = ({
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">
-                        Awadh Ward
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-200">
+                        Ward No. {mohalla.wardNumber}
                       </span>
+                      <span className="text-[10px] text-slate-400 font-mono">PIN 261131</span>
                     </div>
 
                     <div>
                       <h4 className="text-base font-extrabold text-slate-900">
                         {mohalla.name}
                       </h4>
-                      <p className="text-xs text-slate-500 font-medium">
+                      <p className="text-xs text-purple-700 font-semibold">
                         {mohalla.hindiName}
                       </p>
                     </div>

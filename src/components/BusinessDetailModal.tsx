@@ -15,9 +15,9 @@ import {
   MessageSquarePlus,
   Star,
   Heart,
+  Copy,
 } from 'lucide-react';
 import { CityListing, Review, ReviewFormData } from '../types/directory';
-import { KhairabadMapPreview } from './KhairabadMapPreview';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
@@ -47,17 +47,42 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   onToggleFavorite,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
   if (!listing) return null;
 
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
+  const shareUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(listing.id)}`
+      : `https://khairabad.city/?listing=${encodeURIComponent(listing.id)}`;
+
+  const shareWhatsAppText = `📍 *${listing.name}*
+${listing.subcategory || listing.category} · ${listing.locality}, Khairabad
+${listing.address ? `📌 Address: ${listing.address}\n` : ''}${listing.phone ? `📞 Phone: ${listing.phone}\n` : ''}${listing.openingHours ? `⏰ Timings: ${listing.openingHours}\n` : ''}
+🔗 View full details on Khairabad City Directory:
+${shareUrl}`;
+
+  const shareTwitterText = `Discover "${listing.name}" (${listing.subcategory || listing.category}) in ${listing.locality}, Khairabad on Khairabad City Directory:`;
+
+  const handleCopyLink = async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
     }
   };
 
@@ -93,7 +118,12 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
             <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md font-medium">
               {listing.subcategory} · {listing.locality}
             </span>
-            {listing.verified ? (
+            {listing.status === 'under-review' ? (
+              <span className="bg-amber-500/95 text-slate-950 px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-sm">
+                <Clock className="w-3.5 h-3.5" />
+                Under Review
+              </span>
+            ) : listing.verified ? (
               <span className="bg-emerald-600/90 text-white px-2.5 py-1 rounded-md font-semibold flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 Verified
@@ -198,13 +228,80 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                   <Heart className={`w-4 h-4 ${isFavorite ? 'fill-rose-500 text-rose-500' : ''}`} />
                 </button>
               )}
-              <button
-                onClick={handleShare}
-                className="p-2 border border-slate-300 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white"
-                title="Share Listing"
-              >
-                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setIsShareOpen(!isShareOpen)}
+                  className={`p-2 border rounded-xl transition-colors ${
+                    isShareOpen
+                      ? 'bg-amber-100 border-amber-300 text-amber-900'
+                      : 'border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-white'
+                  }`}
+                  title="Share Listing with Friends"
+                >
+                  <Share2 className="w-4 h-4" />
+                </button>
+
+                {isShareOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 p-3 z-30 animate-fadeIn space-y-2">
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                      <span className="text-xs font-bold text-slate-800">Share with Friends</span>
+                      <button
+                        onClick={() => setIsShareOpen(false)}
+                        className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* WhatsApp */}
+                    <a
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareWhatsAppText)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <MessageCircle className="w-3.5 h-3.5" />
+                        <span>WhatsApp</span>
+                      </div>
+                      <span className="text-[10px] bg-emerald-700/80 px-1.5 py-0.5 rounded text-emerald-100">Send Chat</span>
+                    </a>
+
+                    {/* Twitter / X */}
+                    <a
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTwitterText)}&url=${encodeURIComponent(shareUrl)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold shadow-xs transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Share2 className="w-3.5 h-3.5" />
+                        <span>Twitter / X</span>
+                      </div>
+                      <span className="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Post</span>
+                    </a>
+
+                    {/* Copy Link */}
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                        copied
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                          : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                        <span>{copied ? 'Link Copied!' : 'Copy Direct Link'}</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {copied ? '✓' : 'Copy'}
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -258,20 +355,6 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               <span>{listing.capacity}</span>
             </div>
           )}
-
-          {/* Specific Location Pin Map Component */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <h4 className="font-bold uppercase tracking-wider text-slate-700 font-display flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-red-600" />
-                <span>Khairabad Location &amp; Address Pin</span>
-              </h4>
-              <span className="text-[11px] font-bold text-amber-950 bg-amber-100 px-2 py-0.5 rounded border border-amber-300">
-                {listing.locality}
-              </span>
-            </div>
-            <KhairabadMapPreview listing={listing} />
-          </div>
 
           {/* Customer Reviews & Rating Section */}
           <div className="pt-2 border-t border-slate-100">
