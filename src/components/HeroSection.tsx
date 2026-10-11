@@ -27,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image with Fallback and Measured Scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/khairabad_hero_banner_1791046903675.jpg"
+          src="/images/khairabad_hero_banner_1791046903675.jpg"
           alt="Historic Awadh architecture in Khairabad, Uttar Pradesh"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-105"

@@ -50,7 +50,7 @@ export const AboutKhairabad: React.FC<AboutKhairabadProps> = ({ onViewBlog, onVi
 
         <div className="lg:col-span-6 overflow-hidden rounded-2xl border border-slate-200 shadow-md">
           <img
-            src="/src/assets/images/khairabad_badi_sangat_1791046924123.jpg"
+            src="/images/khairabad_badi_sangat_1791046924123.jpg"
             alt="Historic Badi Sangat architecture in Khairabad"
             referrerPolicy="no-referrer"
             className="w-full h-72 object-cover"
@@ -173,7 +173,7 @@ export const AboutKhairabad: React.FC<AboutKhairabadProps> = ({ onViewBlog, onVi
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white p-6 sm:p-8 rounded-3xl border border-slate-200">
         <div className="lg:col-span-6 order-2 lg:order-1 overflow-hidden rounded-2xl border border-slate-200 shadow-md">
           <img
-            src="/src/assets/images/khairabad_market_street_1791046938937.jpg"
+            src="/images/khairabad_market_street_1791046938937.jpg"
             alt="Traditional marketplace street in Khairabad"
             referrerPolicy="no-referrer"
             className="w-full h-72 object-cover"

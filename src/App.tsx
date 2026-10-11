@@ -20,8 +20,13 @@ import {
   Heart,
   Signpost,
 } from 'lucide-react';
-import { INITIAL_LISTINGS, LOCALITIES, EMERGENCY_CONTACTS } from './data/khairabadData';
-import { getAllCombinedListings, saveUserListing, deleteUserListing } from './utils/listingStorage';
+import { INITIAL_LISTINGS, LOCALITIES } from './data/khairabadData';
+import {
+  getAllCombinedListings,
+  saveUserListing,
+  deleteUserListing,
+  syncListingsFromPersistentStorage,
+} from './utils/listingStorage';
 import { CategoryId, CityListing } from './types/directory';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -35,7 +40,6 @@ import { EmergencyModal } from './components/EmergencyModal';
 import { AboutKhairabad } from './components/AboutKhairabad';
 import { BlogPage } from './components/BlogPage';
 import { ListingDetailPage } from './components/ListingDetailPage';
-import { RecentlyAddedSection } from './components/RecentlyAddedSection';
 import { MAIN_ROADS_CONNECTIVITY, CHAURAHA_HUBS, TRADITIONAL_MOHALLAS } from './data/roadsConnectivityData';
 import { Footer } from './components/Footer';
 import { useReviewSystem } from './hooks/useReviewSystem';
@@ -61,6 +65,7 @@ export default function App() {
   const [selectedMohalla, setSelectedMohalla] = useState('all');
   const [selectedChauraha, setSelectedChauraha] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [myPlacesOnly, setMyPlacesOnly] = useState(false);
   const [activeView, setActiveView] = useState<'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
 
   // Synchronize listing detail and views from URL query parameters (?listing=..., ?view=...)
@@ -98,6 +103,11 @@ export default function App() {
 
     syncFromUrl();
     window.addEventListener('popstate', syncFromUrl);
+
+    // Asynchronously synchronize listings from IndexedDB persistent storage
+    syncListingsFromPersistentStorage().then((allListings) => {
+      setListings(allListings);
+    });
 
     const handleListingsUpdate = () => {
       setListings(getAllCombinedListings());
@@ -191,9 +201,18 @@ export default function App() {
     return listings.filter((item) => favoriteIds.includes(item.id));
   }, [listings, favoriteIds]);
 
+  const userAddedCount = useMemo(() => {
+    return listings.filter((item) => item.id.startsWith('kh-user-')).length;
+  }, [listings]);
+
   // Filter computation
   const filteredListings = useMemo(() => {
     return listings.filter((item) => {
+      // My Added Places filter
+      if (myPlacesOnly && !item.id.startsWith('kh-user-')) {
+        return false;
+      }
+
       // Favorites filter
       if (favoritesOnly && !favoriteIds.includes(item.id)) {
         return false;
@@ -317,6 +336,7 @@ export default function App() {
     setSelectedChauraha('all');
     setVerifiedOnly(false);
     setFavoritesOnly(false);
+    setMyPlacesOnly(false);
   };
 
   const scrollToDirectory = () => {
@@ -455,54 +475,6 @@ export default function App() {
                 setAddCategoryPreselect(cat);
                 setIsAddModalOpen(true);
               }}
-            />
-
-            {/* Quick Emergency Ticker Section */}
-            <section className="py-6 px-4 sm:px-6 max-w-7xl mx-auto">
-              <div className="bg-slate-900 text-white rounded-2xl p-5 shadow-sm">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
-                  <div>
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display">
-                      Direct Emergency Dispatch
-                    </h3>
-                    <p className="text-xs text-slate-400">
-                      National, Uttar Pradesh &amp; Khairabad immediate responder hotlines
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setIsEmergencyOpen(true)}
-                    className="text-xs text-amber-400 hover:text-amber-300 font-semibold underline shrink-0"
-                  >
-                    View All Emergency Numbers &rarr;
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2.5">
-                  {EMERGENCY_CONTACTS.slice(0, 5).map((contact) => (
-                    <a
-                      key={contact.id}
-                      href={`tel:${contact.number.replace(/[^0-9]/g, '')}`}
-                      className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-colors flex flex-col justify-between group"
-                    >
-                      <span className="text-[11px] text-slate-400 truncate">{contact.title}</span>
-                      <span className="text-base font-extrabold text-amber-400 group-hover:text-amber-300">
-                        {contact.number}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Recently Added Section */}
-            <RecentlyAddedSection
-              listings={listings}
-              onSelectListing={(item) => setSelectedListing(item)}
-              onOpenAddModal={() => setIsAddModalOpen(true)}
-              onOpenListingDetail={(item) => handleOpenListingDetail(item)}
-              getListingRating={getListingRating}
-              isFavorite={isFavorite}
-              onToggleFavorite={toggleFavorite}
             />
 
             {/* Dedicated Saved Favorites Section */}
@@ -828,7 +800,8 @@ export default function App() {
                         selectedChauraha !== 'all' ||
                         searchQuery ||
                         verifiedOnly ||
-                        favoritesOnly) && (
+                        favoritesOnly ||
+                        myPlacesOnly) && (
                         <button
                           onClick={handleResetFilters}
                           className="text-amber-800 font-bold hover:underline flex items-center gap-1"
@@ -839,14 +812,45 @@ export default function App() {
                       )}
                     </div>
 
+                    {userAddedCount > 0 && (
+                      <div className="pt-1.5 flex items-center gap-2">
+                        <button
+                          onClick={() => setMyPlacesOnly(!myPlacesOnly)}
+                          className={`text-xs px-3 py-1 rounded-full font-bold transition-all flex items-center gap-1.5 ${
+                            myPlacesOnly
+                              ? 'bg-amber-500 text-slate-950 ring-2 ring-amber-400 shadow-xs'
+                              : 'bg-amber-100 text-amber-950 hover:bg-amber-200 border border-amber-300'
+                          }`}
+                        >
+                          <span>📍 View My Added Places ({userAddedCount})</span>
+                        </button>
+                        <span className="text-[11px] text-slate-500">
+                          (Saved in this browser&apos;s database)
+                        </span>
+                      </div>
+                    )}
+
                     {/* Active Filter Chips */}
                     {(selectedRoad !== 'all' ||
                       selectedMohalla !== 'all' ||
                       selectedChauraha !== 'all' ||
                       selectedLocality !== 'all' ||
-                      selectedCategory !== 'all') && (
+                      selectedCategory !== 'all' ||
+                      myPlacesOnly) && (
                       <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-100">
                         <span className="text-[11px] font-bold text-slate-400">Active filters:</span>
+
+                        {myPlacesOnly && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-200 text-amber-950 text-[11px] font-bold border border-amber-300">
+                            <span>📍 My Added Places ({userAddedCount})</span>
+                            <button
+                              onClick={() => setMyPlacesOnly(false)}
+                              className="hover:text-amber-800 font-bold ml-1"
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        )}
 
                         {selectedRoad !== 'all' && (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-[11px] font-semibold border border-blue-200">

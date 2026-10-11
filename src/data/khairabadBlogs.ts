@@ -47,7 +47,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Food & Lifestyle Desk',
-    image: '/src/assets/images/babbu_hotel_khairabad_1791570399551.jpg',
+    image: '/images/babbu_hotel_khairabad_1791570399551.jpg',
     tags: [
       'Babbu Hotel',
       'Khairabad Food',
@@ -86,7 +86,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '6 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Heritage & Historical Research Desk',
-    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
     tags: [
       'Notable People',
       'Fazl-e-Haq Khairabadi',
@@ -125,7 +125,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Heritage Desk',
-    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
     tags: ['Badi Sangat', 'Hindu Heritage', 'Akbar Era', 'Architecture']
   },
   {
@@ -154,7 +154,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Heritage Desk',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Sufism', 'Hazrat Makhdoom', 'Dargah', 'Awadh History']
   },
   {
@@ -183,7 +183,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Cultural Archive',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Qadam Rasul', 'Nawabi Architecture', 'Imambara', 'Awadh Heritage']
   },
   {
@@ -212,7 +212,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '5 min read',
     publishDate: 'October 2026',
     author: 'History & Research Committee',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['1857 Revolution', 'Fazl-e-Haq', 'Philosophy', 'Freedom Fighter']
   },
   {
@@ -241,7 +241,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Khairabad City Guide',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Indian Railways', 'Station KB', 'Transport', 'Heritage']
   },
   {
@@ -270,7 +270,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Public Health Desk',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['CHC Khairabad', 'Healthcare', 'Govt Hospital', 'Emergency 24x7']
   },
   {
@@ -299,7 +299,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Heritage Desk',
-    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
     tags: ['Chhoti Sangat', 'Bhakti Tradition', 'Ashram', 'Meditation']
   },
   {
@@ -328,7 +328,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Education & Youth Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['GIC Khairabad', 'Education', 'UP Board', 'Inter College']
   },
   {
@@ -357,7 +357,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Khairabad Heritage Desk',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Madrasa', 'Islamic Philosophy', 'Arabic Manuscript', 'Scholarship']
   },
   {
@@ -386,7 +386,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Civic Administration Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Nagar Palika', 'Town Hall', 'Civic History', 'Mughal Sarkar']
   },
   {
@@ -415,7 +415,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Culture & Handicrafts Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Handloom', 'Durrie Weaving', 'Artisans', 'Textile Heritage']
   },
   {
@@ -444,7 +444,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Local Commerce Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Sarafa Market', 'Jewellery', 'Gold & Silver', 'Shopping']
   },
   {
@@ -473,7 +473,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Khairabad City Guide',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Sabzi Mandi', 'Agriculture', 'Main Bazaar', 'Farmers']
   },
   {
@@ -502,7 +502,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Civic Administration Desk',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Thana Khairabad', 'Police', 'Law & Order', 'Safety 112']
   },
   {
@@ -531,7 +531,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Civic Administration Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['India Post', 'PIN 261131', 'Speed Post', 'IPPB Banking']
   },
   {
@@ -560,7 +560,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Food & Culture Desk',
-    image: '/src/assets/images/khairabad_hero_banner_1791046903675.jpg',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
     tags: ['Mango Groves', 'Dasheri', 'Awadh Agriculture', 'Sarayan River']
   },
   {
@@ -589,7 +589,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Geography & Ecology Desk',
-    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
     tags: ['Sarayan River', 'Geography', 'Ecology', 'Awadh River']
   },
   {
@@ -618,7 +618,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Urban Development Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Chungi Naka', 'NH-30', 'Transport', 'City Gateway']
   },
   {
@@ -647,7 +647,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '3 min read',
     publishDate: 'October 2026',
     author: 'Lifestyle & Events Desk',
-    image: '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
     tags: ['Marriage Lawns', 'Weddings', 'Awadhi Banquet', 'Events']
   },
   {
@@ -676,7 +676,7 @@ export const KHAIRABAD_BLOGS: KhairabadBlog[] = [
     readTime: '4 min read',
     publishDate: 'October 2026',
     author: 'Culinary & Culture Desk',
-    image: '/src/assets/images/khairabad_market_street_1791046938937.jpg',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
     tags: ['Food Trail', 'Biryani', 'Jalebi', 'Awadhi Cuisine', 'Street Food']
   }
 ];

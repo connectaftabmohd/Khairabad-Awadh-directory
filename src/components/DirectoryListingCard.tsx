@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CityListing } from '../types/directory';
 import { StarRatingDisplay } from './StarRatingDisplay';
+import { getListingPrimaryImage } from '../utils/categoryImages';
 
 interface DirectoryListingCardProps {
   listing: CityListing;
@@ -24,25 +25,7 @@ interface DirectoryListingCardProps {
 }
 
 export const getPlaceImage = (listing: CityListing): string => {
-  if (listing.images && listing.images.length > 0 && listing.images[0]) {
-    return listing.images[0];
-  }
-  if (listing.category === 'marriage-lawns') {
-    return '/src/assets/images/khairabad_marriage_lawn_1791567699343.jpg';
-  }
-  if (['hospitals', 'clinics', 'doctors', 'pharmacies'].includes(listing.category)) {
-    return '/src/assets/images/khairabad_hospital_chc_1791567719143.jpg';
-  }
-  if (listing.category === 'gyms') {
-    return '/src/assets/images/fitness_feed_gym_1791097586687.jpg';
-  }
-  if (['restaurants', 'markets', 'mobile-shops', 'salons', 'banks', 'cyber-cafes', 'auto-services'].includes(listing.category)) {
-    return '/src/assets/images/khairabad_market_street_1791046938937.jpg';
-  }
-  if (['religious', 'schools', 'colleges'].includes(listing.category)) {
-    return '/src/assets/images/khairabad_badi_sangat_1791046924123.jpg';
-  }
-  return '/src/assets/images/khairabad_hero_banner_1791046903675.jpg';
+  return getListingPrimaryImage(listing);
 };
 
 export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
@@ -68,8 +51,8 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
       : listing.reviews || 0;
 
   const resolvedImage = imageError
-    ? '/src/assets/images/khairabad_hero_banner_1791046903675.jpg'
-    : getPlaceImage(listing);
+    ? '/images/khairabad_market_street_1791046938937.jpg'
+    : getListingPrimaryImage(listing);
 
   return (
     <article

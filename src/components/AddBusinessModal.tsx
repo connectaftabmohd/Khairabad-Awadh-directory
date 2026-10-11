@@ -41,6 +41,9 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
   const [imageUrlInput, setImageUrlInput] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const [lastAddedListingId, setLastAddedListingId] = useState<string | null>(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+
   if (!isOpen) return null;
 
   const compressImage = (file: File): Promise<string> => {
@@ -49,7 +52,8 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
       reader.onload = (event) => {
         const img = new Image();
         img.onload = () => {
-          const MAX_DIM = 1200;
+          // Optimized for web & mobile display while keeping storage size under 40KB
+          const MAX_DIM = 800;
           let width = img.width;
           let height = img.height;
 
@@ -69,12 +73,12 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
           const ctx = canvas.getContext('2d');
           if (ctx) {
             ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', 0.8));
+            resolve(canvas.toDataURL('image/jpeg', 0.7));
           } else {
-            resolve(event.target?.result as string);
+            resolve('');
           }
         };
-        img.onerror = () => resolve(event.target?.result as string);
+        img.onerror = () => resolve('');
         img.src = event.target?.result as string;
       };
       reader.onerror = () => resolve('');
@@ -141,8 +145,18 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
       isDemo: false,
     };
 
+    setLastAddedListingId(newListing.id);
     onAddListing(newListing);
     setIsSuccess(true);
+  };
+
+  const handleCopyListingLink = () => {
+    if (lastAddedListingId && typeof window !== 'undefined') {
+      const url = `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(lastAddedListingId)}`;
+      navigator.clipboard.writeText(url);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
   };
 
   const resetAndClose = () => {
@@ -155,6 +169,8 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
     setServicesInput('');
     setUploadedImages([]);
     setImageUrlInput('');
+    setLastAddedListingId(null);
+    setCopiedLink(false);
     onClose();
   };
 
@@ -179,19 +195,42 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
         </div>
 
         {isSuccess ? (
-          <div className="text-center py-8 space-y-3">
-            <CheckCircle className="w-12 h-12 text-emerald-600 mx-auto" />
-            <h4 className="text-lg font-bold text-slate-900">Place Added Successfully!</h4>
-            <p className="text-xs text-slate-600 max-w-sm mx-auto">
-              &quot;{name}&quot; has been added to the Khairabad directory database with its photo and is now searchable and visible in the listings.
-            </p>
-            <div className="pt-2">
+          <div className="text-center py-6 space-y-4">
+            <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+              <CheckCircle className="w-8 h-8" />
+            </div>
+            <div>
+              <h4 className="text-lg font-bold text-slate-900">Place Added &amp; Saved Successfully!</h4>
+              <p className="text-xs text-slate-600 max-w-md mx-auto mt-1">
+                <strong>&quot;{name}&quot;</strong> has been saved directly to your device&#39;s persistent local database (IndexedDB &amp; offline storage).
+              </p>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-left text-xs text-amber-950 space-y-1.5 max-w-md mx-auto">
+              <div className="font-bold flex items-center gap-1.5">
+                <span>✓ Always Available on This Device</span>
+              </div>
+              <p className="text-[11px] text-amber-900 leading-relaxed">
+                Even if you close or reopen your browser, this listing will remain saved and searchable. You can also share the direct link below.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
                 onClick={resetAndClose}
-                className="px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold shadow-xs"
+                className="w-full sm:w-auto px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-500 rounded-xl text-xs font-bold shadow-xs"
               >
                 View in Directory
               </button>
+              {lastAddedListingId && (
+                <button
+                  type="button"
+                  onClick={handleCopyListingLink}
+                  className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold border border-slate-300 flex items-center justify-center gap-1.5"
+                >
+                  <span>{copiedLink ? '✓ Link Copied!' : 'Copy Direct Link'}</span>
+                </button>
+              )}
             </div>
           </div>
         ) : (

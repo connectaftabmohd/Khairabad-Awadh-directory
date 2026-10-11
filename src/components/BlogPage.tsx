@@ -137,6 +137,9 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
               alt={activeArticle.title}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/khairabad_hero_banner_1791046903675.jpg';
+              }}
             />
             <div className="absolute bottom-3 left-4 bg-black/60 backdrop-blur-sm text-white text-[11px] px-3 py-1 rounded-md">
               📍 {activeArticle.visitorInfo.location}
@@ -445,6 +448,9 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
                       alt={blog.title}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/khairabad_hero_banner_1791046903675.jpg';
+                      }}
                     />
                     <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
                       {blog.category}

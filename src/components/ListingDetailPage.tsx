@@ -25,6 +25,7 @@ import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { calculateRatingSummary } from '../utils/reviewStorage';
+import { getListingAllImages } from '../utils/categoryImages';
 
 interface ListingDetailPageProps {
   listing: CityListing;
@@ -59,6 +60,7 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  const displayImages = useMemo(() => getListingAllImages(listing), [listing]);
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
   const handleShare = () => {
@@ -137,12 +139,15 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         {/* Dedicated Full Image Header */}
         <div className="relative h-64 sm:h-80 md:h-96 bg-slate-900 overflow-hidden group">
-          {listing.images && listing.images.length > 0 ? (
+          {displayImages && displayImages.length > 0 ? (
             <img
-              src={listing.images[activeImageIndex] || listing.images[0]}
+              src={displayImages[activeImageIndex] || displayImages[0]}
               alt={listing.name}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover filter brightness-75 transition-all duration-300"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/khairabad_market_street_1791046938937.jpg';
+              }}
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 flex items-center justify-center text-white/40">
@@ -151,9 +156,9 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
           )}
 
           {/* Multiple Image Selector Dots / Thumbnails */}
-          {listing.images && listing.images.length > 1 && (
+          {displayImages && displayImages.length > 1 && (
             <div className="absolute top-16 right-4 z-10 flex gap-1.5 bg-black/60 backdrop-blur-md p-1.5 rounded-xl border border-white/20">
-              {listing.images.map((img, idx) => (
+              {displayImages.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
@@ -163,7 +168,14 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                       : 'border-white/30 opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`View ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/images/khairabad_market_street_1791046938937.jpg';
+                    }}
+                  />
                 </button>
               ))}
             </div>

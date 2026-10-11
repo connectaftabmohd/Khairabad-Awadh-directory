@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Sparkles, MapPin, Phone, ChevronLeft, ChevronRight, Plus, CheckCircle2, ArrowRight, Heart } from 'lucide-react';
 import { CityListing } from '../types/directory';
+import { getListingPrimaryImage } from '../utils/categoryImages';
 
 interface RecentlyAddedSectionProps {
   listings: CityListing[];
@@ -174,18 +175,15 @@ export const RecentlyAddedSection: React.FC<RecentlyAddedSectionProps> = ({
             >
               {/* Card Image Banner */}
               <div className="relative h-40 bg-slate-100 overflow-hidden cursor-pointer" onClick={() => onSelectListing(item)}>
-                {item.images && item.images.length > 0 ? (
-                  <img
-                    src={item.images[0]}
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-amber-50 text-amber-900 font-bold text-lg">
-                    {item.name.slice(0, 2).toUpperCase()}
-                  </div>
-                )}
+                <img
+                  src={getListingPrimaryImage(item)}
+                  alt={item.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/khairabad_market_street_1791046938937.jpg';
+                  }}
+                />
                 {/* Overlay Badges */}
                 <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
                   <span className="px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs flex items-center gap-1">
