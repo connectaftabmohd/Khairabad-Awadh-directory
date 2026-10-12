@@ -2,8 +2,8 @@ import React from 'react';
 import { Store, Heart, CloudSun, BookOpen, AlertTriangle, Info } from 'lucide-react';
 
 interface MobileBottomNavProps {
-  activeView: 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail';
-  setActiveView: (view: 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms') => void;
+  activeView: 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail' | 'admin';
+  setActiveView: (view: 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin') => void;
   favoritesCount: number;
   onOpenFavorites: () => void;
   onOpenEmergency: () => void;

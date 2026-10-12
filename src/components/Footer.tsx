@@ -149,6 +149,17 @@ export const Footer: React.FC<FooterProps> = ({
             </li>
             <li>
               <button
+                onClick={() => {
+                  setActiveView('admin');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="hover:text-white transition-colors text-amber-300 font-bold flex items-center gap-1.5"
+              >
+                <span>🛡️ Admin Palace &amp; Content Manager</span>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={onOpenEmergency}
                 className="hover:text-white transition-colors text-amber-400"
               >
@@ -169,10 +180,10 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Local Area Information */}
         <div className="space-y-2.5">
           <h4 className="text-white font-semibold text-xs uppercase tracking-wider">
-            Key Town Localities
+            Key Town Localities &amp; Famous Places
           </h4>
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            NH-24 Sitapur Road · BCM Road · Bahraich Road · Nai Bazar · Post Office Road · Joshitola · Sujawalpur · Arjunpur · Mevati Tola · Miyan Sarai · Purani Bazar
+            Nai Bazar · Lateef Market · Purani Bazar · Galla Mandi · Power House · Hira Market · Sabzi Mandi (Purani &amp; Nai Bazar) · Batto Khan Chauraha · NH-24 Sitapur Road · BCM Road · Bahraich Road · Joshitola · Sujawalpur · Miyan Sarai
           </p>
           <div className="pt-2">
             <button
@@ -191,6 +202,16 @@ export const Footer: React.FC<FooterProps> = ({
           &copy; 2026 Khairabad City Directory. All rights reserved.
         </div>
         <div className="flex items-center gap-3 text-slate-400 flex-wrap justify-center sm:justify-end">
+          <button
+            onClick={() => {
+              setActiveView('admin');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="hover:text-amber-400 transition-colors underline font-bold text-amber-400"
+          >
+            Admin Login
+          </button>
+          <span>·</span>
           <button
             onClick={() => setActiveView('privacy')}
             className="hover:text-amber-400 transition-colors underline"

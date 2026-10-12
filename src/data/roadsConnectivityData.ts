@@ -276,6 +276,16 @@ export const CHAURAHA_HUBS: ChaurahaHub[] = [
     landmarks: ['Alam Kirana Store', 'Joshitola Galli', 'Apparel & Saree Stores', 'Stationery Hub'],
     googleMapsUrl: 'https://www.google.com/maps/search/Nai+Bazar+Road+Khairabad+Sitapur',
   },
+  {
+    id: 'batto-khan-chauraha',
+    name: 'Batto Khan Chauraha',
+    hindiName: 'बट्टो ख़ान चौराहा',
+    road: 'Nai Bazar Road / Bahraich–Sitapur Link',
+    mohalla: 'Joshitola / Sujawalpur Corridor',
+    description: 'Prominent and vibrant central town crossroads connecting Nai Bazar, Lateef Market, and Sujawalpur. Busy transit junction famous for tea stalls, snack points, local commerce, and e-rickshaws.',
+    landmarks: ['Batto Khan Corner', 'Lateef Market Link', 'Nai Bazar Extension', 'E-Rickshaw Stand', 'Tea & Refreshment Hub'],
+    googleMapsUrl: 'https://www.google.com/maps/search/Batto+Khan+Chauraha+Khairabad+Sitapur',
+  },
 ];
 
 export const TRADITIONAL_MOHALLAS: TraditionalMohalla[] = [

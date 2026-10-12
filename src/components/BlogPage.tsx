@@ -19,6 +19,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { KHAIRABAD_BLOGS, KhairabadBlog } from '../data/khairabadBlogs';
+import { getStoredBlogs } from '../utils/siteContentStorage';
 import { CityListing } from '../types/directory';
 
 interface BlogPageProps {
@@ -27,10 +28,19 @@ interface BlogPageProps {
 }
 
 export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listings }) => {
+  const [blogsList, setBlogsList] = useState<KhairabadBlog[]>(() => getStoredBlogs());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeArticle, setActiveArticle] = useState<KhairabadBlog | null>(null);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handleBlogsUpdate = () => {
+      setBlogsList(getStoredBlogs());
+    };
+    window.addEventListener('khairabad_blogs_updated', handleBlogsUpdate);
+    return () => window.removeEventListener('khairabad_blogs_updated', handleBlogsUpdate);
+  }, []);
 
   // SEO: Dynamic document title sync
   useEffect(() => {
@@ -54,7 +64,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
   ];
 
   const filteredBlogs = useMemo(() => {
-    return KHAIRABAD_BLOGS.filter((blog) => {
+    return blogsList.filter((blog) => {
       const matchCategory = selectedCategory === 'All' || blog.category === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
       const matchSearch =

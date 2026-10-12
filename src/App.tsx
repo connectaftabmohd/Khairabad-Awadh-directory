@@ -56,6 +56,8 @@ import { FAQSection } from './components/FAQSection';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { SupabaseStatusModal } from './components/SupabaseStatusModal';
+import { AdminPortal } from './components/AdminPortal';
+import { getSiteAnnouncement, SiteAnnouncement } from './utils/siteContentStorage';
 
 export default function App() {
   const [listings, setListings] = useState<CityListing[]>(() => getAllCombinedListings());
@@ -68,7 +70,9 @@ export default function App() {
   const [selectedChauraha, setSelectedChauraha] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [myPlacesOnly, setMyPlacesOnly] = useState(false);
-  const [activeView, setActiveView] = useState<'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail'>('directory');
+  const [visibleListingCount, setVisibleListingCount] = useState(4);
+  const [announcement, setAnnouncement] = useState<SiteAnnouncement>(() => getSiteAnnouncement());
+  const [activeView, setActiveView] = useState<'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail' | 'admin'>('directory');
 
   // Synchronize listing detail and views from URL query parameters (?listing=..., ?view=...)
   useEffect(() => {
@@ -94,8 +98,8 @@ export default function App() {
           return;
         }
 
-        if (view && ['directory', 'roads', 'about', 'blog', 'weather', 'privacy', 'terms'].includes(view)) {
-          setActiveView(view as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+        if (view && ['directory', 'roads', 'about', 'blog', 'weather', 'privacy', 'terms', 'admin'].includes(view)) {
+          setActiveView(view as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           return;
         }
       } catch {
@@ -116,9 +120,15 @@ export default function App() {
     };
     window.addEventListener('khairabad_listings_updated', handleListingsUpdate);
 
+    const handleAnnouncementUpdate = () => {
+      setAnnouncement(getSiteAnnouncement());
+    };
+    window.addEventListener('khairabad_announcement_updated', handleAnnouncementUpdate);
+
     return () => {
       window.removeEventListener('popstate', syncFromUrl);
       window.removeEventListener('khairabad_listings_updated', handleListingsUpdate);
+      window.removeEventListener('khairabad_announcement_updated', handleAnnouncementUpdate);
     };
   }, []);
 
@@ -142,6 +152,7 @@ export default function App() {
     getListingRating,
     submitReview,
     voteHelpful,
+    deleteReview,
   } = useReviewSystem();
 
   const [cardReviewModalListing, setCardReviewModalListing] = useState<CityListing | null>(null);
@@ -186,6 +197,9 @@ export default function App() {
     } else if (activeView === 'terms') {
       title = 'Terms of Service | Khairabad City Directory';
       desc = 'Terms of Service, community listing guidelines, and usage terms for Khairabad City Directory.';
+    } else if (activeView === 'admin') {
+      title = 'Admin Palace & Control Room | Khairabad Directory Management';
+      desc = 'Official Admin Palace for Khairabad City Directory: review submissions, approve or reject businesses, and manage website content.';
     } else if (activeView === 'listing-detail' && selectedListingDetail) {
       title = `${selectedListingDetail.name} – ${selectedListingDetail.category} in ${selectedListingDetail.locality || 'Khairabad'} | City Directory`;
       desc = `${selectedListingDetail.name} in Khairabad (${selectedListingDetail.locality || 'Sitapur'}). Phone: ${selectedListingDetail.phone || 'Available in directory'}. ${selectedListingDetail.address}. Verified local listing.`;
@@ -350,7 +364,23 @@ export default function App() {
     setVerifiedOnly(false);
     setFavoritesOnly(false);
     setMyPlacesOnly(false);
+    setVisibleListingCount(4);
   };
+
+  // Reset to 4 visible places whenever search or filters change
+  useEffect(() => {
+    setVisibleListingCount(4);
+  }, [
+    searchQuery,
+    selectedCategory,
+    selectedLocality,
+    selectedRoad,
+    selectedMohalla,
+    selectedChauraha,
+    verifiedOnly,
+    favoritesOnly,
+    myPlacesOnly,
+  ]);
 
   const scrollToDirectory = () => {
     setActiveView('directory');
@@ -359,6 +389,26 @@ export default function App() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  // If in Admin Palace view, render the dedicated Admin Portal
+  if (activeView === 'admin') {
+    return (
+      <AdminPortal
+        onBackToDirectory={() => {
+          setActiveView('directory');
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('view');
+            window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+          } catch {
+            // ignore
+          }
+        }}
+        reviews={reviews}
+        onDeleteReview={deleteReview}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 pb-16 md:pb-0">
@@ -370,7 +420,7 @@ export default function App() {
         activeView={activeView}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           try {
             const url = new URL(window.location.href);
             url.searchParams.delete('listing');
@@ -454,27 +504,51 @@ export default function App() {
               }}
             />
 
-            {/* Verification / Accuracy Notice Banner */}
-            <aside aria-label="Community notice" className="hidden sm:block bg-amber-50 border-y border-amber-200 py-2.5 px-4 text-xs text-amber-900">
-              <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold uppercase text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded shrink-0">
-                    Directory Notice
-                  </span>
-                  <span>
-                    Community submitted information — unverified entries are marked as <strong>Demo / Verify</strong>. Please confirm hospital timings and phone numbers before traveling.
-                  </span>
+            {/* Dynamic Community / Admin Announcement Banner */}
+            {announcement.enabled && (
+              <aside
+                aria-label="Community notice"
+                className={`hidden sm:block border-y py-2.5 px-4 text-xs ${
+                  announcement.type === 'alert'
+                    ? 'bg-rose-50 border-rose-200 text-rose-950'
+                    : announcement.type === 'event'
+                    ? 'bg-purple-50 border-purple-200 text-purple-950'
+                    : 'bg-amber-50 border-amber-200 text-amber-950'
+                }`}
+              >
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`font-bold uppercase text-[10px] px-1.5 py-0.5 rounded shrink-0 ${
+                        announcement.type === 'alert'
+                          ? 'bg-rose-200 text-rose-900'
+                          : announcement.type === 'event'
+                          ? 'bg-purple-200 text-purple-900'
+                          : 'bg-amber-200 text-amber-900'
+                      }`}
+                    >
+                      {announcement.badgeText || 'Directory Notice'}
+                    </span>
+                    <span>
+                      {announcement.hindiText}
+                      {announcement.englishText && (
+                        <span className="text-slate-600 hidden md:inline ml-1">
+                          · {announcement.englishText}
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <button
+                      onClick={() => setIsAddModalOpen(true)}
+                      className="font-semibold text-amber-900 underline hover:text-amber-950"
+                    >
+                      + Suggest a Place
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    onClick={() => setIsAddModalOpen(true)}
-                    className="font-semibold text-amber-900 underline hover:text-amber-950"
-                  >
-                    + Suggest a Place
-                  </button>
-                </div>
-              </div>
-            </aside>
+              </aside>
+            )}
 
             {/* Category Grid Section */}
             <CategoryGrid
@@ -958,20 +1032,69 @@ export default function App() {
                       </div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {filteredListings.map((listing, index) => (
-                        <React.Fragment key={listing.id}>
-                          <DirectoryListingCard
-                            listing={listing}
-                            onSelect={handleOpenListingDetail}
-                            ratingSummary={getListingRating(listing.id)}
-                            onWriteReview={(item) => setCardReviewModalListing(item)}
-                            isFavorite={isFavorite(listing.id)}
-                            onToggleFavorite={toggleFavorite}
-                          />
-                        </React.Fragment>
-                      ))}
-                    </div>
+                    <>
+                      {/* Listings Grid (Displays 4 items initially) */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {filteredListings.slice(0, visibleListingCount).map((listing) => (
+                          <React.Fragment key={listing.id}>
+                            <DirectoryListingCard
+                              listing={listing}
+                              onSelect={handleOpenListingDetail}
+                              ratingSummary={getListingRating(listing.id)}
+                              onWriteReview={(item) => setCardReviewModalListing(item)}
+                              isFavorite={isFavorite(listing.id)}
+                              onToggleFavorite={toggleFavorite}
+                            />
+                          </React.Fragment>
+                        ))}
+                      </div>
+
+                      {/* View More Button Section */}
+                      {filteredListings.length > visibleListingCount ? (
+                        <div className="pt-2 text-center bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2.5">
+                          <p className="text-xs text-slate-500 font-medium">
+                            Showing <strong className="text-slate-900">{Math.min(visibleListingCount, filteredListings.length)}</strong> of <strong className="text-slate-900">{filteredListings.length}</strong> places in Khairabad
+                          </p>
+                          <div className="flex flex-wrap items-center justify-center gap-2.5">
+                            <button
+                              onClick={() => setVisibleListingCount((prev) => prev + 4)}
+                              className="px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs transition-all shadow-xs border border-amber-500 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.99]"
+                            >
+                              <span>View More Places</span>
+                              <span className="bg-amber-950/15 text-slate-950 text-[10px] px-1.5 py-0.5 rounded-full font-black">
+                                +{Math.min(4, filteredListings.length - visibleListingCount)}
+                              </span>
+                            </button>
+                            {filteredListings.length > visibleListingCount + 4 && (
+                              <button
+                                onClick={() => setVisibleListingCount(filteredListings.length)}
+                                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition-colors border border-slate-200"
+                              >
+                                View All ({filteredListings.length})
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        filteredListings.length > 4 && (
+                          <div className="pt-2 text-center">
+                            <div className="inline-flex items-center gap-2 text-xs text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-2xs">
+                              <span>All {filteredListings.length} places displayed</span>
+                              <button
+                                onClick={() => {
+                                  setVisibleListingCount(4);
+                                  const el = document.getElementById('directory-content');
+                                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className="text-amber-800 font-bold hover:underline ml-1"
+                              >
+                                Show Less (Top 4) ↑
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -1131,7 +1254,7 @@ export default function App() {
         onOpenEmergency={() => setIsEmergencyOpen(true)}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms');
+          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           try {
             const url = new URL(window.location.href);
             url.searchParams.delete('listing');

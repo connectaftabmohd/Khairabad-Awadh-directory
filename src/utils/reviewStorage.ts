@@ -65,6 +65,16 @@ export function saveReviews(reviews: Review[]): void {
 }
 
 /**
+ * Delete a review by ID
+ */
+export function deleteStoredReview(reviewId: string): Review[] {
+  const current = getStoredReviews();
+  const updated = current.filter((r) => r.id !== reviewId);
+  saveReviews(updated);
+  return updated;
+}
+
+/**
  * Get all reviews for a specific listing
  */
 export function getReviewsForListing(allReviews: Review[], listingId: string): Review[] {

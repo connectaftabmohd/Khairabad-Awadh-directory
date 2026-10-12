@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle, Upload, Trash2, Loader2, Clock, ShieldCheck, Share2, Copy, Check } from 'lucide-react';
 import { CategoryId, CityListing } from '../types/directory';
 import { CATEGORIES, LOCALITIES } from '../data/khairabadData';
-import { TRADITIONAL_MOHALLAS } from '../data/roadsConnectivityData';
+import { TRADITIONAL_MOHALLAS, CHAURAHA_HUBS } from '../data/roadsConnectivityData';
 import { syncListingToSupabase } from '../utils/supabaseClient';
 
 // Clean SVG icon for WhatsApp branding
@@ -496,11 +496,19 @@ export const AddBusinessModal: React.FC<AddBusinessModalProps> = ({
                 </label>
                 <input
                   type="text"
+                  list="chauraha-hub-datalist"
                   value={chaurahaHub}
                   onChange={(e) => setChaurahaHub(e.target.value)}
-                  placeholder="e.g. Khairabad Chauraha, BCM Chauraha"
+                  placeholder="e.g. Batto Khan Chauraha, Nai Bazar Chauraha..."
                   className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:border-amber-500 text-xs bg-white"
                 />
+                <datalist id="chauraha-hub-datalist">
+                  {CHAURAHA_HUBS.map((h) => (
+                    <option key={h.id} value={h.name}>
+                      {h.name} ({h.hindiName})
+                    </option>
+                  ))}
+                </datalist>
               </div>
             </div>
 

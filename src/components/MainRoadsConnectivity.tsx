@@ -25,6 +25,11 @@ import {
   ChaurahaHub,
   TraditionalMohalla,
 } from '../data/roadsConnectivityData';
+import {
+  getStoredMohallas,
+  getStoredChaurahas,
+  getStoredRoads,
+} from '../utils/siteContentStorage';
 import { CityListing } from '../types/directory';
 
 interface MainRoadsConnectivityProps {
@@ -47,7 +52,23 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
   const [activeTab, setActiveTab] = useState<'all' | 'highways' | 'local-roads' | 'chaurahas' | 'mohallas'>('all');
   const [selectedRoadId, setSelectedRoadId] = useState<string | null>(null);
 
-  const filteredRoads = MAIN_ROADS_CONNECTIVITY.filter((road) => {
+  const [roads, setRoads] = useState<RoadConnectivityItem[]>(() => getStoredRoads());
+  const [chaurahas, setChaurahas] = useState<ChaurahaHub[]>(() => getStoredChaurahas());
+  const [mohallas, setMohallas] = useState<TraditionalMohalla[]>(() => getStoredMohallas());
+
+  React.useEffect(() => {
+    const handleSync = () => {
+      setRoads(getStoredRoads());
+      setChaurahas(getStoredChaurahas());
+      setMohallas(getStoredMohallas());
+    };
+    window.addEventListener('khairabad_locations_updated', handleSync);
+    return () => {
+      window.removeEventListener('khairabad_locations_updated', handleSync);
+    };
+  }, []);
+
+  const filteredRoads = roads.filter((road) => {
     if (activeTab === 'highways') return road.category === 'highways';
     if (activeTab === 'local-roads') return road.category === 'local-roads';
     return true;
@@ -135,7 +156,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <Layers className="w-4 h-4" />
-          <span>All Road Arteries ({MAIN_ROADS_CONNECTIVITY.length})</span>
+          <span>All Road Arteries ({roads.length})</span>
         </button>
 
         <button
@@ -147,7 +168,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <Car className="w-4 h-4 text-blue-500" />
-          <span>🛣️ Category 1: Highways & Transit Arteries (2)</span>
+          <span>🛣️ Category 1: Highways ({roads.filter((r) => r.category === 'highways').length})</span>
         </button>
 
         <button
@@ -159,7 +180,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <ShoppingBag className="w-4 h-4 text-amber-500" />
-          <span>🏙️ Category 2: Central Local & Commercial Roads (4)</span>
+          <span>🏙️ Category 2: Local &amp; Commercial ({roads.filter((r) => r.category === 'local-roads').length})</span>
         </button>
 
         <button
@@ -171,7 +192,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <Signpost className="w-4 h-4 text-emerald-500" />
-          <span>🚦 Landmark Chaurahas ({CHAURAHA_HUBS.length})</span>
+          <span>🚦 Landmark Chaurahas ({chaurahas.length})</span>
         </button>
 
         <button
@@ -183,7 +204,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
           }`}
         >
           <Building className="w-4 h-4 text-purple-500" />
-          <span>🏘️ Municipal Wards &amp; Mohallas ({TRADITIONAL_MOHALLAS.length})</span>
+          <span>🏘️ Municipal Wards &amp; Mohallas ({mohallas.length})</span>
         </button>
       </div>
 
@@ -198,7 +219,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
                   <span className="text-xl">🛣️</span>
                   <div>
                     <h3 className="text-base sm:text-lg font-extrabold text-slate-900 font-display">
-                      Category 1: Highways & Regional Arteries
+                      Category 1: Highways &amp; Regional Arteries
                     </h3>
                     <p className="text-xs text-slate-500">
                       Primary entry and exit corridors seeing the highest daily traffic. Built for travelers, intercity commuters, and regional logistics.
@@ -212,7 +233,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
 
               {/* Highway Cards Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {MAIN_ROADS_CONNECTIVITY.filter((r) => r.category === 'highways').map((road) => {
+                {roads.filter((r) => r.category === 'highways').map((road) => {
                   const placeCount = getListingCountForRoad(road);
                   return (
                     <div
@@ -352,7 +373,7 @@ export const MainRoadsConnectivity: React.FC<MainRoadsConnectivityProps> = ({
 
               {/* Local Roads Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {MAIN_ROADS_CONNECTIVITY.filter((r) => r.category === 'local-roads').map((road) => {
+                {roads.filter((r) => r.category === 'local-roads').map((road) => {
                   const placeCount = getListingCountForRoad(road);
                   return (
                     <div

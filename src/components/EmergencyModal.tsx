@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Phone, ShieldAlert, HeartPulse, Building2, Flame, Users, Shield } from 'lucide-react';
-import { EMERGENCY_CONTACTS } from '../data/khairabadData';
+import { getStoredEmergencyContacts } from '../utils/siteContentStorage';
+import { EmergencyContact } from '../types/directory';
 
 interface EmergencyModalProps {
   isOpen: boolean;
@@ -11,6 +12,16 @@ export const EmergencyModal: React.FC<EmergencyModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [contacts, setContacts] = useState<EmergencyContact[]>(() => getStoredEmergencyContacts());
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setContacts(getStoredEmergencyContacts());
+    };
+    window.addEventListener('khairabad_emergency_contacts_updated', handleUpdate);
+    return () => window.removeEventListener('khairabad_emergency_contacts_updated', handleUpdate);
+  }, []);
+
   if (!isOpen) return null;
 
   return (
@@ -46,7 +57,7 @@ export const EmergencyModal: React.FC<EmergencyModalProps> = ({
         </div>
 
         <div className="space-y-3">
-          {EMERGENCY_CONTACTS.map((item) => (
+          {contacts.map((item) => (
             <div
               key={item.id}
               className="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-300 bg-slate-50 flex items-center justify-between gap-4 transition-all"

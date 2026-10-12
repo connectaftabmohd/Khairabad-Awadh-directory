@@ -64,6 +64,8 @@ export interface SupabaseBusinessRow {
   images?: string[];
   google_maps_url?: string;
   verified?: boolean;
+  status?: string;
+  rejection_reason?: string;
   is_demo?: boolean;
   created_at?: string;
 }
@@ -91,6 +93,8 @@ export function listingToSupabaseRow(listing: CityListing): SupabaseBusinessRow 
     images: listing.images || [],
     google_maps_url: listing.googleMapsUrl || '',
     verified: listing.verified || false,
+    status: listing.status || 'active',
+    rejection_reason: listing.rejectionReason || '',
     is_demo: listing.isDemo || false,
   };
 }
@@ -118,8 +122,26 @@ export function supabaseRowToListing(row: SupabaseBusinessRow): CityListing {
     images: Array.isArray(row.images) ? row.images : [],
     googleMapsUrl: row.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${row.name} Khairabad`)}`,
     verified: Boolean(row.verified),
+    status: (row.status as CityListing['status']) || (row.verified ? 'active' : 'under-review'),
+    rejectionReason: row.rejection_reason || undefined,
     isDemo: Boolean(row.is_demo),
   };
+}
+
+/**
+ * Delete a listing from Supabase by ID.
+ */
+export async function deleteListingFromSupabase(id: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await supabase.from('businesses').delete().eq('id', id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { success: false, error: msg };
+  }
 }
 
 /**

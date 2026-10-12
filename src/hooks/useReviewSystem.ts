@@ -57,6 +57,14 @@ export function useReviewSystem() {
     });
   }, []);
 
+  const deleteReview = useCallback((reviewId: string) => {
+    setReviews((prev) => {
+      const next = prev.filter((r) => r.id !== reviewId);
+      saveReviews(next);
+      return next;
+    });
+  }, []);
+
   return {
     reviews,
     isLoaded,
@@ -64,5 +72,6 @@ export function useReviewSystem() {
     getListingRating,
     submitReview,
     voteHelpful,
+    deleteReview,
   };
 }

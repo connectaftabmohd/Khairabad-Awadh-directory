@@ -1,6 +1,6 @@
 import { CityListing } from '../types/directory';
 import { INITIAL_LISTINGS } from '../data/khairabadData';
-import { syncListingToSupabase, fetchListingsFromSupabase } from './supabaseClient';
+import { syncListingToSupabase, fetchListingsFromSupabase, deleteListingFromSupabase } from './supabaseClient';
 
 export const USER_LISTINGS_STORAGE_KEY = 'khairabad_user_listings_v1';
 const DB_NAME = 'KhairabadDirectoryDB';
@@ -271,19 +271,89 @@ export function deleteUserListing(id: string): CityListing[] {
 
 /**
  * Combines all user-submitted custom listings with the standard initial dataset.
+ * Filters out listings that have been rejected by the admin from public display.
  * User listings appear at the top so they are immediately discoverable.
  */
 export function getAllCombinedListings(): CityListing[] {
   const userListings = getUserListings();
-  if (userListings.length === 0) {
+  
+  // Exclude rejected listings from public view
+  const publicUserListings = userListings.filter((l) => l.status !== 'rejected');
+
+  if (publicUserListings.length === 0) {
     return INITIAL_LISTINGS;
   }
 
-  // De-duplicate: If a user edited an existing listing or added a new one
-  const userIds = new Set(userListings.map((l) => l.id));
+  // De-duplicate: If a user or admin edited an existing listing
+  const userIds = new Set(publicUserListings.map((l) => l.id));
   const remainingInitial = INITIAL_LISTINGS.filter((l) => !userIds.has(l.id));
 
-  return [...userListings, ...remainingInitial];
+  return [...publicUserListings, ...remainingInitial];
+}
+
+/**
+ * Returns ALL listings for the Admin Palace, including:
+ * - Active listings
+ * - Under-review listings (awaiting moderation)
+ * - Rejected listings
+ */
+export function getAllAdminListings(): CityListing[] {
+  const userListings = getUserListings();
+  const userIds = new Set(userListings.map((l) => l.id));
+
+  // For initial listings, assure status defaults to 'active'
+  const initialWithStatus: CityListing[] = INITIAL_LISTINGS
+    .filter((l) => !userIds.has(l.id))
+    .map((l) => ({
+      ...l,
+      status: l.status || 'active',
+      verified: l.verified ?? true,
+    }));
+
+  return [...userListings, ...initialWithStatus];
+}
+
+/**
+ * Update the review status of a listing (Admin action: approve, reject, re-evaluate).
+ */
+export function updateListingStatus(
+  id: string,
+  status: 'active' | 'under-review' | 'rejected',
+  verified?: boolean,
+  rejectionReason?: string
+): CityListing[] {
+  const allCurrent = getAllAdminListings();
+  const target = allCurrent.find((l) => l.id === id);
+
+  if (!target) return allCurrent;
+
+  const updated: CityListing = {
+    ...target,
+    status,
+    verified: verified !== undefined ? verified : (status === 'active'),
+    rejectionReason: status === 'rejected' ? (rejectionReason || 'Did not meet directory verification guidelines') : undefined,
+    reviewedAt: new Date().toISOString(),
+    reviewedBy: 'Admin',
+  };
+
+  return saveUserListing(updated);
+}
+
+/**
+ * Admin full update of any listing fields.
+ */
+export function adminUpdateListing(updatedListing: CityListing): CityListing[] {
+  return saveUserListing(updatedListing);
+}
+
+/**
+ * Admin permanent delete of a listing from local storage, IndexedDB, and Supabase cloud.
+ */
+export function adminDeleteListing(id: string): CityListing[] {
+  // Delete from Supabase in background
+  deleteListingFromSupabase(id).catch((err) => console.warn('Supabase delete background notice:', err));
+
+  return deleteUserListing(id);
 }
 
 /**
