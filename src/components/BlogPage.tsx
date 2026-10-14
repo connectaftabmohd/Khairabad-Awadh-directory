@@ -17,10 +17,26 @@ import {
   Flame,
   UserCheck,
   ExternalLink,
+  Copy,
+  Check,
+  QrCode,
 } from 'lucide-react';
 import { KHAIRABAD_BLOGS, KhairabadBlog } from '../data/khairabadBlogs';
 import { getStoredBlogs } from '../utils/siteContentStorage';
 import { CityListing } from '../types/directory';
+import {
+  WhatsAppIcon,
+  FacebookIcon,
+  TwitterXIcon,
+  TelegramIcon,
+  LinkedInIcon,
+} from './icons/SocialIcons';
+import { SocialShareModal } from './SocialShareModal';
+import {
+  getBlogShareData,
+  updateDocumentBlogSocialMeta,
+  restoreDefaultSocialMeta,
+} from '../utils/socialShare';
 
 interface BlogPageProps {
   onOpenListingDetail?: (item: CityListing) => void;
@@ -32,7 +48,13 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeArticle, setActiveArticle] = useState<KhairabadBlog | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [shareBlog, setShareBlog] = useState<KhairabadBlog | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2500);
+  };
 
   useEffect(() => {
     const handleBlogsUpdate = () => {
@@ -42,15 +64,50 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
     return () => window.removeEventListener('khairabad_blogs_updated', handleBlogsUpdate);
   }, []);
 
-  // SEO: Dynamic document title sync
+  // Synchronize deep-link (?blog=slug or #blog-slug) on mount
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const blogParam = params.get('blog');
+      const hash = window.location.hash;
+      const targetSlug = blogParam || (hash.startsWith('#blog-') ? hash.replace('#blog-', '') : null);
+      if (targetSlug && blogsList.length > 0) {
+        const found = blogsList.find((b) => b.slug === targetSlug || b.id === targetSlug);
+        if (found) {
+          setActiveArticle(found);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [blogsList]);
+
+  // SEO & OpenGraph Social Meta + URL sync
   useEffect(() => {
     if (activeArticle) {
-      document.title = `${activeArticle.title} | Khairabad Directory`;
+      updateDocumentBlogSocialMeta(activeArticle);
+      try {
+        const newUrl = `${window.location.pathname}?view=blog&blog=${encodeURIComponent(activeArticle.slug || activeArticle.id)}`;
+        window.history.replaceState({ blog: activeArticle.slug }, '', newUrl);
+      } catch {
+        // ignore
+      }
     } else {
-      document.title = 'Khairabad Heritage Guides & Notable People – City Directory';
+      restoreDefaultSocialMeta();
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('blog')) {
+          params.delete('blog');
+          params.set('view', 'blog');
+          const newUrl = `${window.location.pathname}?${params.toString()}`;
+          window.history.replaceState({}, '', newUrl);
+        }
+      } catch {
+        // ignore
+      }
     }
     return () => {
-      document.title = 'Khairabad Directory & Heritage – Notable People & City Guide';
+      restoreDefaultSocialMeta();
     };
   }, [activeArticle]);
 
@@ -76,23 +133,15 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
 
       return matchCategory && matchSearch;
     });
-  }, [searchQuery, selectedCategory]);
-
-  const handleShare = (blog: KhairabadBlog) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(`${window.location.origin}/#blog-${blog.slug}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
+  }, [blogsList, searchQuery, selectedCategory]);
 
   return (
-    <div className="py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-10">
+    <div className="py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 relative">
       {/* If an article is selected, show Full Article View */}
       {activeArticle ? (
         <article className="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden space-y-8 p-6 sm:p-10">
-          {/* Back button */}
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+          {/* Back button & Action buttons */}
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-3">
             <button
               onClick={() => setActiveArticle(null)}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-amber-800 transition-colors"
@@ -101,13 +150,29 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
               <span>Back to All Khairabad Heritage Guides</span>
             </button>
 
-            <button
-              onClick={() => handleShare(activeArticle)}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>{copied ? 'Link Copied!' : 'Share Article'}</span>
-            </button>
+            {/* Quick Share Action Buttons */}
+            <div className="flex items-center gap-2">
+              <a
+                href={getBlogShareData(activeArticle).links.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#20ba5a] px-3.5 py-1.5 rounded-xl shadow-xs transition-colors"
+                title="Share article directly to WhatsApp"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setShareBlog(activeArticle)}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-slate-950 border border-slate-200 hover:border-amber-400 bg-white hover:bg-amber-50/50 px-3.5 py-1.5 rounded-xl shadow-2xs transition-colors cursor-pointer"
+                title="Open complete multi-app social share options & QR code"
+              >
+                <Share2 className="w-3.5 h-3.5 text-amber-600" />
+                <span>Share Article</span>
+              </button>
+            </div>
           </div>
 
           {/* Article Header */}
@@ -381,6 +446,111 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
             ))}
           </div>
 
+          {/* Social Sharing Section for the Article */}
+          <div className="p-6 sm:p-8 bg-gradient-to-br from-amber-50/90 via-white to-amber-100/40 border-2 border-amber-300 rounded-3xl space-y-5 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200/80 pb-4">
+              <div>
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-900 uppercase tracking-wider">
+                  <Share2 className="w-4 h-4 text-amber-700" />
+                  <span>Share this Khairabad Story &amp; Article</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold font-display text-slate-900 mt-0.5">
+                  Spread Knowledge of Khairabad&#39;s Heritage
+                </h3>
+                <p className="text-xs text-slate-600 mt-1">
+                  Share this verified history, monument guide &amp; news spotlight with friends, family, and social networks.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShareBlog(activeArticle)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-black text-amber-400 font-bold rounded-xl text-xs transition-colors shadow-2xs self-start sm:self-auto shrink-0 cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>All Sharing Options</span>
+              </button>
+            </div>
+
+            {/* Quick 1-Click Platform Buttons */}
+            {(() => {
+              const shareInfo = getBlogShareData(activeArticle);
+              return (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
+                  {/* WhatsApp */}
+                  <a
+                    href={shareInfo.links.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <WhatsAppIcon className="w-4 h-4" />
+                    <span>WhatsApp</span>
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href={shareInfo.links.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <FacebookIcon className="w-4 h-4" />
+                    <span>Facebook</span>
+                  </a>
+
+                  {/* Twitter / X */}
+                  <a
+                    href={shareInfo.links.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 bg-black hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <TwitterXIcon className="w-4 h-4" />
+                    <span>Twitter / X</span>
+                  </a>
+
+                  {/* Telegram */}
+                  <a
+                    href={shareInfo.links.telegram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 bg-[#229ED9] hover:bg-[#1d8ec4] text-white rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <TelegramIcon className="w-4 h-4" />
+                    <span>Telegram</span>
+                  </a>
+
+                  {/* LinkedIn */}
+                  <a
+                    href={shareInfo.links.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 bg-[#0A66C2] hover:bg-[#095196] text-white rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <LinkedInIcon className="w-4 h-4" />
+                    <span>LinkedIn</span>
+                  </a>
+
+                  {/* Copy Link */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (navigator.clipboard) {
+                        navigator.clipboard.writeText(shareInfo.shareUrl);
+                        showToast('Article link copied to clipboard!');
+                      }
+                    }}
+                    className="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-[1.02] cursor-pointer"
+                  >
+                    <Copy className="w-4 h-4 text-slate-500" />
+                    <span>Copy Link</span>
+                  </button>
+                </div>
+              );
+            })()}
+          </div>
+
           {/* Bottom Navigation */}
           <div className="pt-6 border-t border-slate-200 flex justify-between items-center">
             <button
@@ -465,6 +635,20 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
                     <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
                       {blog.category}
                     </div>
+
+                    {/* Quick Share Button on Thumbnail */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShareBlog(blog);
+                      }}
+                      className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-amber-400 text-white hover:text-slate-950 rounded-full backdrop-blur-sm transition-all shadow-md cursor-pointer hover:scale-110"
+                      title={`Share "${blog.title}"`}
+                      aria-label="Share article"
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                    </button>
                   </div>
 
                   {/* Body Content */}
@@ -490,13 +674,27 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
                 <div className="px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                   <span className="flex items-center gap-1 text-[11px] text-slate-500">
                     <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                    <span className="truncate max-w-[150px]">{blog.visitorInfo.location}</span>
+                    <span className="truncate max-w-[140px]">{blog.visitorInfo.location}</span>
                   </span>
 
-                  <span className="font-bold text-slate-900 group-hover:text-amber-800 group-hover:underline flex items-center gap-0.5 shrink-0">
-                    <span>Read Guide</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShareBlog(blog);
+                      }}
+                      className="p-1.5 rounded-lg text-slate-500 hover:text-amber-800 hover:bg-amber-50 border border-slate-200 transition-colors cursor-pointer"
+                      title="Share article on social media"
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                    </button>
+
+                    <span className="font-bold text-slate-900 group-hover:text-amber-800 group-hover:underline flex items-center gap-0.5 shrink-0">
+                      <span>Read Guide</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
                 </div>
               </article>
             ))}
@@ -521,6 +719,24 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onOpenListingDetail, listing
             </div>
           )}
         </>
+      )}
+
+      {/* Centralized Multi-App Social Share Modal for Blogs & News */}
+      {shareBlog && (
+        <SocialShareModal
+          isOpen={!!shareBlog}
+          blog={shareBlog}
+          onClose={() => setShareBlog(null)}
+          onToast={(msg) => showToast(msg)}
+        />
+      )}
+
+      {/* Floating Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-amber-400 text-xs px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 animate-bounce pointer-events-none">
+          <Sparkles className="w-4 h-4 text-amber-400" />
+          <span>{toastMessage}</span>
+        </div>
       )}
     </div>
   );

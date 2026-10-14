@@ -1,7 +1,15 @@
-import React from 'react';
-import { Search, MapPin, ShieldAlert, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, MapPin, ShieldAlert, X, Sparkles } from 'lucide-react';
 import { CategoryId } from '../types/directory';
 import { WeatherWidget } from './WeatherWidget';
+
+const EXPLORE_EFFECTS = [
+  { id: '', name: 'Prismatic Diamond Glint' },
+  { id: 'effect-aurora', name: 'Aurora Borealis' },
+  { id: 'effect-fire', name: 'Solar Flame' },
+  { id: 'effect-neon', name: 'Cyber Neon' },
+  { id: 'effect-gold', name: 'Royal Gold' },
+];
 
 interface HeroSectionProps {
   searchQuery: string;
@@ -22,6 +30,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenWeather,
   onOpenRoads,
 }) => {
+  const [effectIdx, setEffectIdx] = useState(0);
+  const [showToast, setShowToast] = useState(false);
+
+  const cycleEffect = () => {
+    setEffectIdx((prev) => (prev + 1) % EXPLORE_EFFECTS.length);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2400);
+  };
   return (
     <section className="relative bg-slate-950 text-white min-h-[460px] flex items-center justify-center px-4 sm:px-6 py-16 overflow-hidden">
       {/* Background Image with Fallback and Measured Scrim */}
@@ -55,8 +71,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           )}
         </div>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-display mb-4 leading-tight text-white [text-wrap:balance]">
-          Explore Khairabad, Uttar Pradesh
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-display mb-4 leading-tight text-white [text-wrap:balance] relative">
+          <span
+            onClick={cycleEffect}
+            title={`Effect: ${EXPLORE_EFFECTS[effectIdx].name}. Click to switch effect!`}
+            className={`animate-explore-word ${EXPLORE_EFFECTS[effectIdx].id} inline-block mr-2.5 transition-all duration-300`}
+          >
+            Explore
+          </span>
+          <span>Khairabad, Sitapur (261131)</span>
+          {showToast && (
+            <span className="block mt-2 text-xs font-normal text-amber-300/90 tracking-normal font-sans animate-fade-in">
+              <span className="inline-flex items-center gap-1 bg-slate-900/90 border border-amber-400/40 px-2.5 py-0.5 rounded-full shadow-lg">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                Effect: {EXPLORE_EFFECTS[effectIdx].name}
+              </span>
+            </span>
+          )}
         </h1>
 
         <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed [text-wrap:balance]">

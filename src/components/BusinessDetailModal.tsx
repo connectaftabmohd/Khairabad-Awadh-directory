@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   X,
   Phone,
@@ -22,6 +22,8 @@ import { StarRatingDisplay } from './StarRatingDisplay';
 import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { calculateRatingSummary } from '../utils/reviewStorage';
+import { SocialShareModal } from './SocialShareModal';
+import { updateDocumentSocialMeta, restoreDefaultSocialMeta } from '../utils/socialShare';
 
 interface BusinessDetailModalProps {
   listing: CityListing | null;
@@ -52,39 +54,17 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
 
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
-  if (!listing) return null;
-
-  const shareUrl =
-    typeof window !== 'undefined'
-      ? `${window.location.origin}${window.location.pathname}?listing=${encodeURIComponent(listing.id)}`
-      : `https://khairabad.city/?listing=${encodeURIComponent(listing.id)}`;
-
-  const shareWhatsAppText = `📍 *${listing.name}*
-${listing.subcategory || listing.category} · ${listing.locality}, Khairabad
-${listing.address ? `📌 Address: ${listing.address}\n` : ''}${listing.phone ? `📞 Phone: ${listing.phone}\n` : ''}${listing.openingHours ? `⏰ Timings: ${listing.openingHours}\n` : ''}
-🔗 View full details on Khairabad City Directory:
-${shareUrl}`;
-
-  const shareTwitterText = `Discover "${listing.name}" (${listing.subcategory || listing.category}) in ${listing.locality}, Khairabad on Khairabad City Directory:`;
-
-  const handleCopyLink = async () => {
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(shareUrl);
-      } else {
-        const textArea = document.createElement('textarea');
-        textArea.value = shareUrl;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy', err);
+  // Synchronize dynamic social metadata when modal is open
+  useEffect(() => {
+    if (listing) {
+      updateDocumentSocialMeta(listing);
     }
-  };
+    return () => {
+      restoreDefaultSocialMeta();
+    };
+  }, [listing]);
+
+  if (!listing) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
@@ -230,76 +210,19 @@ ${shareUrl}`;
               )}
               <div className="relative">
                 <button
-                  onClick={() => setIsShareOpen(!isShareOpen)}
-                  className={`p-2 border rounded-xl transition-colors ${
-                    isShareOpen
-                      ? 'bg-amber-100 border-amber-300 text-amber-900'
-                      : 'border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-white'
-                  }`}
+                  onClick={() => setIsShareOpen(true)}
+                  className="p-2 border rounded-xl border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-white transition-colors"
                   title="Share Listing with Friends"
                 >
-                  <Share2 className="w-4 h-4" />
+                  <Share2 className="w-4 h-4 text-amber-600" />
                 </button>
 
                 {isShareOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 p-3 z-30 animate-fadeIn space-y-2">
-                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                      <span className="text-xs font-bold text-slate-800">Share with Friends</span>
-                      <button
-                        onClick={() => setIsShareOpen(false)}
-                        className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
-                    {/* WhatsApp */}
-                    <a
-                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareWhatsAppText)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <MessageCircle className="w-3.5 h-3.5" />
-                        <span>WhatsApp</span>
-                      </div>
-                      <span className="text-[10px] bg-emerald-700/80 px-1.5 py-0.5 rounded text-emerald-100">Send Chat</span>
-                    </a>
-
-                    {/* Twitter / X */}
-                    <a
-                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTwitterText)}&url=${encodeURIComponent(shareUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold shadow-xs transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Share2 className="w-3.5 h-3.5" />
-                        <span>Twitter / X</span>
-                      </div>
-                      <span className="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Post</span>
-                    </a>
-
-                    {/* Copy Link */}
-                    <button
-                      type="button"
-                      onClick={handleCopyLink}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
-                        copied
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
-                        <span>{copied ? 'Link Copied!' : 'Copy Direct Link'}</span>
-                      </div>
-                      <span className="text-[10px] text-slate-400 font-mono">
-                        {copied ? '✓' : 'Copy'}
-                      </span>
-                    </button>
-                  </div>
+                  <SocialShareModal
+                    listing={listing}
+                    isOpen={isShareOpen}
+                    onClose={() => setIsShareOpen(false)}
+                  />
                 )}
               </div>
             </div>

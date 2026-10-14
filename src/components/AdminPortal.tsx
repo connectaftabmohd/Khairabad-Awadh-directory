@@ -1514,6 +1514,16 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       </div>
 
                       <div className="flex items-center gap-1.5 shrink-0">
+                        <a
+                          href={`/?view=blog&blog=${encodeURIComponent(blog.slug || blog.id)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-amber-400 hover:text-slate-950 text-slate-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors"
+                          title="View and share article live on website"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>View &amp; Share</span>
+                        </a>
                         <button
                           onClick={() => {
                             setEditingBlog(blog);
