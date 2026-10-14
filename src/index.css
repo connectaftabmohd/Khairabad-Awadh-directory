@@ -149,3 +149,20 @@
   animation: explore-shine-sweep 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite, explore-float-glow 2.6s ease-in-out infinite;
 }
 
+/* Hero Background Slider Ken Burns effect */
+@keyframes hero-ken-burns {
+  0% {
+    transform: scale(1.02);
+  }
+  50% {
+    transform: scale(1.08) translate(-0.5%, -0.5%);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-hero-kenburns {
+  animation: hero-ken-burns 14s ease-in-out infinite alternate;
+}
+

@@ -1,7 +1,78 @@
-import React, { useState } from 'react';
-import { Search, MapPin, ShieldAlert, X, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  Search,
+  MapPin,
+  ShieldAlert,
+  X,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+  Camera,
+} from 'lucide-react';
 import { CategoryId } from '../types/directory';
 import { WeatherWidget } from './WeatherWidget';
+
+export interface FamousPlaceSlide {
+  id: string;
+  name: string;
+  tagline: string;
+  landmark: string;
+  image: string;
+  category?: CategoryId;
+}
+
+export const KHAIRABAD_FAMOUS_PLACES: FamousPlaceSlide[] = [
+  {
+    id: 'badi-sangat',
+    name: 'Historic Badi Sangat Mandir',
+    tagline: '17th-Century Akbar Era Temple Complex & Sacred Kund',
+    landmark: 'Badi Sangat Road',
+    image: '/images/khairabad_badi_sangat_1791046924123.jpg',
+    category: 'religious',
+  },
+  {
+    id: 'qadam-rasul-dargah',
+    name: 'Dargah Hazrat Makhdoom Shah & Qadam Rasul',
+    tagline: '15th-Century Chishti Sufi Beacon & Mughal Monument',
+    landmark: 'Qadam Rasul Road',
+    image: '/images/khairabad_hero_banner_1791046903675.jpg',
+    category: 'religious',
+  },
+  {
+    id: 'main-bazaar',
+    name: 'Khairabad Main Bazaar & Historic Chowk',
+    tagline: 'Centuries-Old Merchant Quarters & Awadhi Retail Market',
+    landmark: 'Nai Bazar / Main Market',
+    image: '/images/khairabad_market_street_1791046938937.jpg',
+    category: 'markets',
+  },
+  {
+    id: 'babbu-hotel',
+    name: 'Babbu Hotel & Chilla Sarain Chauraha',
+    tagline: 'Famous Kulhad Chai & Historic Neighborhood Junction',
+    landmark: 'Chilla Sarain Chauraha',
+    image: '/images/babbu_hotel_khairabad_1791570399551.jpg',
+    category: 'restaurants',
+  },
+  {
+    id: 'marriage-lawn',
+    name: 'Royal Awadh Marriage Lawns & Banquets',
+    tagline: 'Grand Celebration Lawns & Awadhi Architecture',
+    landmark: 'Sitapur Bypass Road',
+    image: '/images/khairabad_marriage_lawn_1791567699343.jpg',
+    category: 'marriage-lawns',
+  },
+  {
+    id: 'chc-hospital',
+    name: 'Community Health Centre (CHC) Khairabad',
+    tagline: 'Public Healthcare Landmark & 24x7 Emergency Services',
+    landmark: 'Civil Lines, Khairabad',
+    image: '/images/khairabad_hospital_chc_1791567719143.jpg',
+    category: 'hospitals',
+  },
+];
 
 const EXPLORE_EFFECTS = [
   { id: '', name: 'Prismatic Diamond Glint' },
@@ -32,24 +103,74 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const [effectIdx, setEffectIdx] = useState(0);
   const [showToast, setShowToast] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Background Slider Auto-rotation
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % KHAIRABAD_FAMOUS_PLACES.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % KHAIRABAD_FAMOUS_PLACES.length);
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + KHAIRABAD_FAMOUS_PLACES.length) % KHAIRABAD_FAMOUS_PLACES.length);
+  };
 
   const cycleEffect = () => {
     setEffectIdx((prev) => (prev + 1) % EXPLORE_EFFECTS.length);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2400);
   };
+
   return (
-    <section className="relative bg-slate-950 text-white min-h-[460px] flex items-center justify-center px-4 sm:px-6 py-16 overflow-hidden">
-      {/* Background Image with Fallback and Measured Scrim */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/khairabad_hero_banner_1791046903675.jpg"
-          alt="Historic Awadh architecture in Khairabad, Uttar Pradesh"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-slate-950/40" />
+    <section className="relative bg-slate-950 text-white min-h-[480px] flex items-center justify-center px-4 sm:px-6 py-16 overflow-hidden">
+      {/* Background Image Slider with Ken Burns & Smooth Cross-Fade */}
+      <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
+        {KHAIRABAD_FAMOUS_PLACES.map((place, idx) => (
+          <img
+            key={place.id}
+            src={place.image}
+            alt={`${place.name} - ${place.landmark}`}
+            referrerPolicy="no-referrer"
+            className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.38] contrast-105 transition-all duration-1000 ease-in-out ${
+              idx === currentSlide
+                ? 'opacity-100 scale-105 animate-hero-kenburns z-0'
+                : 'opacity-0 scale-100 pointer-events-none -z-10'
+            }`}
+          />
+        ))}
+        {/* Measured Scrim Gradient Overlay for Superior Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/75 to-slate-950/45 z-0" />
       </div>
+
+      {/* Slider Left Arrow Control */}
+      <button
+        type="button"
+        onClick={handlePrevSlide}
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-950/50 hover:bg-slate-900/90 text-white/70 hover:text-white border border-white/10 hover:border-amber-400/50 backdrop-blur-md transition-all shadow-lg hover:scale-110 cursor-pointer hidden sm:flex items-center justify-center"
+        aria-label="Previous Khairabad place"
+        title="Previous Khairabad landmark"
+      >
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
+
+      {/* Slider Right Arrow Control */}
+      <button
+        type="button"
+        onClick={handleNextSlide}
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-950/50 hover:bg-slate-900/90 text-white/70 hover:text-white border border-white/10 hover:border-amber-400/50 backdrop-blur-md transition-all shadow-lg hover:scale-110 cursor-pointer hidden sm:flex items-center justify-center"
+        aria-label="Next Khairabad place"
+        title="Next Khairabad landmark"
+      >
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
 
       <div className="relative z-10 max-w-4xl mx-auto text-center w-full">
         {/* Anti-slop clean kicker with live Sitapur/Khairabad weather badge */}
@@ -90,9 +211,66 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           )}
         </h1>
 
-        <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed [text-wrap:balance]">
+        <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-5 leading-relaxed [text-wrap:balance]">
           Find local businesses, emergency services, hospitals, marriage lawns, schools, and historic heritage places — all in one community guide.
         </p>
+
+        {/* Famous Place Background Slider Badge & UX Controls */}
+        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-6">
+          {/* Active Place Tag Button with Shortcut to Directory */}
+          <button
+            type="button"
+            onClick={() => {
+              if (KHAIRABAD_FAMOUS_PLACES[currentSlide].category) {
+                onSelectCategory(KHAIRABAD_FAMOUS_PLACES[currentSlide].category!);
+              }
+              onSearchChange(KHAIRABAD_FAMOUS_PLACES[currentSlide].name);
+              onScrollToDirectory();
+            }}
+            className="inline-flex items-center gap-2 bg-slate-900/85 hover:bg-slate-900 backdrop-blur-md border border-amber-400/40 hover:border-amber-400 px-3.5 py-1.5 rounded-full shadow-lg text-xs transition-all hover:scale-[1.02] cursor-pointer group"
+            title={`Click to find ${KHAIRABAD_FAMOUS_PLACES[currentSlide].name} in directory`}
+          >
+            <Camera className="w-3.5 h-3.5 text-amber-400 shrink-0 group-hover:scale-110 transition-transform" />
+            <span className="font-bold text-amber-300">
+              {KHAIRABAD_FAMOUS_PLACES[currentSlide].name}
+            </span>
+            <span className="text-slate-500 hidden sm:inline">·</span>
+            <span className="text-slate-300 text-[11px] hidden sm:inline">
+              {KHAIRABAD_FAMOUS_PLACES[currentSlide].landmark}
+            </span>
+            <span className="bg-amber-400/20 text-amber-300 text-[10px] font-black px-1.5 py-0.5 rounded ml-1">
+              {currentSlide + 1} / {KHAIRABAD_FAMOUS_PLACES.length}
+            </span>
+          </button>
+
+          {/* Slider Pagination Dots & Autoplay Toggle */}
+          <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full shadow-md">
+            {KHAIRABAD_FAMOUS_PLACES.map((place, idx) => (
+              <button
+                key={place.id}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                title={`View ${place.name}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  idx === currentSlide
+                    ? 'w-6 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]'
+                    : 'w-2 bg-white/40 hover:bg-white/80'
+                }`}
+                aria-label={`Go to slide ${idx + 1}: ${place.name}`}
+              />
+            ))}
+
+            <button
+              type="button"
+              onClick={() => setIsAutoPlaying((prev) => !prev)}
+              title={isAutoPlaying ? 'Pause background slider' : 'Resume background slider'}
+              className="text-white/60 hover:text-amber-400 ml-1.5 p-0.5 rounded cursor-pointer transition-colors"
+              aria-label={isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
+            >
+              {isAutoPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            </button>
+          </div>
+        </div>
 
         {/* Primary Search Container */}
         <div className="bg-white p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto text-slate-900">
