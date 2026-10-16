@@ -123,45 +123,6 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
           <span className="text-slate-300">/</span>
           <span className="font-semibold text-slate-800 truncate max-w-[200px]">{listing.name}</span>
         </div>
-
-        <div className="flex items-center gap-2">
-          {onToggleFavorite && (
-            <button
-              onClick={() => onToggleFavorite(listing.id)}
-              className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors ${
-                isFavorite
-                  ? 'bg-rose-50 text-rose-700 border-rose-300'
-                  : 'bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 border-slate-200'
-              }`}
-              title={isFavorite ? 'Remove from Saved' : 'Save to Favorites'}
-            >
-              <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
-              <span>{isFavorite ? 'Saved' : 'Save'}</span>
-            </button>
-          )}
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors text-slate-700 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer"
-            title="Share business via native device options (Web Share API)"
-          >
-            <Share2 className="w-3.5 h-3.5 text-amber-600" />
-            <span>Share</span>
-          </button>
-
-          {isShareOpen && (
-            <SocialShareModal
-              listing={listing}
-              isOpen={isShareOpen}
-              onClose={() => setIsShareOpen(false)}
-            />
-          )}
-          <button
-            onClick={() => onClaim(listing)}
-            className="text-xs font-bold text-slate-900 hover:text-amber-800 px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-amber-50 transition-colors"
-          >
-            Claim Listing
-          </button>
-        </div>
       </div>
 
       {/* Main Full Page Content Container */}
@@ -607,6 +568,15 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Social Share Fallback Modal */}
+      {isShareOpen && (
+        <SocialShareModal
+          listing={listing}
+          isOpen={isShareOpen}
+          onClose={() => setIsShareOpen(false)}
+        />
+      )}
 
       {/* Write a Review Modal */}
       <ReviewFormModal
