@@ -19,6 +19,7 @@ import { CityListing } from '../types/directory';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { getListingPrimaryImage } from '../utils/categoryImages';
 import { SocialShareModal } from './SocialShareModal';
+import { shareListingWithWebShareApi } from '../utils/socialShare';
 
 interface DirectoryListingCardProps {
   listing: CityListing;
@@ -114,16 +115,19 @@ export const DirectoryListingCard: React.FC<DirectoryListingCardProps> = ({
           <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
-                setIsShareOpen((prev) => !prev);
+                await shareListingWithWebShareApi(listing, {
+                  onFallback: () => setIsShareOpen(true),
+                  onError: () => setIsShareOpen(true),
+                });
               }}
-              className={`p-2 rounded-xl backdrop-blur-md border transition-all active:scale-90 shadow-sm ${
+              className={`p-2 rounded-xl backdrop-blur-md border transition-all active:scale-90 shadow-sm cursor-pointer ${
                 isShareOpen
                   ? 'bg-amber-500 text-white border-amber-400 shadow-amber-500/20'
                   : 'bg-white/85 hover:bg-white text-slate-700 hover:text-amber-800 border-white/50'
               }`}
-              title="Share listing on WhatsApp, Twitter, or copy link"
+              title="Share listing via device options or social apps"
               aria-label={`Share ${listing.name}`}
             >
               <Share2 className="w-4 h-4" />

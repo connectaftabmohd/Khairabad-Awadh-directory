@@ -28,7 +28,7 @@ import { StarRatingDisplay } from './StarRatingDisplay';
 import { calculateRatingSummary } from '../utils/reviewStorage';
 import { getListingAllImages } from '../utils/categoryImages';
 import { SocialShareModal } from './SocialShareModal';
-import { updateDocumentSocialMeta, restoreDefaultSocialMeta } from '../utils/socialShare';
+import { updateDocumentSocialMeta, restoreDefaultSocialMeta, shareListingWithWebShareApi } from '../utils/socialShare';
 
 interface ListingDetailPageProps {
   listing: CityListing;
@@ -61,8 +61,25 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const handleShare = async () => {
+    await shareListingWithWebShareApi(listing, {
+      onSuccess: () => {
+        setShareFeedback('Shared successfully via device options!');
+        setTimeout(() => setShareFeedback(null), 3000);
+      },
+      onFallback: () => {
+        // Fallback for browsers without native Web Share API
+        setIsShareOpen(true);
+      },
+      onError: () => {
+        setIsShareOpen(true);
+      },
+    });
+  };
 
   const displayImages = useMemo(() => getListingAllImages(listing), [listing]);
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
@@ -123,11 +140,12 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
             </button>
           )}
           <button
-            onClick={() => setIsShareOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors text-slate-700 bg-white hover:bg-slate-50 border-slate-200"
+            onClick={handleShare}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border shadow-2xs transition-colors text-slate-700 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer"
+            title="Share business via native device options (Web Share API)"
           >
             <Share2 className="w-3.5 h-3.5 text-amber-600" />
-            <span>Share Place</span>
+            <span>Share</span>
           </button>
 
           {isShareOpen && (
@@ -283,6 +301,16 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                 <span>Chat on WhatsApp</span>
               </a>
             )}
+
+            <button
+              type="button"
+              onClick={handleShare}
+              className="px-4 py-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-slate-300 hover:border-amber-400 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
+              title="Share business information via native device sharing (Web Share API)"
+            >
+              <Share2 className="w-4 h-4 text-amber-600" />
+              <span>Share Business</span>
+            </button>
 
             <button
               onClick={() => setIsReviewModalOpen(true)}
@@ -587,6 +615,14 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
         listing={listing}
         onSubmitReview={onSubmitReview}
       />
+
+      {/* Floating Share Feedback Toast */}
+      {shareFeedback && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-amber-400 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold animate-fade-in">
+          <Share2 className="w-4 h-4 text-amber-400" />
+          <span>{shareFeedback}</span>
+        </div>
+      )}
     </div>
   );
 };

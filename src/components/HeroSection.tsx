@@ -7,8 +7,6 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
-  Pause,
-  Play,
   Camera,
 } from 'lucide-react';
 import { CategoryId } from '../types/directory';
@@ -104,16 +102,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const [effectIdx, setEffectIdx] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Background Slider Auto-rotation
   useEffect(() => {
-    if (!isAutoPlaying) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % KHAIRABAD_FAMOUS_PLACES.length);
     }, 5500);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, []);
 
   const handleNextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % KHAIRABAD_FAMOUS_PLACES.length);
@@ -200,7 +196,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             Explore
           </span>
-          <span>Khairabad, Sitapur (261131)</span>
+          <span>Khairabad</span>
           {showToast && (
             <span className="block mt-2 text-xs font-normal text-amber-300/90 tracking-normal font-sans animate-fade-in">
               <span className="inline-flex items-center gap-1 bg-slate-900/90 border border-amber-400/40 px-2.5 py-0.5 rounded-full shadow-lg">
@@ -215,8 +211,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           Find local businesses, emergency services, hospitals, marriage lawns, schools, and historic heritage places — all in one community guide.
         </p>
 
-        {/* Famous Place Background Slider Badge & UX Controls */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-6">
+        {/* Famous Place Background Slider Badge with Shortcut to Directory */}
+        <div className="flex items-center justify-center mb-6">
           {/* Active Place Tag Button with Shortcut to Directory */}
           <button
             type="button"
@@ -242,34 +238,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {currentSlide + 1} / {KHAIRABAD_FAMOUS_PLACES.length}
             </span>
           </button>
-
-          {/* Slider Pagination Dots & Autoplay Toggle */}
-          <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full shadow-md">
-            {KHAIRABAD_FAMOUS_PLACES.map((place, idx) => (
-              <button
-                key={place.id}
-                type="button"
-                onClick={() => setCurrentSlide(idx)}
-                title={`View ${place.name}`}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  idx === currentSlide
-                    ? 'w-6 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]'
-                    : 'w-2 bg-white/40 hover:bg-white/80'
-                }`}
-                aria-label={`Go to slide ${idx + 1}: ${place.name}`}
-              />
-            ))}
-
-            <button
-              type="button"
-              onClick={() => setIsAutoPlaying((prev) => !prev)}
-              title={isAutoPlaying ? 'Pause background slider' : 'Resume background slider'}
-              className="text-white/60 hover:text-amber-400 ml-1.5 p-0.5 rounded cursor-pointer transition-colors"
-              aria-label={isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
-            >
-              {isAutoPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-            </button>
-          </div>
         </div>
 
         {/* Primary Search Container */}

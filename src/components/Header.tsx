@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, AlertTriangle, Heart, Navigation } from 'lucide-react';
+import { Plus, Heart } from 'lucide-react';
 import { KhairabadLogo } from './KhairabadLogo';
 
 interface HeaderProps {
@@ -78,29 +78,6 @@ export const Header: React.FC<HeaderProps> = ({
               className={`hover:text-amber-700 transition-colors ${activeView === 'directory' ? 'text-slate-950 font-bold border-b-2 border-amber-500 pb-0.5' : ''}`}
             >
               Directory
-            </button>
-            <button
-              onClick={() => {
-                setActiveView('roads');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`group flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${
-                activeView === 'roads'
-                  ? 'bg-amber-500 text-slate-950 font-bold shadow-xs border border-amber-600 ring-2 ring-amber-400/25'
-                  : 'text-slate-700 hover:text-amber-900 hover:bg-amber-50/80 font-medium'
-              }`}
-            >
-              <Navigation className={`w-3.5 h-3.5 transition-transform ${
-                activeView === 'roads' ? 'text-slate-950 stroke-[2.5]' : 'text-amber-600 group-hover:scale-110'
-              }`} />
-              <span>Roads &amp; Transit</span>
-              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-wider transition-colors ${
-                activeView === 'roads'
-                  ? 'bg-slate-950 text-amber-300'
-                  : 'bg-amber-100 text-amber-800 group-hover:bg-amber-200'
-              }`}>
-                Map
-              </span>
             </button>
             <button
               onClick={() => setActiveView('blog')}

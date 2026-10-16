@@ -23,7 +23,7 @@ import { ReviewListSection } from './ReviewListSection';
 import { ReviewFormModal } from './ReviewFormModal';
 import { calculateRatingSummary } from '../utils/reviewStorage';
 import { SocialShareModal } from './SocialShareModal';
-import { updateDocumentSocialMeta, restoreDefaultSocialMeta } from '../utils/socialShare';
+import { updateDocumentSocialMeta, restoreDefaultSocialMeta, shareListingWithWebShareApi } from '../utils/socialShare';
 
 interface BusinessDetailModalProps {
   listing: CityListing | null;
@@ -50,7 +50,25 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+  const handleShare = async () => {
+    if (!listing) return;
+    await shareListingWithWebShareApi(listing, {
+      onSuccess: () => {
+        setShareFeedback('Shared successfully via device options!');
+        setTimeout(() => setShareFeedback(null), 3000);
+      },
+      onFallback: () => {
+        // Fallback to social share modal if Web Share is not supported
+        setIsShareOpen(true);
+      },
+      onError: () => {
+        setIsShareOpen(true);
+      },
+    });
+  };
 
   const ratingSummary = useMemo(() => calculateRatingSummary(reviews), [reviews]);
 
@@ -84,14 +102,27 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
             </div>
           )}
 
-          {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors backdrop-blur-sm"
-            aria-label="Close details"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Top Right Actions: Share & Close */}
+          <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+            <button
+              type="button"
+              onClick={handleShare}
+              className="h-9 px-3 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center gap-1.5 transition-colors backdrop-blur-sm text-xs font-semibold cursor-pointer shadow-sm"
+              title="Share listing via native device sharing options (Web Share API)"
+              aria-label="Share listing"
+            >
+              <Share2 className="w-3.5 h-3.5 text-amber-400" />
+              <span>Share</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors backdrop-blur-sm cursor-pointer"
+              aria-label="Close details"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
           {/* Tag & Verification Overlay */}
           <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs">
@@ -210,11 +241,13 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               )}
               <div className="relative">
                 <button
-                  onClick={() => setIsShareOpen(true)}
-                  className="p-2 border rounded-xl border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-white transition-colors"
-                  title="Share Listing with Friends"
+                  type="button"
+                  onClick={handleShare}
+                  className="px-3.5 py-2 border rounded-xl border-slate-300 text-slate-700 hover:text-slate-900 hover:bg-white hover:border-amber-400 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer shadow-2xs"
+                  title="Share listing via native device sharing options (Web Share API)"
                 >
-                  <Share2 className="w-4 h-4 text-amber-600" />
+                  <Share2 className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Share</span>
                 </button>
 
                 {isShareOpen && (
@@ -316,6 +349,14 @@ export const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           listing={listing}
           onSubmitReview={onSubmitReview}
         />
+      )}
+
+      {/* Floating Share Feedback Toast */}
+      {shareFeedback && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-amber-400 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold animate-fade-in">
+          <Share2 className="w-4 h-4 text-amber-400" />
+          <span>{shareFeedback}</span>
+        </div>
       )}
     </div>
   );

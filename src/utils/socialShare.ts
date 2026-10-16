@@ -458,3 +458,54 @@ export function restoreDefaultSocialMeta(): void {
   const existingScript = document.getElementById('listing-json-ld');
   if (existingScript) existingScript.remove();
 }
+
+/**
+ * Checks whether the current device/browser supports the Web Share API.
+ */
+export function isWebShareSupported(): boolean {
+  return typeof navigator !== 'undefined' && typeof navigator.share === 'function';
+}
+
+/**
+ * Shares business listing information using the Web Share API via native device sharing options.
+ * Calls onFallback if Web Share API is not available on this browser/platform.
+ */
+export async function shareListingWithWebShareApi(
+  listing: CityListing,
+  options?: {
+    onSuccess?: () => void;
+    onCancel?: () => void;
+    onError?: (err: unknown) => void;
+    onFallback?: () => void;
+  }
+): Promise<boolean> {
+  const shareData = getListingShareData(listing);
+  const sharePayload: ShareData = {
+    title: `${listing.name} - Khairabad City Directory`,
+    text: `Check out "${listing.name}" (${shareData.category}) in ${shareData.locality}, Khairabad (PIN 261131).\n${listing.address ? `📍 Address: ${listing.address}\n` : ''}${listing.phone ? `📞 Phone: ${listing.phone}\n` : ''}`,
+    url: shareData.shareUrl,
+  };
+
+  if (isWebShareSupported()) {
+    try {
+      if (typeof navigator.canShare === 'function' && !navigator.canShare(sharePayload)) {
+        options?.onFallback?.();
+        return false;
+      }
+      await navigator.share(sharePayload);
+      options?.onSuccess?.();
+      return true;
+    } catch (err: unknown) {
+      if ((err as Error)?.name === 'AbortError') {
+        options?.onCancel?.();
+        return false;
+      }
+      options?.onError?.(err);
+      options?.onFallback?.();
+      return false;
+    }
+  } else {
+    options?.onFallback?.();
+    return false;
+  }
+}

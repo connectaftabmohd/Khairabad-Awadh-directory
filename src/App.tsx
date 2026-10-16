@@ -51,7 +51,6 @@ import { WeatherWidget } from './components/WeatherWidget';
 import { WeatherPage } from './components/WeatherPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
-import { RoadsTransitPage } from './components/RoadsTransitPage';
 import { FAQSection } from './components/FAQSection';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { MobileBottomNav } from './components/MobileBottomNav';
@@ -72,7 +71,7 @@ export default function App() {
   const [myPlacesOnly, setMyPlacesOnly] = useState(false);
   const [visibleListingCount, setVisibleListingCount] = useState(4);
   const [announcement, setAnnouncement] = useState<SiteAnnouncement>(() => getSiteAnnouncement());
-  const [activeView, setActiveView] = useState<'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail' | 'admin'>('directory');
+  const [activeView, setActiveView] = useState<'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'listing-detail' | 'admin'>('directory');
 
   // Synchronize listing detail and views from URL query parameters (?listing=..., ?view=...)
   useEffect(() => {
@@ -98,8 +97,13 @@ export default function App() {
           return;
         }
 
-        if (view && ['directory', 'roads', 'about', 'blog', 'weather', 'privacy', 'terms', 'admin'].includes(view)) {
-          setActiveView(view as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
+        if (view === 'roads') {
+          setActiveView('directory');
+          return;
+        }
+
+        if (view && ['directory', 'about', 'blog', 'weather', 'privacy', 'terms', 'admin'].includes(view)) {
+          setActiveView(view as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           return;
         }
       } catch {
@@ -179,10 +183,7 @@ export default function App() {
     let title = 'Khairabad City Directory & Local Business Guide | Sitapur, UP (PIN 261131)';
     let desc = 'Official Khairabad digital guide & local business directory: find top hospitals, doctors, schools, marriage lawns, emergency helplines, shops & historic Awadh heritage in Sitapur (PIN 261131).';
 
-    if (activeView === 'roads') {
-      title = 'Khairabad Roads, Highways (NH-24, SH-30) & Transit Corridors | Khairabad Directory';
-      desc = 'Complete guide to Khairabad highways (NH-24 Sitapur-Lucknow, SH-30 Biswan), major local roads, Chauraha hubs, e-rickshaw stands, and mohalla connectivity.';
-    } else if (activeView === 'about') {
+    if (activeView === 'about') {
       title = 'About Khairabad – History, Awadh Heritage, Facts & Tourism Profile | PIN 261131';
       desc = "Discover Khairabad's rich history from Raja Khaira Pasi to Mughal Akbar Sarkar, Badi Sangat, Dargahs, culture, population, and connectivity in Sitapur district.";
     } else if (activeView === 'blog') {
@@ -420,7 +421,7 @@ export default function App() {
         activeView={activeView}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
+          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           try {
             const url = new URL(window.location.href);
             url.searchParams.delete('listing');
@@ -490,17 +491,6 @@ export default function App() {
               onOpenWeather={() => {
                 setActiveView('weather');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              onOpenRoads={() => {
-                setActiveView('roads');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                try {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('view', 'roads');
-                  window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-                } catch {
-                  // ignore
-                }
               }}
             />
 
@@ -1107,17 +1097,6 @@ export default function App() {
                 scrollToDirectory();
               }}
               onOpenAddModal={() => setIsAddModalOpen(true)}
-              onOpenRoads={() => {
-                setActiveView('roads');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                try {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('view', 'roads');
-                  window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-                } catch {
-                  // ignore
-                }
-              }}
               onOpenBlog={() => {
                 setActiveView('blog');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1131,69 +1110,6 @@ export default function App() {
               }}
             />
           </>
-        ) : activeView === 'roads' ? (
-          /* Dedicated Separate Page for Khairabad Main Roads, Highways & Transit */
-          <RoadsTransitPage
-            onBackToDirectory={() => {
-              setActiveView('directory');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.delete('view');
-                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-              } catch {
-                // ignore
-              }
-            }}
-            onSelectRoadFilter={(roadName) => {
-              setSelectedRoad(roadName);
-              setActiveView('directory');
-              setTimeout(() => {
-                const el = document.getElementById('directory-content');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 60);
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.delete('view');
-                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-              } catch {
-                // ignore
-              }
-            }}
-            onSelectMohallaFilter={(mohalla) => {
-              setSelectedMohalla(mohalla);
-              setActiveView('directory');
-              setTimeout(() => {
-                const el = document.getElementById('directory-content');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 60);
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.delete('view');
-                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-              } catch {
-                // ignore
-              }
-            }}
-            onSelectChaurahaFilter={(chauraha) => {
-              setSelectedChauraha(chauraha);
-              setActiveView('directory');
-              setTimeout(() => {
-                const el = document.getElementById('directory-content');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 60);
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.delete('view');
-                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-              } catch {
-                // ignore
-              }
-            }}
-            onOpenListingDetail={handleOpenListingDetail}
-            onOpenAddModal={() => setIsAddModalOpen(true)}
-            allListings={listings}
-          />
         ) : activeView === 'blog' ? (
           /* Verified Khairabad Place & Notable Figures Blogs View */
           <BlogPage
@@ -1228,17 +1144,6 @@ export default function App() {
           /* About Khairabad View */
           <AboutKhairabad
             onViewBlog={() => { setActiveView('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            onViewRoads={() => {
-              setActiveView('roads');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.set('view', 'roads');
-                window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
-              } catch {
-                // ignore
-              }
-            }}
           />
         )}
       </main>
@@ -1254,7 +1159,7 @@ export default function App() {
         onOpenEmergency={() => setIsEmergencyOpen(true)}
         setActiveView={(v) => {
           setSelectedListingDetail(null);
-          setActiveView(v as 'directory' | 'roads' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
+          setActiveView(v as 'directory' | 'about' | 'blog' | 'weather' | 'privacy' | 'terms' | 'admin');
           try {
             const url = new URL(window.location.href);
             url.searchParams.delete('listing');

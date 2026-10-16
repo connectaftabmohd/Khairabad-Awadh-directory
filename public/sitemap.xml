@@ -2,721 +2,1621 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- 1. STATIC CORE PAGES -->
+  <!-- Home Page -->
   <url>
     <loc>https://khairabadcity.in/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>1.00</priority>
   </url>
+  <!-- City Directory -->
   <url>
     <loc>https://khairabadcity.in/?tab=directory</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
+  <!-- Roads and Connectivity -->
   <url>
     <loc>https://khairabadcity.in/?view=roads</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
+  <!-- Roads and Connectivity (Alt) -->
   <url>
     <loc>https://khairabadcity.in/?tab=roads</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
-  <url>
-    <loc>https://khairabadcity.in/?tab=about</loc>
-    <lastmod>2026-10-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
+  <!-- Khairabad Heritage Blog and News -->
   <url>
     <loc>https://khairabadcity.in/?tab=blog</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
+  <!-- Live Weather Forecast -->
   <url>
     <loc>https://khairabadcity.in/?tab=weather</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- About Khairabad -->
+  <url>
+    <loc>https://khairabadcity.in/?tab=about</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <!-- Privacy Policy -->
   <url>
     <loc>https://khairabadcity.in/?tab=privacy</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.50</priority>
   </url>
+  <!-- Terms of Service -->
   <url>
     <loc>https://khairabadcity.in/?tab=terms</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.50</priority>
   </url>
-
-  <!-- 2. DIRECTORY CATEGORIES -->
+  <!-- Category: Hospitals and Health -->
   <url>
     <loc>https://khairabadcity.in/?category=hospitals</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Clinics and Diagnostics -->
   <url>
     <loc>https://khairabadcity.in/?category=clinics</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Doctors and Specialists -->
   <url>
     <loc>https://khairabadcity.in/?category=doctors</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Pharmacies and Meds -->
   <url>
     <loc>https://khairabadcity.in/?category=pharmacies</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Restaurants and Food -->
   <url>
     <loc>https://khairabadcity.in/?category=restaurants</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Hotels and Lodging -->
   <url>
     <loc>https://khairabadcity.in/?category=hotels</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Marriage Lawns and Banquets -->
   <url>
     <loc>https://khairabadcity.in/?category=marriage-lawns</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Wedding and Event Services -->
   <url>
     <loc>https://khairabadcity.in/?category=event-services</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Schools and Education -->
   <url>
     <loc>https://khairabadcity.in/?category=schools</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Degree Colleges and Institutes -->
   <url>
     <loc>https://khairabadcity.in/?category=colleges</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Coaching and Tuitions -->
   <url>
     <loc>https://khairabadcity.in/?category=coaching</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Banks and Financial -->
   <url>
     <loc>https://khairabadcity.in/?category=banks</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: 24/7 Cash ATMs -->
   <url>
     <loc>https://khairabadcity.in/?category=atms</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Govt and Citizen Services -->
   <url>
     <loc>https://khairabadcity.in/?category=government</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Police Stations and Chowkis -->
   <url>
     <loc>https://khairabadcity.in/?category=police</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Post Offices and Courier -->
   <url>
     <loc>https://khairabadcity.in/?category=post-office</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Petrol Pumps and Fuel -->
   <url>
     <loc>https://khairabadcity.in/?category=petrol-pumps</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Car and Bike Garages -->
   <url>
     <loc>https://khairabadcity.in/?category=auto-services</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Transport and Travel -->
   <url>
     <loc>https://khairabadcity.in/?category=transport</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Bazaars and Shopping -->
   <url>
     <loc>https://khairabadcity.in/?category=markets</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Mobile and Electronics -->
   <url>
     <loc>https://khairabadcity.in/?category=mobile-shops</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Cyber Cafe and CSC Centers -->
   <url>
     <loc>https://khairabadcity.in/?category=cyber-cafes</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Salons and Parlours -->
   <url>
     <loc>https://khairabadcity.in/?category=salons</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Gyms and Fitness -->
   <url>
     <loc>https://khairabadcity.in/?category=gyms</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Photo and Video Studios -->
   <url>
     <loc>https://khairabadcity.in/?category=photographers</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Lawyers and Legal Services -->
   <url>
     <loc>https://khairabadcity.in/?category=lawyers</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Property and Real Estate -->
   <url>
     <loc>https://khairabadcity.in/?category=real-estate</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
+  <!-- Category: Heritage and Religious -->
   <url>
     <loc>https://khairabadcity.in/?category=religious</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
-
-  <!-- 3. EDITORIAL & HERITAGE BLOG POSTS -->
+  <!-- Blog: Babbu Hotel Khairabad: The Iconic Town Eatery, Kulhad Chai and Culinary Landmark of Chilla Sarain Chauraha -->
   <url>
     <loc>https://khairabadcity.in/?blog=babbu-hotel-khairabad-chilla-sarain-culinary-landmark</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Notable People of Khairabad: The Revolutionary and Literary Dynasty of Fazl-e-Haq Khairabadi, Muztar Khairabadi and Jan Nisar Akhtar -->
   <url>
     <loc>https://khairabadcity.in/?blog=notable-people-of-khairabad-fazl-e-haq-muztar-jan-nisar-akhtar</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Historic Badi Sangat Mandir: The 17th-Century Spiritual Sanctuary of Baba Sahajram -->
   <url>
     <loc>https://khairabadcity.in/?blog=historic-badi-sangat-mandir-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Dargah Hazrat Makhdoom Sheikh Saaduddin: A 15th-Century Beacon of Sufi Peace -->
   <url>
     <loc>https://khairabadcity.in/?blog=dargah-hazrat-makhdoom-saaduddin-khairabadi</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Historic Dargah Qadam Rasul and The Royal Imambaras of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=dargah-qadam-rasul-imambara-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Allama Fazl-e-Haq Khairabadi: The Revolutionary Philosopher and Freedom Fighter -->
   <url>
     <loc>https://khairabadcity.in/?blog=allama-fazl-e-haq-khairabadi-life-and-legacy</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Khairabad Avadh Railway Station (KB): The Colonial Rail Lifeline Since 1886 -->
   <url>
     <loc>https://khairabadcity.in/?blog=khairabad-avadh-railway-station-history-and-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Community Health Centre (CHC) Khairabad: The 24/7 Lifeline of Town Healthcare -->
   <url>
     <loc>https://khairabadcity.in/?blog=chc-community-health-centre-khairabad-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Chhoti Sangat: The Meditative Hermitage and Sadhu Traditions of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=chhoti-sangat-ashram-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Government Inter College (GIC) Khairabad: A Century of Academic Excellence -->
   <url>
     <loc>https://khairabadcity.in/?blog=government-inter-college-gic-khairabad-legacy</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Al-Jamiatul Arabiatul Islamia: Preserving Classical Scholarly Tradition -->
   <url>
     <loc>https://khairabadcity.in/?blog=al-jamiatul-arabiatul-islamia-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Nagar Palika Parishad: The Civic Evolution of Khairabad Town Hall -->
   <url>
     <loc>https://khairabadcity.in/?blog=nagar-palika-parishad-khairabad-civic-history</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: The Handloom Durrie Weavers of Khairabad: A Vanishing Textile Art Form -->
   <url>
     <loc>https://khairabadcity.in/?blog=handloom-durrie-weavers-khairabad-textile-art</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Sarafa Market: The Gold, Silver and Traditional Bridal Jewellery of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=sarafa-market-khairabad-bridal-jewellery-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: The Bustling Sabzi Mandi and Main Bazaar: Pulse of Agricultural Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=sabzi-mandi-main-bazaar-khairabad-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Kotwali Thana Khairabad: The Guardians of Public Safety and Civic Order -->
   <url>
     <loc>https://khairabadcity.in/?blog=kotwali-thana-khairabad-police-station-history</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Khairabad Sub Post Office (PIN 261131): Connecting Citizens Since The British Raj -->
   <url>
     <loc>https://khairabadcity.in/?blog=khairabad-post-office-pin-261131-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Bagh-e-Khairabad: The Legendary Mango Groves of The Sarayan Basin -->
   <url>
     <loc>https://khairabadcity.in/?blog=bagh-e-khairabad-mango-groves-sarayan-basin</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Sarayan River Basin: The Ecological Lifeline and Geography of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=sarayan-river-basin-ecology-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Chungi Naka: The Vibrant Entryway and Transport Junction of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=chungi-naka-gateway-khairabad-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: Marriage Lawns and Royal Banquets: The Grand Wedding Culture of Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?blog=marriage-lawns-wedding-culture-khairabad</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
+  <!-- Blog: The Khairabad Food Trail: From Morning Desi Ghee Jalebi to Midnight Dum Biryani -->
   <url>
     <loc>https://khairabadcity.in/?blog=khairabad-food-trail-biryani-jalebi-culinary-guide</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>October 2026</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
-
-  <!-- 4. DYNAMIC BUSINESS, ATM, BANK & CIVIC LISTINGS -->
+  <!-- HOSPITALS: Community Health Centre (CHC) Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-hosp-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- CLINICS: Awadh Clinical and Diagnostic Care -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-cln-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- DOCTORS: Dr. R. K. Verma Child and Family Clinic -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-doc-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- PHARMACIES: Janta Medicos and Surgical Store -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-med-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- RESTAURANTS: Babbu Hotel and Restaurant (बब्बू होटल) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rest-babbu</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- RESTAURANTS: Al-Madina Family Restaurant and Biryani Corner -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rest-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- HOTELS: Babbu Hotel (बब्बू होटल) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-htl-babbu</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- HOTELS: Royal Highway Inn and Guest House -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-htl-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- MARRIAGE-LAWNS: Chandra Marriage Lawn and Banquet Hall -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-lawn-chandra</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- MARRIAGE-LAWNS: JP Lawns -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-lawn-jp</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- MARRIAGE-LAWNS: T M Lawn -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-lawn-tm</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- MARRIAGE-LAWNS: Gulshan Marriage Lawn -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-lawn-gulshan</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- MARRIAGE-LAWNS: Royal Palace Banquet Hall and Marriage Lawn -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-lawn-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- EVENT-SERVICES: Khairabad Shahi Tent House and Flower Decorators -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-evt-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- SCHOOLS: Government Inter College (GIC) Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-edu-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- SCHOOLS: Bright Circle School -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-bright-circle</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: G.D. Goenka Public School Sitapur -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-gd-goenka</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Jeevan Jyoti Convent School -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-jeevan-jyoti</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Arcadia Public School -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-arcadia</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Hira Public School -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-hira-public-school</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Hira Public Inter College -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-hira-inter-college</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Nalanda Public School -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-nalanda</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: PSAS Inter College (Pt. Surya Dutt Anandi Saigal) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-psas-inter-college</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Pt Surya Dutt Anandi Saigal Girls Inter College -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-psas-girls-inter-college</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Jawahar Navodaya Vidyalaya (JNV) Sitapur -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-jnv-khairabad</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: JLMDJ Inter College Khairabad -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-jlmdj-inter-college</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- SCHOOLS: Government Primary School Khairabad -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-edu-primary-school</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- COLLEGES: Khairabad Degree College and Higher Learning -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-col-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- COACHING: Target Point Academy and Coaching Centre -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-coa-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- BANKS: State Bank of India (SBI) Khairabad Branch -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- BANKS: Punjab National Bank (PNB) - Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-pnb</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- BANKS: Indian Bank - Khairabad Branch -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-indian</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- BANKS: HDFC Bank - Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-hdfc</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- BANKS: Axis Bank - Kanayatpur / Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-axis</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- BANKS: Bank of India - BCM Hospital Area -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-bank-boi</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: Punjab National Bank ATM (GPMX+VC7) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-pnb-gpmx</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: Union Bank of India ATM (GPJW+QXR) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-union</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: SBI ATM - Near BCM Hospital -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-sbi-bcm</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: Money Spot ATM Khairabad (GPMX+74W) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-moneyspot</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- ATMS: Punjab National Bank - BNA / CDM -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-pnb-bna</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: ATM - BCM Road (GQG3+R2G) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-bcm-rd</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- ATMS: Central Bank of India - ATM -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-cbi-bcm</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: HDFC Bank ATM (Gate No 1033) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-hdfc-gate1033</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: Bank of India ATM - BCM Hospital -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-boi-bcm</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- ATMS: State Bank of India ATM - Khairabad Chungi -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-atm-sbi-chungi</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- GOVERNMENT: Nagar Palika Parishad Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-govt-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- POLICE: Kotwali Thana Khairabad (Police Station) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-pol-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- POST-OFFICE: Khairabad Sub Post Office (PIN: 261131) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-post-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- PETROL-PUMPS: Indian Oil Fuel Station and Auto Care -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-fuel-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- AUTO-SERVICES: Verma Two-Wheeler Workshop and Spare Parts -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-auto-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- TRANSPORT: Khairabad Avadh Railway Station (Station Code: KB) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-trans-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- MARKETS: Sarafa and Handloom Textile Bazaar -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mkt-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- MOBILE-SHOPS: Awadh Mobile World and Repairing Hub -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mob-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- CYBER-CAFES: Digital India Jan Seva Kendra and CSC Center -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-cyb-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- SALONS: Noor Herbal Beauty Parlour and Makeover -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-sal-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- GYMS: Awadh Power Fitness Gym and Health Club -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-gym-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- PHOTOGRAPHERS: Khairabad Royal Studio and Wedding Cinema -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-pho-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- LAWYERS: Khairabad Legal Chamber and Notary Services -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-law-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- REAL-ESTATE: Awadh Bhumi Property and Real Estate Consultants -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rea-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.70</priority>
   </url>
+  <!-- RELIGIOUS: Historic Badi Sangat Mandir Complex -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rel-001</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
+  <!-- RELIGIOUS: Dargah Hazrat Makhdoom Sheikh Saaduddin Khairabadi -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rel-002</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
-  <!-- 5. MAIN ROADS, TRANSIT HUBS & KEY LANDMARKS -->
+  <!-- CYBER-CAFES: Ashish Kumar Plywood and CSC Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-ashish-sharma-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Gita Yadav CSC Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-gita-yadav-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Haani CSC and Online Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-haani-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Haree Om Yadav Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-haree-om-yadav-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Himanshu Dutt Dixit Jan Seva and Computer Center -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-himanshu-dutt-dixit-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Javed Alam Digital CSC and Online Services -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-javed-alam-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Jitendra Kumar Mishra CSC Center -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-jitendra-mishra-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Maya Prakash Mishra CSC and Cyber Point -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-maya-prakash-mishra-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mehtab Alam Common Service Center -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mehtab-alam-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mohd Faheem Digital Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mohd-faheem-station-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mohd Kaleem CSC and Online Services -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mohd-kaleem-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mohd Naseeb Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mohd-naseeb-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mohammad Faheem Jan Seva and CSC Point -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mohammad-faheem-bazar-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Mohd. Amir Common Service Center (CSC) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-mohd-amir-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Om CSC Center and Online Seva (Om Prakash) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-om-prakash-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Be Happy Stationery and CSC Center (Pankaj Kumar) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-pankaj-be-happy-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Pankaj Kumar Digital CSC Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-pankaj-kumar-sangat-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Roshan Lal CSC Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-roshan-lal-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Seema Mishra Jan Seva and Online Hub (Hera Panna) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-seema-mishra-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Shan Mohd CSC Digital Center -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-shan-mohd-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Som Pal CSC Jan Seva Kendra -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-som-pal-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- CYBER-CAFES: Vinay Kumar Sharma CSC and Cyber Services -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=csc-vinay-kumar-sharma-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- GYMS: Fitness Feed Gym -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=gym-fitness-feed-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- GYMS: FAUJI PHYSICAL ACADEMY Khairabad -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=gym-fauji-physical-academy-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- GYMS: Alpha Gym and Fitness Centre -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=gym-alpha-fitness-centre-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- GYMS: Ultimate Fitness Gym -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=gym-ultimate-fitness-261131</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- HOSPITALS: BCM Hospital Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-hosp-bcm-001</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- MARKETS: Khairabad Iron Store -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mkt-iron-store</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- CLINICS: City Optical Market Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-cln-city-optical</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- GOVERNMENT: RTO Office Sitapur (Arjunpur Khairabad) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-govt-rto-sitapur</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- RELIGIOUS: Allama Fazl-e-Haq Khairabadi Smarak Chauraha -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-rel-fazl-e-haq-smarak</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- MARKETS: Hira Market Sujawalpur (Wholesale Apparel) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mkt-hira-market</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- MARKETS: Alam Kirana Store -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mkt-alam-kirana</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- TRANSPORT: Barabhari Toll Plaza (NH-24) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-trn-barabhari-toll</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- POLICE: Kotwali Thana Khairabad (Police Station) -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-pol-thana-khairabad</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.75</priority>
   </url>
+  <!-- MARKETS: Suhaima Market Khairabad -->
   <url>
     <loc>https://khairabadcity.in/?listing=kh-mkt-suhaima-market</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Nai Bazar Central Market (नई बाज़ार) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-nai-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Lateef Market Commercial Complex (लतीफ़ मार्केट) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-lateef-market</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Purani Bazar Heritage Market (पुरानी बाज़ार) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-purani-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Khairabad Galla Mandi (अनाज एवं गल्ला मंडी) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-galla-mandi</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- GOVERNMENT: Power House 33/11kV Substation Khairabad (विद्युत उपकेंद्र पावर हाउस) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-gov-power-house</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Hira Market Wholesale Cloth and Garments Bazaar (हीरा मार्केट) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-hira-market-main</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Purani Bazar Sabzi Mandi (सब्ज़ी मंडी - पुरानी बाज़ार) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-sabzi-mandi-purani-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- MARKETS: Nai Bazar Sabzi Mandi (सब्ज़ी मंडी - नई बाज़ार) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-mkt-sabzi-mandi-nai-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- TRANSPORT: Batto Khan Chauraha Commercial Junction (बट्टो ख़ान चौराहा) -->
+  <url>
+    <loc>https://khairabadcity.in/?listing=kh-trn-batto-khan-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- Road: National Highway 24 (NH-24) -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=nh-24</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Road: State Highway 30 (SH-30) -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=sh-30</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Road: BCM Road -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=bcm-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Road: Bahraich–Sitapur Road -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=bahraich-sitapur-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Road: Post Office Road (Purani Bazar Link) -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=post-office-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Road: Nai Bazar Road -->
+  <url>
+    <loc>https://khairabadcity.in/?view=roads&amp;road=nai-bazar-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- Chauraha: Khairabad Chauraha (NH-24 Junction) -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=khairabad-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: Allama Fazl-e-Haq Khairabadi Smarak Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=fazl-e-haq-smarak</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: Purani Bazar Teen-Rasta Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=purani-bazar-teen-rasta</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: BCM Hospital Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=bcm-hospital-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: Thana Khairabad Chauraha (SH-30) -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=thana-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: Nai Bazar Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=nai-bazar-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Chauraha: Batto Khan Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?chauraha=batto-khan-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <!-- Locality: Sitapur Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sitapur-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: BCM Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=bcm-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Bahraich–Sitapur Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=bahraich-sitapur-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Nai Bazar Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=nai-bazar-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Post Office Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=post-office-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Biswan–Sitapur Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=biswan-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Main Bazaar / Sabzi Mandi -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=main-bazaar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Nai Bazar -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=nai-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Lateef Market -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=lateef-market</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Purani Bazar -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=purani-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Galla Mandi -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=galla-mandi</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Power House -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=power-house</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Hira Market -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=hira-market</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Sabzi Mandi (Purani Bazar) -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sabzi-mandi-purani-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Sabzi Mandi (Nai Bazar) -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sabzi-mandi-nai-bazar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Batto Khan Chauraha -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=batto-khan-chauraha</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Makhupur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=makhupur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Laliya Pur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=laliya-pur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Gadhi Darwaja -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=gadhi-darwaja</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Kajiyara -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=kajiyara</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Panwadiya -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=panwadiya</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Hataura -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=hataura</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Kisani Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=kisani-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Shujawalpur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=shujawalpur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Sujawalpur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sujawalpur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Poli Pur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=poli-pur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Katra -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=katra</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Mahendri Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=mahendri-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Kamal Sarayan -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=kamal-sarayan</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Miyansray -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=miyansray</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Miyan Sarai -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=miyan-sarai</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Bajdari Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=bajdari-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Bhulanpur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=bhulanpur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Shekhpura -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=shekhpura</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Shekh Saray Pratham -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=shekh-saray-pratham</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Joshitola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=joshitola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Rauja Darwaja -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=rauja-darwaja</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Shekhasray Dwitiy -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=shekhasray-dwitiy</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Chillay Sarany -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=chillay-sarany</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Turkapatti -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=turkapatti</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Kulhan Saray -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=kulhan-saray</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Tursava -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=tursava</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Kaswati Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=kaswati-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Qasbati Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=qasbati-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Arjunpur -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=arjunpur</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Mevati Tola -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=mevati-tola</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Railway Station Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=railway-station-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Chungi Naka -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=chungi-naka</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Badi Sangat Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sangat-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Mahmoodabad Road -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=mahmoodabad-road</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Qadam Rasul Area -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=qadam-rasul</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Civil Lines / Block Colony -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=civil-lines</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <!-- Locality: Sarafa Market -->
+  <url>
+    <loc>https://khairabadcity.in/?locality=sarafa-market</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
 </urlset>

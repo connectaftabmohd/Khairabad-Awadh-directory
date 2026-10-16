@@ -122,17 +122,6 @@ export const Footer: React.FC<FooterProps> = ({
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveView('roads');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="hover:text-white transition-colors text-amber-300 font-medium"
-              >
-                🛣️ Main Roads &amp; Connectivity Guide
-              </button>
-            </li>
-            <li>
-              <button
                 onClick={() => setActiveView('about')}
                 className="hover:text-white transition-colors"
               >
